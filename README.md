@@ -15,3 +15,4 @@ git clone --depth=1 https://github.com/uafgeoteach/GEOS627_inverse.git
 ### Setup
 
 A yml file (see setup/ folder) lists dependencies. This file, executed within conda or docker, enables a user to establish the software tools needed to execute the iPython notebooks. (A dockerfile is also provided in setup/)
+
