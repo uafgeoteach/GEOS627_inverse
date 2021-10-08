@@ -1,0 +1,94 @@
+% dvips -t letter lab_newton.dvi -o lab_newton.ps ; ps2pdf lab_newton.ps
+\documentclass[11pt,titlepage,fleqn]{article}
+
+\input{hw627_header}
+
+%\pagestyle{empty}
+
+\renewcommand{\vertgap}{\vspace{1.5cm}}
+
+% change the figures to ``Figure L3'', etc
+\renewcommand{\thefigure}{L\arabic{figure}}
+\renewcommand{\thetable}{L\arabic{table}}
+\renewcommand{\theequation}{L\arabic{equation}}
+\renewcommand{\thesection}{L\arabic{section}}
+
+%--------------------------------------------------------------
+\begin{document}
+%-------------------------------------------------------------
+
+\begin{spacing}{1.2}
+\centering
+{\large \bf Lab Exercise: Iterative Newton method [newton]} \\
+GEOS 626: Applied Seismology, Carl Tape \\
+GEOS 627: Inverse Problems and Parameter Estimation, Carl Tape \\
+%Assigned: February 9, 2012 --- Due: February 21, 2012
+Last compiled: \today
+\end{spacing}
+
+%------------------------
+
+\subsection*{Instructions}
+
+Open \verb+lab_newton.ipynb+.
+%Create a copy of the template program: \verb+cp lab_newton_template.m lab_newton.m+
+%
+\begin{enumerate}
+\item Consider the equation $\bH\bem = \bg$. \\
+If $\bH$ is invertible, what is the solution for $\bg$? \\
+If $\bH$ is a scalar, why should these commands be equivalent: \verb+inv(6)*2+ and \verb+1/6*2+. \\
+(Type \verb+LA.inv?+ for details. In fact, it won't work with a scalar.)
+
+\vertgap
+
+\item What are \verb+F+, \verb+g+, and \verb+H+?
+
+\vertgap
+
+%\item Using the Matlab built-in function \verb+fminbnd+, compute the (numerical) minimum of $F(\bem)$.
+\item Using the Python scipy function \verb+optimize.fminbound+, compute the (numerical) minimum of $F(\bem)$.
+
+Plot the point $(\bem_{\rm min},\,F(\bem_{\rm min}))$ on the curve $F(\bem)$.
+
+Zoom in to show that this appears to be a true minimum.
+
+\item By hand, sketch your setup for this problem: axes, a curve, your starting point $(\bem_0,\,F(\bem_0))$, your (known) minimum point $(\bem_{\rm min},\,F(\bem_{\rm min}))$. Describe in words how the Newton algorithm will find the minimum of $F(\bem)$. Annotate your sketch with some iterates of $\bem_n$.
+
+\vspace{10cm}
+
+\item Implement the Newton algorithm (Tarantola, 2005, Eq.~6.291), and demonstrate (graphically or numerically) that you reach the minimum.
+
+Plot the point $(\bem,\,F(\bem))$ for each new value of $\bem$.
+
+Try several different starting values of $\bem$ to make sure it works.
+
+\vertgap
+
+\item Define a sensible stopping criterion.
+
+\vertgap
+
+\item Is your $F(\bem_{\rm min})$ lower or higher than Python's?
+
+\vertgap
+
+\item Repeat the experiment for a {\bf quadratic function}. What happens?
+
+
+
+\item For the {\bf quadratic function}, solve for the analytical minimum $\bem_{\rm min}$ and also $F(\bem_{\rm min})$. Start be writing out $F(m)$ in simplest form.
+
+\vspace{6cm}
+
+\item Show mathematically that the Newton algorithm will give the solution (still for the quadratic function).
+
+\end{enumerate}
+
+%-------------------------------------------------------------
+%\bibliographystyle{agu08}
+%\bibliography{car_abbrev,carl_main,carl_him}
+%-------------------------------------------------------------
+
+%-------------------------------------------------------------
+\end{document}
+%-------------------------------------------------------------

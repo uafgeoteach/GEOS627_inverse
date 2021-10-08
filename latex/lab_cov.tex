@@ -1,0 +1,84 @@
+% dvips -t letter lab_cov.dvi -o lab_cov.ps ; ps2pdf lab_cov.ps
+\documentclass[11pt,titlepage,fleqn]{article}
+
+\input{hw627_header}
+
+%\pagestyle{empty}
+
+% change the figures to ``Figure L3'', etc
+\renewcommand{\thefigure}{L\arabic{figure}}
+\renewcommand{\thetable}{L\arabic{table}}
+\renewcommand{\theequation}{L\arabic{equation}}
+\renewcommand{\thesection}{L\arabic{section}}
+
+%--------------------------------------------------------------
+\begin{document}
+%-------------------------------------------------------------
+
+\begin{spacing}{1.2}
+\begin{center}
+{\large \bf Lab Exercise: Samples of a covariance matrix [cov]} \\
+%GEOS 626: Applied Seismology, Carl Tape \\
+GEOS 627: Inverse Problems and Parameter Estimation, Carl Tape \\
+Last compiled: \today
+\end{center}
+\end{spacing}
+
+%------------------------
+
+\subsection*{Problem}
+
+See class notes \verb+notes_tarantola.pdf+ for background.
+
+\begin{enumerate}
+\item Consider the two vectors
+%
+\begin{equation*}
+\ba =  \left[ \begin{array}{r} 1 \\ 2 \\ 3 \end{array} \right],
+\quad\quad
+\bb =  \left[ \begin{array}{r} 1 \\ 2 \\ 3 \\ 4 \\ 5 \end{array} \right]
+\end{equation*}
+%
+Calculate the following by hand:
+%
+\begin{itemize}
+\item $\ba^T \ba$
+\item $\ba \ba^T$
+\item $\bb^T \bb$
+\item $\bb \bb^T$
+\item $\ba^T \bb$
+\item $\ba \bb^T$
+\item $\bb^T \ba$
+\item $\bb \ba^T$
+\end{itemize}
+
+\item Use \verb+randn+ to generate $\nsample$ samples of $\nparm \times 1$ vectors $\bw$ that have unit covariance, $\bC = \bI$.
+This means that the entries of $\bw$ will have mean $\mu \approx 0$ and standard deviation $\sigma \approx 1$. \\
+Use $\nsample = 500$ and $\nparm = 100$.
+
+It may help to think of sample $\bw_p$ as a profile of a topographic transect or as a seismogram; in any case, there are $\nparm$ discretization points per sample. You have $\nsample$ samples.
+
+\item Using \verb+plot_histo.m+, plot histograms of 12 or so $\bw$ to convince yourself that each $\bw$ appears to be a Gaussian distribution with $\mu \approx 0$ and $\sigma \approx 1$. (You can increase $\nparm$ to make this more clear.)
+
+\item Calculate the mean sample $\bar{\bw}$ for the set of $\nsample$ samples. Make sure it is $\nparm \times 1$.
+
+\item Using a for loop, calculate the estimated covariance matrix \verb+Csamp+ for the set of $\nsample$ samples.
+
+\item Check that your \verb+Csamp+ matches what you get when you use Matlab's \verb+cov+ function.
+
+\item Plot your estimated covariance matrix using \verb+imagesc(Csamp)+. \\
+To make the comparison, use these commands for each plot: \\
+\verb+axis equal, axis tight, caxis([0 1]), colorbar+
+
+\item What is the theoretical covariance matrix? Plot it using the same settings.
+
+\item Plot the residual between the two matrices. Use \verb+caxis(0.1*[-1 1])+ \\
+Is the residual matrix symmetric? Why or why not?
+
+\item Explain why the matrix-square-root method would give the same kinds of samples as the method above. In other words, given an $\nparm \times \nparm$ covariance matrix $\bC$, how can you generate an $\nparm \times \nparm$ representative sample $\bx$? (And what happens if $\bC = \bI$?)
+
+\end{enumerate}
+
+%-------------------------------------------------------------
+\end{document}
+%-------------------------------------------------------------

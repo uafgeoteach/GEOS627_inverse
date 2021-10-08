@@ -1,0 +1,303 @@
+% dvips -t letter hw_ch1.dvi -o hw_ch1.ps ; ps2pdf hw_ch1.ps
+\documentclass[11pt,titlepage,fleqn]{article}
+
+\input{hw627_header}
+
+\renewcommand{\baselinestretch}{1.1}
+
+%--------------------------------------------------------------
+\begin{document}
+%-------------------------------------------------------------
+
+\begin{spacing}{1.2}
+\centering
+{\large \bf Problem Set 2: Aster Ch. 1 [ch1]} \\
+GEOS 627: Inverse Problems and Parameter Estimation, Carl Tape \\
+Assigned: September 4, 2019 --- Due: September 11, 2019 \\
+Last compiled: \today
+\end{spacing}
+
+%------------------------
+
+\subsection*{Instructions}
+
+Review Appendix A of \citet{AsterE2}. In your solutions, be sure to explain your steps. Be clear to distinguish scalars ($k$), vectors ($\bv$), matrices ($\bG$), and operators ($G$). If your answers are hand-written, you might want to put single bars under vectors and double bars under matrices.
+
+%\pagebreak
+\subsection*{Problem 1 (1.0). Aster 1-1.}
+
+Consider a mathematical model of the form $G(\bem) = \bd$, where $\bem$ is a vector of length $\nparm$, and $\bd$ is a vector of length $\ndata$. Suppose that the model obeys the superposition and scaling laws and is thus linear. Show that $G(\bem)$ can be written in the form
+%
+\begin{equation}
+G(\bem) = \bG\bem
+\end{equation}
+%
+where $\bG$ is an $\ndata \times \nparm$ matrix.
+
+\medskip\noindent
+Hints:
+%
+\begin{itemize}
+\item Ignore $\bd$.
+\item Consider the standard basis, and write $\bem$ as a linear combination of the vectors in the standard basis.
+\item Apply the superposition and scaling laws.
+\item Finally, recall the definition of matrix-vector multiplication.
+\end{itemize}
+
+%--------------------------------------------------------------
+
+\clearpage\pagebreak
+\subsection*{Problem 2 (2.0). Aster 1-2 modified.}
+
+Consider the ballistic problem in Section 1.2.
+The mathematical model is \citep[][Eq.~1.13]{AsterE2}
+%
+\begin{equation}
+y(t) = m_1 + m_2 t - \sfrac{1}{2} m_3 t^2.
+\label{ballistic}
+\end{equation}
+%
+Let us assume that $\byh$ points upward.
+% such that a positive value of $m_3$ will pull the ballistic downward.
+The corresponding system of equations is
+%
+\begin{eqnarray}
+\bG \bem &=& \dvec
+\label{lsq}
+\\
+\left[
+\begin{array}{ccc}
+1 & t_1 & -(1/2)t_1^2 \\
+1 & t_2 & -(1/2)t_2^2 \\
+1 & t_3 & -(1/2)t_3^2 \\
+\vdots & \vdots & \vdots \\
+1 & t_\ndata & -(1/2)t_\ndata^2 \\
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+m_1 \\ m_2 \\ m_3
+\end{array}
+\right]
+&=& 
+\left[
+\begin{array}{c}
+y_1 \\ y_2 \\ y_3 \\ \vdots \\ y_\ndata
+\end{array}
+\right]
+\end{eqnarray}
+%
+Let $\ndata = \nparm = 3$ in this problem: {\bf there are $\ndata=3$ people, and each person makes one measurement $(t_i,y_i)$ of the height $y_i$ of the ball at time $t_i$.} Assumptions:
+%
+\begin{itemize}
+\item A ball is being shot from elevation $m_1$ (say, from the middle floor of a high-rise building) with vertical velocity $m_2$ in an environment with vertical acceleration given by $m_3$.
+\item The influence of the ball's height on acceleration is negligible.
+\item Realistic influences such as air friction are negligible.
+\item Each user's measurement $(t_i,y_i)$ may have error (\ie is not accurate).
+\end{itemize}
+%
+After the experiment, the three measurements are tabulated.
+Your task is to solve for the $\nparm=3$ unknowns $m_1, m_2, m_3$.
+%
+\begin{enumerate}
+\item (0.8) Describe the physical meaning of $m_1 < 0$, $m_1 = 0$, $m_1 > 0$.
+
+Describe the physical meaning\footnote{``The ball moves in the direction of $-\byh$'' is {\em not} what I mean by ``physical meaning.''} of $m_2 < 0$, $m_2 = 0$, $m_2 > 0$.
+
+Describe the physical meaning of $m_3 < 0$, $m_3 = 0$, $m_3 > 0$.
+
+\item (0.4) Under what circumstances (if any) will there be a {\bf single solution}?
+
+Plot or sketch an example in $y$-$t$ space that contains three observations and (if it exists) the $\bem$ fitting model(s).
+
+\item (0.4) Under what circumstances (if any) will there be {\bf no solution}?
+
+Plot or sketch an example, as before.
+
+\item (0.4) Under what circumstances (if any) will there be {\bf multiple solutions}?
+
+Plot or sketch an example, as before.
+\end{enumerate}
+%
+Hint: Row-reducing the $3 \times 3$ system of equations (perhaps with an online tool) may provide insights. 
+% THIS WAS DONE IN MATHEMATICA
+In order to row-reduce the augmented matrix, I typed the following command into the online Mathematica platform {\em Wolfram Development Platform}: \\
+\verb+Simplify[MatrixForm[RowReduce[({{1,t1,-t1^2/2,y1},{1,t2,-t2^2/2,y2},{1,t3,-t3^2/2,y3}})]]]+
+and got the following result:
+%
+\begin{eqnarray}
+&& RREF \left[
+\begin{array}{cccc}
+1 & t_1 & -(1/2)t_1^2 & y_1 \\
+1 & t_2 & -(1/2)t_2^2 & y_2 \\
+1 & t_3 & -(1/2)t_3^2 & y_3 \\
+\end{array}
+\right]
+\nonumber \\ \nonumber \\
+&& =
+\left[
+\begin{array}{cccc}
+1 & 0 & 0 & D^{-1}\left[t_1 t_3(t_3-t_1)y_2 + t_2^2(t_3 y_1 - t_1 y_3) + t_2(t_1^2 y_3 - t_3^2 y_1) \right] \\
+& & & \\
+0 & 1 & 0 & D^{-1}\left[ t_1^2(y_2-y_3) + t_2^2(y_3 -y_1) + t_3^2(y_1-y_2)\right] \\
+& & & \\
+0 & 0 & 1 & 2D^{-1}\left[ t_1(y_2-y_3) + t_2(y_3 -y_1) + t_3(y_1-y_2)\right] \\
+\end{array}
+\right]
+\label{rref}
+\end{eqnarray}
+%
+where
+%
+\begin{equation}
+D = (t_1-t_2)(t_1-t_3)(t_2-t_3).
+\end{equation}
+
+%--------------------------------------------------------------
+
+%\pagebreak
+\subsection*{Problem 3a (1.0). Aster 1-3 modified.}
+
+Consider the borehole vertical seismic profile problem of Examples 1.3 and 1.9. Consider the continuous version of the problem, represented by Eq. (1.20):
+%
+\begin{equation}
+t(z) = \int_0^z s(z')\,dz'
+\label{tz}
+\end{equation}
+
+\begin{enumerate}
+
+\item (0.8) Assume a seismic velocity model having a linear depth gradient specified by
+%
+\begin{equation}
+v(z) = v_0 + kz.
+\label{vz}
+\end{equation}
+%
+Solve for the analytical expression $t(z)$, recalling that $s = 1/v$.
+%Recall that $s = 1/v$, and note that $\xi$ in (1.20) is a dummy integration variable for depth.
+
+Note: The term ``velocity'' is used loosely here. It is probably better to think of ``speed'' instead. Note that $v > 0$ is a property for elastic materials.
+
+%-----
+
+\item (0.2) Given a set of arrival times $t(z)$, what is $s(z)$?
+
+Hint: fundamental theorem of calculus.
+
+\end{enumerate}
+
+%--------------------------------------------------------------
+
+%\pagebreak
+\subsection*{Problem 3b (3.0). Aster 1-3 modified.}
+
+Consider the borehole vertical seismic profile problem of Examples 1.3 and 1.9. Here we consider the discretized version of the problem. 
+
+For this problem we need some numbers and a computer. Assume the following:
+%
+\begin{itemize}
+\item There are $\ndata=100$ equally spaced seismic sensors located at depths of $z = 0.2, 0.4, \ldots, 20$~m.
+\item The vertical slowness profile is represented by $\nparm=\ndata=100$ corresponding vertical intervals with midpoints at $z - 0.1$~m. Within each 0.2~m interval the slowness is assumed to be constant.
+\item Let $v_0 = 1$~km/s be the velocity at the surface ($z=0$). Let the gradient in \refeq{vz} be $k = 40$~m/s per m.
+\end{itemize}
+
+\begin{enumerate}
+
+\item (0.0) Using your formula for $t(z)$ from the previous problem, compute \textcolor{red}{a noiseless synthetic data vector $\bd^{\rm exact}$} of predicted seismic travel times at the sensor depths, $t_i = t(z_i)$. 
+{\bf (No need to list any values or expressions for this part.)}
+
+\item (0.3)  Make two qualitative sketches like Figure 1.10, one containing model variables, the other containing data variable. Each sketch should include a coordinate axis and {\bf discretization points}. In either of the plots, include the labels $z$, $\Delta z$, $s_1$, $s_2$, $s_\nparm$, $t_1$, $t_2$, $t_\ndata$.
+
+Note: Do not list any numbers or draw the sketch to scale.
+
+%-----
+
+\item (0.3) Write the discretized form of \refEq{tz}, with $s(z)$ {\bf assumed to be unknown}.
+
+Hint: Avoid using the Heaviside function.
+
+%-----
+
+\item (0.5) Referring to your discretized version of \refEq{tz}, write a set of equations for the travel times from the surface to the $i$th sensor (at the bottom of the $i$th interval):
+%
+\begin{eqnarray*}
+t_1 &=& ???
+\\
+t_2 &=& ???
+\\
+\vdots
+\\
+t_\ndata &=& ???
+\end{eqnarray*}
+% 
+Write this system of equations in succinct form $\bd = \bG\bem$, and list the expressions for $\bd$, (matrix) $\bG$, and $\bem$.
+
+{\bf No non-integer numbers should appear in your answer.}
+
+%-----
+
+\item (0.4) Using \refEq{vz}, calculate the true slowness values $\bem_{\rm true}$ at the midpoints of the $n$ intervals. (No need to show expressions or values.) Compute
+%
+\begin{equation}
+\bd^{\rm true} = \bG\bem_{\rm true}
+\end{equation}
+%
+and compare this with $\bd^{\rm exact}$ by superimposing the two curves in a plot of $t(z)$ (travel time) vs $z$ (sensor depth). (In all plots, please put depth on the $x$-axis.)
+
+\label{calc1}
+
+%-----
+
+\item (0.5) Using $\bd^{\rm exact}$, solve for the slowness $\bem$ as a function of depth using your $\bG$ matrix and the Matlab backslash operator (\verb+\+). Compare your $\bem$ and $\bem_{\rm true}$  graphically by superimposing the two curves in a plot of $s(z)$ (slowness) vs $z$ (interval midpoint depth).
+
+\label{calc2}
+
+%-----
+
+\item (0.5) Generate a noisy travel time vector where independent normally distributed noise with a standard deviation of 0.05~ms ($5 \times 10^{-5}$~s) is added to the elements of $\bd^{\rm exact}$. (Hint: Matlab command \verb+randn+) Re-solve the system for $\bem$ and again compare your results graphically with $\bem_{\rm true}$. How has the model changed?
+
+
+\label{calc3}
+
+%-----
+
+\item (0.5) Repeat parts \ref{calc1}, \ref{calc2}, and \ref{calc3}, but for just $\nparm=4$ sensor depths and corresponding slowness intervals. Keep the maximum depth as the same as before (20~m), and note that $\Delta z$ is no longer 0.2~m.
+
+Is the recovery of the true model improved? Explain in terms of the condition numbers (Aster Section A.8; Matlab command \verb+cond+) of your $\bG$ matrices.
+
+\end{enumerate}
+
+%--------------------------------------------------------------
+
+\pagebreak
+\subsection*{Problem 4 (3.0). Aster 1-4 modified.}
+
+Find a journal article that discusses the solution of an inverse problem in a discipline of special interest to you. (For example, try a google scholar search such as ``ice physics inverse problem''.)
+%
+\begin{enumerate}
+\item What are the data?
+\item Are the data discrete or continuous?
+\item Have the authors discussed possible sources of noise in the data?
+\item What is the model? Is the model continuous or discrete?
+\item What physical laws determine the forward operator $G$?
+\item Is $G$ linear or nonlinear?
+\item Do the authors discuss any issues associated with existence, uniqueness, or instability of solutions?
+\item Please turn in the first page of your article (with title, authors, abstract, etc).
+\end{enumerate}
+
+%------------------------
+
+%\pagebreak
+\subsection*{Problem} \howmuchtime\
+
+%-------------------------------------------------------------
+\nocite{AsterE2}
+
+\bibliographystyle{agu08}
+\bibliography{carl_abbrev,carl_main,carl_source,carl_him,carl_alaska}
+%-------------------------------------------------------------
+
+%-------------------------------------------------------------
+\end{document}
+%-------------------------------------------------------------

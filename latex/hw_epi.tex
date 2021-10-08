@@ -1,0 +1,279 @@
+% dvips -t letter hw_epi.dvi -o hw_epi.ps ; ps2pdf hw_epi.ps
+\documentclass[11pt,titlepage,fleqn]{article}
+
+\input{hw627_header}
+
+\renewcommand{\baselinestretch}{1.1}
+
+%--------------------------------------------------------------
+\begin{document}
+%-------------------------------------------------------------
+
+\begin{center}
+
+{\large \bf Problem Set 3: Probabilistic inversion for earthquake epicenter [epi]} \\
+GEOS 627: Inverse Problems and Parameter Estimation, Carl Tape \\
+Assigned: September 11, 2019 --- Due: September 23, 2019 \\
+Last compiled: \today
+
+\includegraphics[width=12cm]{hw_epi_L2_ierror0_3D_ai.eps}
+\end{center}
+
+%------------------------
+
+\subsection*{Overview and Instructions}
+
+\begin{itemize}
+\item This is the first problem from the Problems chapter in \citet{Tarantola2005}. It is an example of a problem that is computationally small enough such that the misfit function can be evaluated almost anywhere in the space of model parameters. This allows for a purely probabilistic solution to the problem.
+
+Quoting \citet[][p.~38]{Tarantola2005}:
+\begin{quote}
+If the number of model parameters is very small (say, less than 10) and if the computation of the numerical value of $\sigma_{\rm M}(\bem)$ for an arbitrary $\bem$ is inexpensive (i.e., not consuming too much computer time), we can define a grid over the model space, compute $\sigma_{\rm M}(\bem)$ everywhere in the grid, and directly use these results to discuss the information obtained on the model parameters. This is certainly the most general way of solving the inverse problem. Problem 7.1 gives an illustration of the method.
+\end{quote}
+
+\item Problem 2 involves sampling the probability distribution obtained in Problem 1. You will use the {\em rejection method of sampling}, which is introduced in Section 2.3.2 of \citet{Tarantola2005} (``The Rejection Method''). This method was featured in \verb+lab_sampling.pdf+. The method is attributed to \citet{vonNeumann1951}.
+
+\item For some homework problems, like this one, I provide a template script. Make a copy of this script, then work with \verb+epicenter.m+:
+%
+\begin{verbatim}
+cp epicenter_template.m epicenter.m
+\end{verbatim}
+\end{itemize}
+
+%------------------------
+
+\pagebreak
+\subsection*{Problem 1 (4.0). Probabilistic solution, Part I}
+
+\begin{enumerate}
+\item (0.7) Consider Tarantola's Problem 7-1 (p.~253).
+%
+\begin{enumerate}
+\item (0.1) What are the unknown model parameters? How many?
+\item (0.1) What are the observations? How many?
+\item (0.2) What is the forward model (or ``mathematical model'')? (What is the mathematical relationship between model parameters and the observations?)
+\item (0.2) Is the forward model linear or nonlinear? Why?
+\item (0.1) What parameters are assumed to be fixed (or constant)?
+\end{enumerate}
+
+%---------------------
+
+\item (3.3) Using Matlab, implement the misfit function of Tarantola's Problem 7-1 (p.~253), which can be written in the following ways:
+%
+\begin{eqnarray}
+F(\bem) &=& \frac{1}{2} \sum_{i=1}^6 \frac{\left(t_i(\bem) - t_i^{\rm obs}\right)^2}{\sigma^2}
+\\
+&=& \frac{1}{2\sigma^2} \left(\bt(\bem) - \bt^{\rm obs}\right)^T \left(\bt(\bem) - \bt^{\rm obs}\right)
+\\
+&=& \frac{1}{2\sigma^2} \left(\bt(\bem) - \bt^{\rm obs}\right) \cdot \left(\bt(\bem) - \bt^{\rm obs}\right)
+\end{eqnarray}
+%
+where $\sigma$, $t_i^{\rm obs}$, and the forward model $t_i(\bem)$ are provided in \citet{Tarantola2005}, and the model vector represents the epicenter $\bem = (x^s,y^s)$. Here $\bt(\bem)$ is a $6 \times 1$ vector of predicted arrival times, and $\bt^{\rm obs}$ is a $6 \times 1$ vector of observed arrival times.
+
+\begin{enumerate}
+\item (2.8) Produce a colored 2D plot showing the $F(\bem)$. This will involve evaluating $F(\bem)$ for a grid of $\bem$ (see \verb+epicenter.m+).
+
+\begin{itemize}
+\item For discretizing model parameter space, use the model parameter ranges $x = [0,\;22]$ and $y = [-2,\;30]$.
+\item For all spatial plots in this problem set, use the following axes command,
+
+\verb+axis equal, axis([0 22 -2 30])+
+\end{itemize}
+
+\item (0.5) Does the pattern of the misfit function seem reasonable, given the experiment? Discuss.
+\end{enumerate}
+
+Some tips:
+%
+\begin{itemize}
+\item {\bf Be certain that you have entered the input parameters (\eg station locations, travel times) correctly!} (Your results will be wrong if you enter the input incorrectly.)
+
+\item You may find it useful to define in-line functions (see \verb+lab_sampling.pdf+). I have provided \verb+epicenter.m+ as a starting point. This template includes code for generating a set of points covering the 2D model space (you can change \verb+dx+). Note that I have already used variable names that you need to fill with numbers (\eg \verb+tobs+).
+
+\item The code in \verb+epicenter.m+ implies that you search over the grid of $\bem$ using a single for loop. This will store the vector of values $f_i = F(x_i,y_i)$; in order to plot this, you will need to apply a reshape command, as we did in \verb+lab_linefit.m+. (Or you could use \verb+scatter+) To use \verb+pcolor+ (or related commands), you need to provide same-size matrices of \verb+X+, \verb+Y+, and \verb+F+, as in \verb+pcolor(X,Y,F); shading flat+. (See \verb+lab_linefit.m+ for an example.)
+
+\item Plot your 6 stations on your plots. To do so, you need to type \verb+hold on+ after the figure has been made (or after the first thing had been plotted).
+
+\item Since you will be varying the data vector, $\bt^{\rm obs}$, in Problem 3, you might want to implement the misfit functions as $F(\bem,\bt^{\rm obs})$.
+
+\end{itemize}
+
+\end{enumerate}
+
+%------------------------
+
+\subsection*{Problem 2 (1.5). Probabilistic solution, Part II}
+
+Consider the posterior probability density (eq. 7.9)
+%
+\begin{equation}
+\sigma_{\rm M}(\bem) = \frac{1}{K} e^{-F(\bem)}.
+\end{equation}
+
+\begin{enumerate}
+\item (0.0) Assume that $\sigma_{\rm M}(\bem) = 0$ outside our selected region of 2D model space. This means that the epicenter must lie within our 2D domain.
+
+\item (0.5) Using eq. 1.110,
+%
+\begin{equation}
+P({\cal A}) = \int_{\cal A} \sigma_{\rm M}(\bem) \, d\bem,
+\end{equation}
+%
+derive an expression for $K$ in terms of the variables in this problem. \\
+%Do not expand out the term $F(\bem) = F(x,y)$.
+Your expression for $K$ should have the (unexpanded) term $F(x,y)$ in it.
+
+Hint: What is the probability that the epicenter is somewhere in our model domain?
+
+\item (0.5) 
+
+\begin{enumerate}
+\item (0.3) Write your integral expression for $K$ in discretized form (hint: use \verb+dA+).
+\item (0.2) Compute $\sigma_{\rm M}(\bem)$ and plot a figure similar to Figure 7.1 of \citet{Tarantola2005}.
+\end{enumerate}
+
+\item (0.3) List your values for $K$, $\max(\sigma_{\rm M})$, and the grid increment \verb+dx+. Include units.
+
+\item (0.2) Try a different value for \verb+dx+, and list the new calculations for $K$ and $\max(\sigma_{\rm M})$.  Check that your results do not change (much) when you change the grid increment \verb+dx+.
+
+\label{sigma1}
+
+\end{enumerate}
+
+\begin{spacing}{2.0}
+\centering
+\begin{tabular}{c|c|c|c}
+\hline\hline
+\verb+dx+, km & \verb+dA+, km$^2$ & $K$ & $\max[\sigma_{\rm M}(\bem)]$ \\ \hline\hline
+0.1 & \hspace{0.5cm} & \hspace{3cm} & \hspace{4cm}  \\ \hline
+0.2 & & &  \\ \hline
+1.0 & & &  \\ \hline
+\end{tabular}
+\end{spacing}
+
+%------------------------
+
+\pagebreak
+\subsection*{Problem 3 (2.5). Generating samples of the probabilistic solution}
+
+Consider the posterior probability density $\sigma_{\rm M}(\bem)$ from the previous problem. The goal of this problem is to generate samples of $\sigma_{\rm M}(\bem)$, whereby a ``sample'' is a $\bem = (x^s,y^s)$ that has passed the ``rejection method'' test.
+
+\begin{enumerate}
+\item (0.5) Make a sketch showing how you expect the samples to be distributed in the $xy$-plane. (In other words, plot a few dozen dots.)
+
+If you're confident that your algorithm in the next problem worked, then you can skip this sketch.
+
+\item (1.5) Generate samples of $\sigma_{\rm M}(\bem)$, and extract a subset of exactly 50 samples for the remaining analysis.
+{\bf Include a plot showing the samples} in the $xy$-plane, and include the relevant code.
+Use the same fixed axes scale as before.
+
+Hints:
+%
+\begin{itemize}
+\item For background on the rejection method, see \verb+lab_sampling.m+ and \citet[][Section~2.3.2]{Tarantola2005}. (Note that the example in \verb+lab_sampling.m+ was for a function of one variable, not two.) 
+
+\item You will need to ``try'' some much larger number of samples (\verb+NTRY+) in order to get at least 50 samples that pass the test and are therefore representative of $\sigma_{\rm M}(\bem)$. If you do not get 50 samples that pass the rejection test, try increasing \verb+NTRY+.
+
+\item Check that your \verb+NTRY+ test samples $\bem_i$ cover your full model space.
+
+\item Check that your evaluations of the test samples, $\sigma_{\rm M}(\bem_i)$, all range between 0 and 1.
+
+\item Plot the first 50 samples that pass the rejection test.
+\end{itemize}
+
+\item (0.5) Perform the following statistical analysis on the $\ge50$ samples. (The trends look better if you use more samples.)
+%
+\begin{enumerate}
+\item (0.2) Plot two histograms, one for $x^s$ and one for $y^s$. (Consider using \verb+plot_histo.m+)
+Does either parameter appear to be Gaussian-distributed?
+
+\item (0.1) Compute the standard deviations of $x^s$ and $y^s$.
+Do these quantities capture the spread exhibited by the samples?
+
+\item (0.2) Compute the correlation coefficient (hint: \verb+corr+) between $x^s$ and $y^s$ for the samples.
+Does this quantity capture the relationship between $x^s$ and $y^s$?
+
+\end{enumerate}
+
+\end{enumerate}
+
+%------------------------
+
+\pagebreak
+\subsection*{Problem 4 (2.0). Consideration of data outliers and different norms}
+
+Here we revisit Problem~1. Use the grid discretization of \verb+dx = 0.2+ km for this problem.
+
+\begin{enumerate}
+\item (0.5) Create an outlier measurement by setting the arrival time at the sixth station to be 1.0~s:
+%
+\begin{equation}
+t_6^{\rm obs} = 1.0\;{\rm s}
+\end{equation}
+
+\begin{enumerate}
+\item (0.2) Solve for $\sigma_{\rm M}(\bem)$ with the new data vector, and include this plot.
+\item (0.1) How has the solution changed?
+\item (0.2) Why has it changed?
+\end{enumerate}
+
+\item (1.0) Keep the data outlier, but compute the solution using an L1 norm for the misfit function:
+%
+\begin{eqnarray}
+F(\bem) &=& \sum_{i=1}^6 \frac{\left| t_i(\bem) - t_i^{\rm obs}\right|}{\sigma}
+\end{eqnarray}
+%
+This has the same form as, for example, the first term of eq. 4.26 of \citet{Tarantola2005}, with $s=1$.
+
+How does $\sigma_{\rm M}(\bem)$ compare with the solutions from Problems 2-\ref{sigma1} and 4-1?
+
+\item (0.5) For completeness, undo the data outlier ($t_6^{\rm obs} = 2.98$~s) and solve for $\sigma_{\rm M}(\bem)$ using the L1 misfit function.
+Briefly explain how the solution compares with the ones obtained in Problems 2-\ref{sigma1}, 4-1, and 4-2.
+Summarize your results in \refTab{tab}.
+
+\end{enumerate}
+
+\begin{table}[h]
+\centering
+\caption[]{
+Summary of results for the four cases.
+\label{tab}
+}
+\begin{spacing}{1.5}
+\begin{tabular}{|c||c|c|c|c|c|c}
+\hline\hline
+Problem & norm & outlier & \verb+dx+, km & $K$ & $\max[\sigma_{\rm M}(\bem)]$ \\ \hline\hline
+2-\ref{sigma1} & L2 & N & \hspace{1cm} & \hspace{3cm} & \hspace{3cm} \\ \hline
+4-1            & L2 & Y &  &  & \\ \hline
+4-2            & L1 & Y &  &  & \\ \hline
+4-3            & L1 & N &  &  & \\ \hline
+\end{tabular}
+\end{spacing}
+\end{table}
+
+%--------------------------------
+
+\pagebreak
+\subsection*{Problem} \howmuchtime\
+
+%-------------------------------------------------------------
+%\pagebreak
+\bibliographystyle{agu08}
+\bibliography{carl_abbrev,carl_main,carl_source,carl_him,carl_alaska}
+%-------------------------------------------------------------
+
+% \clearpage\pagebreak
+
+% \begin{figure}
+% \includegraphics[width=16cm]{hw_ch1p3.eps}
+% \caption[]
+% {{
+% Plots for Problem 3.
+% Discretizing the problem with fewer intervals (right column) leads to a stable solution.
+% \label{fig}
+% }}
+% \end{figure}
+
+%-------------------------------------------------------------
+\end{document}
+%-------------------------------------------------------------

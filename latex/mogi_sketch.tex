@@ -1,0 +1,29 @@
+% ORIGINAL: caption next to figure
+%\begin{figure}
+%\begin{tabular}{ccc}
+%\parbox{6cm}{
+%\caption[]
+%{{
+%Sketch showing the relationship between the surface displacement vector $\bu$ and the line-of-sight vector, $\bLh$. The satellite flies in the track direction at angle $t$ with respect to north; in the sketch, this is the in-to-page direction. For the outward deformation signal depicted here, the projection vector, $(\bu^T\bLh)\bLh$, points to the satellite with a {\em negative} line-of-sight distance, $\bu^T\bLh$.
+%\label{proj}
+%}}
+%}
+%&
+%\parbox{9cm}{\includegraphics[width=8cm]{proj_sketch_LOS.eps}}
+%\end{tabular}
+%\end{figure}
+ 
+\begin{figure}
+\centering
+\includegraphics[width=16cm]{proj_sketch_LOS.eps}
+\caption[]
+{{
+Sketch showing the conventions for the angles and vectors.
+(left) Map view showing satellite flight path. The satellite flies in the track direction at angle $t$ with respect to north.
+% NOTE THAT L-HAT SHOULD REALLY BE L-HAT sin(l), so that when l=90 this gives L-HAT and when l=0 this gives ZERO.
+(right) Relationship between the surface displacement vector $\bu$ and the look vector, $\bLh$.
+For the outward deformation signal depicted here, the projection vector $(\bu^T\bLh)\bLh$ points to the satellite with a {\em negative} look displacement $\bu^T\bLh$.
+The look vector is also known as the line-of-sight vector.
+\label{proj}
+}}
+\end{figure}

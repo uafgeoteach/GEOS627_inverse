@@ -1,0 +1,84 @@
+% dvips -t letter lab_svdgeom.dvi -o lab_svdgeom.ps ; ps2pdf lab_svdgeom.ps
+\documentclass[11pt,titlepage,fleqn]{article}
+
+\input{hw627_header}
+
+\renewcommand{\baselinestretch}{1.1}
+
+% change the figures to ``Figure L3'', etc
+\renewcommand{\thefigure}{L\arabic{figure}}
+\renewcommand{\thetable}{L\arabic{table}}
+\renewcommand{\theequation}{L\arabic{equation}}
+\renewcommand{\thesection}{L\arabic{section}}
+
+%--------------------------------------------------------------
+\begin{document}
+%-------------------------------------------------------------
+
+\begin{spacing}{1.2}
+\centering
+{\large \bf Lab Exercise: Aster examples, Chapters 2-3 [ch2]} \\
+GEOS 627: Inverse Problems and Parameter Estimation, Carl Tape \\
+Last compiled: \today \\
+%\textcolor{red}{Answer questions in red for lab credit}
+\end{spacing}
+
+\subsection*{Part I: Aster Chapter 2 examples}
+
+\begin{enumerate}
+\item Review \citet{AsterE2}, Examples 2-1 and 2-2 by running \verb+ex_2_1_2_uaf.m+.
+(This was needed in HW5 for calculating a confidence ellipse for the crescent misfit problem of \citet{Tarantola2005} in HW3.)
+
+\item What do you expect to happen to the confidence curves if you decrease \verb+PCONF+?
+
+\item What do you expect to happen to the samples of the posterior if you decrease \verb+PCONF+?
+
+\item Write some lines of code to plot the $m_3$-vs-$m_1$ posterior samples overlain by confidence curves for 10\%, 20\%, \ldots, 90\%.
+
+Suggestion: Start by copying-and-pasting the relevant blocks of code to start a new figure.
+
+\end{enumerate}
+
+%------------------------
+
+\subsection*{Part II: Aster Chapter 3 example}
+
+\begin{enumerate}
+\item Read \citet{AsterE2}, Example 3-1. Then read \verb+ex_3_1_uaf.m+ and run the script. 
+%
+\begin{enumerate}
+\item What is the forward model in this problem?
+\item Examine \refFig{fig:index}. Write the system of equations for $t_1, \ldots, t_8$.
+\item Convince yourself that the $\bG$ provided for this problem is correct.
+\item Provide a succinct description of this inverse problem.
+\end{enumerate}
+
+\item Explain the significance of the spike test results for this problem.
+
+\end{enumerate}
+
+%-------------------------------------------------------------
+%\pagebreak
+\bibliographystyle{agu08}
+\bibliography{carl_abbrev,carl_main}
+%-------------------------------------------------------------
+
+\begin{figure}[h]
+\centering
+\begin{tabular}{lc}
+{\bf(a)} & \includegraphics[width=8cm]{hw_ch3p2_index.eps} \\
+{\bf(b)} & \includegraphics[width=9cm]{aster_tomo_rays.eps} \\
+\end{tabular}
+\caption[]
+{{
+Setup for the tomography problem.
+(a) Indexing of the $n=9$ model parameters.
+(Note that here the checkerboard pattern is only plotted to illuminate the boundaries of the cells.)
+(b) Ray paths for the $m=8$ measurements.
+\label{fig:index}
+}}
+\end{figure} 
+
+%-------------------------------------------------------------
+\end{document}
+%-------------------------------------------------------------

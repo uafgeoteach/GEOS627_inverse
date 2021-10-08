@@ -1,0 +1,58 @@
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{latexsym}
+\usepackage[round]{natbib}
+%\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{bm}
+
+\usepackage{url}
+\usepackage{color}
+
+%--------------------------------------------------------------
+%       SPACING COMMANDS (Latex Companion, p. 52)
+%--------------------------------------------------------------
+
+\usepackage{setspace}    % double-space or single-space
+\usepackage{xspace}
+
+\renewcommand{\baselinestretch}{1.2}
+
+\textwidth 460pt
+\textheight 690pt
+\oddsidemargin 0pt
+\evensidemargin 0pt
+
+% see Latex Companion, p. 85
+\voffset     -50pt
+\topmargin     0pt
+\headsep      20pt
+\headheight   15pt
+\headheight    0pt
+\footskip     30pt
+\hoffset       0pt
+
+\include{carlcommands}
+
+\graphicspath{
+  {./figures/}
+}
+
+\newcommand{\repodir}{{\tt inverse}}
+
+\newcommand{\howmuchtime}{Approximately how much time {\em outside of class and lab time} did you spend on this problem set? Feel free to suggest improvements here.}
+
+% provide space for students to write their solutions
+\newcommand{\vertgap}{\vspace{1cm}}
+
+\newcommand{\Ucolor}{\textcolor{red}{\bU}}
+\newcommand{\Vcolor}{\textcolor{blue}{\bV}}
+
+\newcommand{\Gcolor}{\textcolor{red}{\bU}\bS\textcolor{blue}{\bV^T}}
+\newcommand{\Gpcolor}{\textcolor{red}{\bU_p}\,\bS_p\textcolor{blue}{\bV_p^T}}
+\newcommand{\Gdcolor}{\textcolor{blue}{\bV_p}\,\bS_p^{-1}\textcolor{red}{\bU_p^T}}
+\newcommand{\GcolorT}{\textcolor{blue}{\bV}\bS^T\textcolor{red}{\bU^T}}
+\newcommand{\GpcolorT}{\textcolor{blue}{\bV_p}\,\bS_p\textcolor{red}{\bU_p^T}}
+\newcommand{\GdcolorT}{\textcolor{red}{\bU_p}\,\bS_p^{-1}\textcolor{blue}{\bV_p^T}}
+
+\newcommand{\blank}{xxxx}

@@ -1,0 +1,140 @@
+% dvips -t letter lab_linefit.dvi -o lab_linefit.ps ; ps2pdf lab_linefit.ps
+\documentclass[11pt,titlepage,fleqn]{article}
+
+\input{hw627_header}
+
+\renewcommand{\baselinestretch}{1.0}
+
+% change the figures to ``Figure L3'', etc
+\renewcommand{\thefigure}{L\arabic{figure}}
+\renewcommand{\thetable}{L\arabic{table}}
+\renewcommand{\theequation}{L\arabic{equation}}
+\renewcommand{\thesection}{L\arabic{section}}
+
+%--------------------------------------------------------------
+\begin{document}
+%-------------------------------------------------------------
+
+\begin{spacing}{1.2}
+\centering
+{\large \bf Lab Exercise: Fitting a line to scattered data [linefit]} \\
+GEOS 626: Applied Seismology, Carl Tape \\
+GEOS 627: Inverse Problems and Parameter Estimation, Carl Tape \\
+Last compiled: \today
+\end{spacing}
+
+%------------------------
+
+\vspace{-0.5cm}
+\subsection*{Overview}
+
+The objective of this lab is to introduce the concepts of forward and inverse problems by exploring the example of fitting a line to scattered data. We also want to develop some basic capabilities in Python, such as vector-matrix operations and plotting.
+
+\begin{enumerate}
+\item Write down the forward model $d_i = m_1 + m_2 x_i$ in schematic matrix form $\bd = \bG\bem$.
+
+\vertgap
+\vertgap
+
+\item Show that minimizing the least squares misfit function (\ie sum of squares of residuals) leads to the solution $\bem = (\bG^T\bG)^{-1}\bG^T\dvec$ (see \verb+notes_taylor.pdf+).
+
+\vertgap
+\vertgap
+\vertgap
+
+\item Run the script \verb+lab_linefit.ipynb+ and identify the key parts of the code associated with the forward problem and the inverse problem. What is the syntax for $\bem^T$, $\bG\bem$, and $\bG^T\bd$?
+
+\vertgap
+
+\item How are the ``target'' (or ``true'') data generated?
+
+\vertgap
+
+\item What are the different ways to compute the solution vector $\bem$? \\
+(To see the help for a function (\eg, \verb+inv+), type \verb+help(LA.inv)+ or \verb+LA.inv?+)
+
+\vertgap
+
+\item How does the estimated model $\bem_{\rm est}$ compare with the target model $\bem_{\rm tar}$?
+
+\vertgap
+
+How does the standard deviation of the residuals compare with the assumed value of $\sigma$?
+
+\vertgap
+
+\item What does the histogram show? \\
+How does it change if you increase the number of points to $10^5$? \\
+How does it change if you set $\sigma = 0$?
+
+\vertgap
+
+\item Re-set \verb+ndata=50+ and $\sigma = 0.3$ and add one outlier to the simulated observations. This can be done by replacing the first observation point with a value that is $1000\sigma$ larger. What happens (and why)?
+
+\vertgap
+
+%\pagebreak
+\item Now comment out the outlier, then examine the last block of code. Make sure you understand what is being plotted and how it is calculated.
+%
+\begin{itemize}
+\item What is the dimension of model space?
+\item Fill out the table below.
+%\item XXX In the code, why is the operation \verb+res.*res+ used instead of \verb+res*res+, \verb+res'*res+, or \verb+res*res'+? XXX
+\end{itemize}
+
+\begin{tabular}{c|c|c|c}
+\hline
+variable & code variable   & dimension      & description \\ \hline\hline
+         & \verb+ndata+    &                &              \\ \hline
+         & \verb+nparm+    &                &              \\ \hline
+         & \verb+dobs+     &                &              \\ \hline
+         & \verb+G+        &                &              \\ \hline
+$\misfitvar(\bem)$  &      &                &              \\ \hline
+         & \verb+ngrid+    &                &              \\ \hline
+---      & \verb+RSSm+     &                &              \\ \hline
+\bem     & \verb+mtry+     & $2 \times 1$   & \hspace{3cm} \\ \hline
+         & \verb+dtry+     &                &              \\ \hline
+         & \verb+res+      &                &              \\ \hline
+\bgamma(\bem)  & --        & $2 \times 1$   & gradient of misfit function \\ \hline
+--       & \verb+gammam+   & $2 \times n_g$ &  \\ \hline
+\end{tabular}
+
+%==============================================================
+% GEOS 626 STOP HERE THE FIRST TIME THROUGH
+%==============================================================
+
+\item Referring to the class notes ``Taylor series and least squares'' (\verb+notes_taylor.pdf+) compute the gradient $\bgamma(\bem)$ for the same grid of $\bem$ that was used to plot the misfit function.
+
+Hint: one line of code (plus one line to initialize $\bgamma(\bem)$)
+
+The \verb+gradient+ function will not help you here, since you need an exact evaluation of the gradient, whereas \verb+gradient+ will provide a numerical gradient for a grid of pre-computed values.
+
+\vertgap
+
+\item Using the \verb+quiver+ command, superimpose the vector field $-\gamma(\bem)$ on the contour plot of the misfit function.
+
+Set \verb+nx = 10+ so that the vector field is more visible. \\
+Hint: This is one line of code. \\
+What is the relationship between the contours of $F(\bem)$ and $\bgamma(\bem)$?
+
+\vertgap
+
+How does $\|\bgamma(\bem)\|$ vary with respect to $\bem_{\rm est}$? \\
+% it gets larger 
+Bonus: Use \verb+plot_surface+ to plot $\|\bgamma(\bem)\|$. What shape is it?
+% a cone
+
+\vertgap
+
+\item What is the dependence of the Hessian on the model, $\bH(\bem)$? \\
+% Hessian does not depend on m
+What does that imply about $F(\bem)$?
+% it is strictly quadratic
+
+%What does that imply about the forward model $\bg(\bem)$?
+
+\end{enumerate}
+
+%-------------------------------------------------------------
+\end{document}
+%-------------------------------------------------------------

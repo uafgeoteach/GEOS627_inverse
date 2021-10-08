@@ -1,0 +1,151 @@
+% dvips -t letter hw_iter.dvi -o hw_iter.ps ; ps2pdf hw_iter.ps
+\documentclass[11pt,titlepage,fleqn]{article}
+
+\input{hw627_header}
+
+\renewcommand{\baselinestretch}{1.1}
+
+%--------------------------------------------------------------
+\begin{document} 
+%-------------------------------------------------------------
+
+\begin{spacing}{1.2}
+\centering
+{\large \bf Problem Set 5: Iterative methods with generalized least squares, Part A [iterA]} \\
+GEOS 627: Inverse Problems and Parameter Estimation, Carl Tape \\
+Assigned: September 30, 2019 --- Due: October 9, 2019 \\
+Last compiled: \today
+\end{spacing}
+
+%------------------------
+
+\subsection*{Overview and instructions}
+
+\begin{enumerate}
+\item Reading: Section 6.22 of \citet{Tarantola2005}
+
+\item {\bf Problem 1.} In HW4 you explored Gaussian random fields with prescribed covariance (exponential or Gaussian) for a 1D spatial field. This problem deals with 2D Gaussian random fields. Your goal is to understand how these fields are generated, and to get some intuitive sense for how certain parameters change the appearance of the 2D fields.
+
+The Matlab scripts for computing Gaussian random fields in the frequency domain were provided by Miranda Holmes, who wrote them as part of the study \citet{BuhlerHolmes2009}. She also wrote a useful set of notes, ``Generating stationary Gaussian random fields,'' which is available as \verb+ft_summary.pdf+ in the same directory containing the Matlab scripts (\verb+~/+\repodir\verb+/util_grf/+).
+
+Why do we care about the statistical characteristics of spatial random fields? Because real systems have complex variations that we would like to quantify in simpler terms. \citet{Gneiting2012} examined several different covariance functions, including the Matern family, which includes the Gaussian and exponential functions, and they illustrate their technique with line transects of arctic sea ice.
+
+\item {\bf Problem 2.} Iterative methods are needed for nonlinear problems, which are characterized by a nonlinear forward model $\bg(\bem)$. In many problems it is not computationally feasible to evaluate the misfit function dozens of times, let alone millions (or billions) of times needed to cover the $\nparm$-dimensional model space. The basic strategy is to evaluate the misfit function at one point, then use the gradient (and Hessian) at that point to guide the choice of the next point. This problem will build upon the lab exercie \verb+lab_iter.pdf+.
+
+\item {\bf Problem 3.} Here we revisit \citet{Tarantola2005}, Problem 7-1. See HW3 for background.
+
+\end{enumerate}
+
+%------------------------
+
+\pagebreak
+\subsection*{Problem 1 (3.0). 2D Gaussian random fields}
+
+In this problem, a ``sample'' is a 2D spatial field that is $n_x \times n_y$.
+%
+\begin{enumerate}
+\item (0.2) Make a copy of the template code:
+%
+\begin{verbatim}
+cp covrand2D_template.m covrand2D.m
+\end{verbatim}
+%
+Run \verb+covrand2D.m+, which will generate 1000 samples of a 2D Gaussian random field with prescribed covariance; eight samples are plotted.
+
+Compute and plot the sample mean $\bmu_{1000}$ with a colorbar.
+
+Throughout this problem, when plotting samples, use the same plotting commands\footnote{If you are not using Matlab, then the key points when plotting are to not distort the shape of the samples and to use a color scale that ranges between $-3\sigma$ and $+3\sigma$.}:
+
+\verb+axis equal, axis(ax1aex), caxis(3*sigma*[-1 1])+
+
+\item (0.3) Open \verb+xy2distance.m+ (note \footnote{This is in the subfolder {\tt util$\_$grf}), which will be in your Matlab path (type {\tt open xy2distance}) if you ran {\tt covrand2D.m} in the previous problem.}, set \verb+idisplay=1+, then run the example at the bottom.
+%
+\begin{enumerate}
+\item (0.0) Explain how the points are ordered within the distance index matrix \verb+iD+.
+\item (0.1) What kind of matrix structure does \verb+iD+ have? (Be as specific as possible.)
+\item (0.1) How can you compute the actual distances between points, $\bD$ (or \verb+D+)? 
+(Recognize the difference between the distance matrix $\bD$ and the index distance matrix.)
+\item (0.1) What is the maximum distance between two points in the example grid?
+Note that you need to consider $\Delta x$, which is not represented in the plotted example grid.
+\end{enumerate}
+%
+After you are done, be sure to reset \verb+idisplay=0+.
+
+\item (0.0) What is the maximum distance between two points in the default grid in \verb+covranD.m+?
+
+%\pagebreak
+\item (0.5) Compute the sample covariance matrix $\bC_{1000}$, which we label as \verb+Csamp+.
+
+\begin{enumerate}
+\item (0.2) Include a plot of $\bC_{1000}$
+
+\verb+figure; imagesc(Csamp); axis equal, axis tight+
+
+\item (0.1) Plot the points of $\bC_{1000}$ vs $\bD$. We denote this as $C_{1000}(d)$.
+
+%Hint: Only a single plotting command is needed.
+
+\item (0.1) Superimpose the covariance function, $C(d)$.
+
+Hint: \verb+plot(iD*dx,C,'r.')+ is one way to plot $C(d)$.
+
+\item (0.1) Show that the length scale is consistent with the input value $L'$ (Matlab variable~\verb+L+) (hint: see HW4 solutions).
+\end{enumerate}
+
+\item (0.0) Now set \verb+ifourier=1+ and \verb+idouble=1+ and convince yourself that the FFT method gives the same result. Check that your scatterplot of estimated $C_{1000}(d)$ is about the same.
+
+\item (0.3) The Cholesky decomposition is extremely unstable. In order to consider denser grids, or covariance functions with large $L'$ length scales, we need to use Fourier methods (\verb+ifourier=1+).
+
+\begin{enumerate}
+\item Explain what happens in the code if \verb+idouble=0+ instead of \verb+idouble=1+.
+\item Include a plot of $\bC_{1000}$ for \verb+idouble=0+.
+\item Explain the impact of changing \verb+idouble+ on the samples.
+\end{enumerate}
+%
+After you are done, reset \verb+idouble=1+; from here on out, we will use \verb+idouble=1+.
+
+\item (0.2) Compute the mean and standard deviation of each sample from the set of 1000 samples. Plot the means and standard deviations as two histograms.
+
+\item (1.0) Generate a Gaussian random field with (a) Gaussian covariance, (b) exponential covariance, and (c) circular covariance. In each case, {\em use the same Gaussian random vector} (note: this requires coding). Use \verb+nx = 2^7+, \verb+ichol=0+, \verb+ifourier=1+, \verb+idouble=1+, and keep all other parameters fixed (as defaults).
+%
+\begin{enumerate}
+\item Show the GRFs in a $3 \times 1$ subplot figure. \\
+In all plots use the same the color range \verb+caxis(3*sigma*[-1 1])+. \\
+Make sure that you are using \verb+nx = 2^7+.
+
+\item Show your modified lines of code.
+
+Hint: Use the template code provided at the end of \verb+covrand2D.m+ and see \verb+grf2.m+.
+%When you generate the first Gaussian random field, save the Gaussian random vectors as \verb+A+ and \verb+B+ in \verb+grf2.m+. Then pass these vectors into \verb+grf2.m+ for the other two sets of samples.
+\end{enumerate}
+
+\item (0.5) Choose a covariance function (pick any \verb+icov+), then plot six Gaussian random fields, each with a different length scale $L'$. Use the same Gaussian random vector to generate each GRF. Include a $3 \times 2$ subplot figure showing your GRFs.
+
+\end{enumerate}
+
+%------------------------
+
+%-------------------------------------------------------------
+%\pagebreak
+\bibliographystyle{agu08}
+\bibliography{carl_abbrev,carl_main,carl_source,carl_him,carl_alaska}
+%-------------------------------------------------------------
+
+%\clearpage\pagebreak
+
+%-------------------------------------------------------------
+
+% \begin{figure}
+% \centering
+% \includegraphics[width=15cm]{covC_LFACTOR2.eps}
+% \caption[]
+% {{
+% Covariance functions from {\tt covC.m} characterized by length scale $L'$ and amplitude $\sigma^2$. The Mat\'ern covariance functions include an additional parameter, $\nu$, that influences the shape: $\nu \rightarrow \infty$ for the Gaussian function (upper left), $\nu = 0.5$ for the exponential function (upper right).
+% Some reference e-folding depths are labeled; for example, the $y$-values of the top line is $y = \sigma^2 e^{-1/2} \approx 9.70$.
+% \label{fig:covC2}
+% }}
+% \end{figure}
+
+%-------------------------------------------------------------
+\end{document}
+%-------------------------------------------------------------

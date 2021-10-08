@@ -1,0 +1,89 @@
+% dvips -t letter lab_svdball.dvi -o lab_svdball.ps ; ps2pdf lab_svdball.ps
+\documentclass[11pt,titlepage,fleqn]{article}
+
+\input{hw627_header}
+
+\renewcommand{\baselinestretch}{1.1}
+
+% change the figures to ``Figure L3'', etc
+\renewcommand{\thefigure}{L\arabic{figure}}
+\renewcommand{\thetable}{L\arabic{table}}
+\renewcommand{\theequation}{L\arabic{equation}}
+\renewcommand{\thesection}{L\arabic{section}}
+
+%--------------------------------------------------------------
+\begin{document}
+%-------------------------------------------------------------
+
+\begin{spacing}{1.2}
+\centering
+{\large \bf Lab Exercise: SVD approach to ballistic problem [svdball]} \\
+GEOS 627: Inverse Problems and Parameter Estimation, Carl Tape \\
+Last compiled: \today
+\end{spacing}
+
+%------------------------
+
+\subsection*{Overview}
+
+This is Problem 3 from Chapter 3 \citep{AsterE2}, revisiting Example~1.1, which was featured in our second problem set (\verb+hw_ch1.pdf+). Review Example~1.1 and the solutions to the problem (if needed). In this lab we apply SVD to the same problem. See Chapter 3 (and notes) for background on SVD.
+
+%------------------------
+
+\subsection*{Aster Chapter 3, Problem 3 (expanded)}
+
+Using the parameter estimation problem described in Example~1.1 for determining the three parameters defining a ballistic trajectory, construct synthetic examples that demonstrate the following four cases using the SVD.
+
+In each case, display and interpret the SVD components $\bU$, $\bV$, and $\bS$ in terms of the rank, $p$, of your forward problem $\bG$ matrix.
+Calculate and interpret any model and data null space vector(s).
+Calculate model and data space resolution matrices.
+%
+\begin{enumerate}
+\item Write out the forward model for the ballistics problem in matrix schematic form.
+
+\item Exploring the model null space.
+
+\begin{enumerate}
+\item Three data points ($\ndata = 3$) that are exactly fit by a unique model (\refFig{fig:unique}). \\
+Plot your data points and the predicted data for your model.
+
+\item Two data points ($\ndata = 2$) that are exactly fit by an infinite suite of parabolas. \\
+Plot your data points and the predicted data for a suite of these models.
+
+\item Four data points ($\ndata = 4$) that are only approximately fit by a parabola. \\
+Plot your data points and the predicted data for the least squares model.
+
+Choose one of the sets of data in \refFig{fig:unique}. Add a fourth point that is off the curve. Then plot the updated solution as a new parabola. Does the new parabola fit any of the points?
+
+\item Two data points ($\ndata = 2$) that are only approximately fit by any parabola, and for which there are an infinite number of least squares solutions. \\
+Plot your data points and the predicted data for a suite of least squares models.
+\end{enumerate}
+
+\item Exploring the data null space.
+
+\begin{enumerate}
+\item For the case of $\ndata = 4$ fit approximately by a parabola, use the data null space vector(s) to generate other data sets whose solutions are the same parabola. What can you say about the trade-offs in $y$ values among the data points?
+\end{enumerate}
+
+\end{enumerate}
+
+%-------------------------------------------------------------
+%\pagebreak
+\bibliographystyle{agu08}
+\bibliography{carl_abbrev,carl_main}
+%-------------------------------------------------------------
+
+\clearpage\pagebreak
+\begin{figure}
+\centering
+\includegraphics[width=16cm]{svdball_uniqueexact}
+\caption[]
+{{
+Examples of sets of $\ndata = 3$ for which there are unique solutions.
+\label{fig:unique}
+}}
+\end{figure}
+
+%-------------------------------------------------------------
+\end{document}
+%-------------------------------------------------------------

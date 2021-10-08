@@ -1,0 +1,102 @@
+% dvips -t letter hw_math.dvi -o hw_math.ps ; ps2pdf hw_math.ps
+\documentclass[11pt,titlepage,fleqn]{article}
+
+\input{hw627_header}
+
+%--------------------------------------------------------------
+\begin{document}
+%-------------------------------------------------------------
+
+\begin{spacing}{1.2}
+\centering
+{\large \bf Problem Set 1: Linear algebra review [math]} \\
+%GEOS 626: Applied Seismology, Carl Tape
+GEOS 627: Inverse Problems and Parameter Estimation, Carl Tape \\
+Assigned: August 28, 2019 --- Due: September 4, 2019 \\
+Last compiled: \today
+\end{spacing}
+
+%------------------------
+
+\subsection*{Overview}
+
+The purpose of this problem set is to review some linear algebra concepts that will be needed throughout the course. For many problems you are welcome to use Matlab to check your answers. If you find yourself doing horrendous algebra, then probably you have made a prior mistake.
+
+%------------------------
+
+\subsection*{Problem 1 (5.0). Matrix decompositions}
+
+This problem must be done by hand, unless specified. ``By hand'' means showing your steps and not using decimal notation; for example, write the expression $(4 +\sqrt{3})/5$ rather than 1.1464.
+Be as clear as possible in explaining what equations you are using.
+%You are welcome to check your answers using Matlab.
+
+\medskip\noindent
+The matrix for this problem is
+%
+\begin{equation*}
+\bA =  \left[ \begin{array}{rrr}
+     1  &   1  &   1 \\
+     3  &   2  &   4 \\
+     0  &   0  &  -1 \\
+\end{array} \right]
+\end{equation*}
+
+\input{hw_math_input}
+
+%-------------------------------------------------------------
+
+\subsection*{Problem 2 (5.0). Aster, Appendix A}
+
+See the exercises in \citet[][Section A.12]{AsterE2}. Note that most answers can be short. {\bf Feel free to use a computer for row reduction (no need to show steps).}
+
+\begin{enumerate}
+\item (0.5) A.1. Let $\bA$ be an $m \times n$ matrix with $n$ pivot columns in its RREF. \\
+Can the system of equations $\bA\bx=\bb$ have infinitely many solutions? Explain.
+
+\item (0.4) A.2. If $\bC = \bA\bB$ is a $5 \times 4$ matrix, then how many rows does $\bA$ have? \\
+How many columns does $\bB$ have? \\
+Can you say anything about the number of columns in $\bA$?
+
+\item (0.5) A.3. Suppose that $\bv_1$, $\bv_2$, and $\bv_3$ are three vectors in \rspace{3} and that $\bv_3 = -2\bv_1 + 3\bv_2$. Are the vectors linearly dependent or linearly independent?
+
+\item (1.6) A.4. Let
+%
+\begin{equation*}
+\bA =  \left[ \begin{array}{rrrr}
+     1  &   2  &   3 & 4 \\
+     2  &   2  &   1 & 3 \\
+     4  &   6  &   7 & 11 \\
+\end{array} \right]
+\end{equation*}
+%
+Find bases for $N(\bA)$, $R(\bA)$, $N(\bA^T)$, and $R(\bA^T)$. \\
+What are the dimensions of the four subspaces?
+
+\item (0.5) A.5. Let $\bA$ be an $n \times n$ matrix such that $\bA^{-1}$ exists. \\
+What are $N(\bA)$, $R(\bA)$, $N(\bA^T)$, and $R(\bA^T)$?
+
+Hint: Use $\bA\bA^{-1} = \bA^{-1}\bA = \bI_n$.
+
+\item (0.5) A.6. Let $\bA$ be any $9 \times 6$ matrix. If the dimension of the null space of $\bA$ is 5, then what is the dimension of $R(\bA)$? What is the dimension of $R(\bA^T)$? What is the rank of $\bA$?
+
+\item (0.5) A.7. Suppose that a nonhomogeneous linear system of equations with four equations and six unknowns has a solution with two free variables. Is it possible to change the right-hand side of the system of equations so that the modified system of equations has no solutions?
+
+\item (0.5) A.8. Let $W$ be the set of vectors $\bx = (x_1,x_2,x_3,x_4)$ in \rspace{4} such that $x_1 x_2 = 0$. (So $W$ is made up of vectors $\bx$, each having a certain property.) Is $W$ a subspace of \rspace{4}? Explain.
+
+Hint: Come up with two vectors that violate the subspace rules.
+\end{enumerate}
+
+\subsection*{Problem} \howmuchtime\
+
+%-------------------------------------------------------------
+\bibliographystyle{agu08}
+\bibliography{carl_abbrev,carl_main,carl_him}
+%-------------------------------------------------------------
+
+\pagebreak
+\vspace{1cm}
+\input{notes_matrix_figs}
+
+%-------------------------------------------------------------
+\end{document}
+%-------------------------------------------------------------

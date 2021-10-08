@@ -1,0 +1,271 @@
+% dvips -t letter lab_mogi.dvi -o lab_mogi.ps ; ps2pdf lab_mogi.ps
+\documentclass[11pt,titlepage,fleqn]{article}
+
+\input{hw627_header}
+
+%\renewcommand{\baselinestretch}{1.0}
+
+% change the figures to ``Figure L3'', etc
+\renewcommand{\thefigure}{L\arabic{figure}}
+\renewcommand{\thetable}{L\arabic{table}}
+\renewcommand{\theequation}{L\arabic{equation}}
+\renewcommand{\thesection}{L\arabic{section}}
+
+%--------------------------------------------------------------
+\begin{document}
+%-------------------------------------------------------------
+
+\begin{spacing}{1.2}
+\centering
+{\large \bf Lab Exercise: Modeling subsurface volcanic sources using InSAR data [mogi]} \\
+Zhong Lu, Franz Meyer, Carl Tape %, Peter Webley
+\\
+GEOS 657: Microwave Remote Sensing \\
+GEOS 627: Inverse Problems and Parameter Estimation \\
+%GEOS 676: Remote Sensing of Volcanic Eruptions \\
+University of Alaska Fairbanks \\
+%Assigned: April 11, 2013 --- Due: April 16, 2013 \\
+%GEOS 627: Inverse Problems and Parameter Estimation, Carl Tape \\
+%Assigned: February 9, 2012 --- Due: February 21, 2012 \\
+%Location: WRRB 004 computer lab \\
+Last compiled: \today
+\end{spacing}
+
+%===============================
+
+%\pagebreak
+\begin{figure}[h]
+\centering
+\includegraphics[width=16cm]{mogi_data_LOS.eps}
+\caption[]
+{{
+Interferogram used in this lab exercise. This is Okmok volcano, which is the northeastern part of Umnak island, which is part of the Fox Islands of the Aleutian Islands, Alaska. The interferogram shows the difference in displacement between images acquired at two different times. By knowing the time interval between the two images, one can estimate the rate of deformation.
+\label{data}
+}}
+\end{figure}
+
+%===============================
+
+\pagebreak
+\subsection*{Overview}
+
+\begin{itemize}
+\item The goal of this lab is to understand the principles of InSAR processing and inverse problems. 
+\textcolor{red}{\bf Matlab may be useful for plotting, but it is not required to answer the lab questions.}
+
+\item Lab time:
+%
+\begin{itemize}
+\item 45 min: lecture by Franz
+\item 15 min: overview of lab by Carl
+\item 10 min: lab: Theory I questions
+\item 50 min: lab: Discussion questions
+\item 60 min: open Matlab, start problem set
+\end{itemize}
+
+\item You are encouraged to pair up with someone in the other class, in order to best cover all the background material for the lab.
+
+\item The primary goal of the problem set is to estimate values for four unknown model parameters describing a source process beneath a volcano. The lab uses real InSAR data from Okmok volcano (\refFig{data}), so you should get some sense for how remote sensing can be used to infer physical processes at volcanoes \citep[\eg][]{ZLu2005}.
+
+%\pagebreak
+\item Background and supplemental reading:
+%
+\begin{itemize}
+\item InSAR geodesy: \citet{Rosen2000,SimonsRosen2007}
+
+\item InSAR methodology: \citet{Wright2003} (see supplement), \citet{ZLu2007}
+
+\item InSAR modeling of Okmok volcano: \citet{ZLu2005}
+
+\item Mogi source: \citet{Mogi1958}
+
+\item Inverse problems: \citet{AsterE2} (Mather library reserve or UAF e-book), \\
+\citet{Tarantola2005} (pdf online)
+
+\end{itemize}
+
+\end{itemize}
+
+%------------------------
+
+\pagebreak
+\subsection*{Theory I: From satellite to interferogram [10 min]}
+
+Discuss the main steps of InSAR processing.
+%
+\begin{spacing}{3}
+\begin{enumerate}
+\item 
+\item 
+\item 
+\item 
+\item 
+\item 
+\item 
+\item 
+\item
+\item
+\end{enumerate}
+\end{spacing}
+
+%------------------------
+
+\pagebreak
+\subsection*{Theory II: From Mogi source to interferogram (the forward model)}
+
+The Mogi model provides the 3D ground displacement $\bu(x,y,z)$ due to an inflating source at location $(x_{\rm s},y_{\rm s},z_{\rm s})$ with volume change $V$:
+%
+\begin{eqnarray}
+\bu(x,y,z) &=& \sfrac{1}{\pi}(1 - \nu)V
+\left[
+\begin{array}{c} \\
+\displaystyle{\frac{x-x_{\rm s}}{r(x,y,z)^3}} \\ \\
+\displaystyle{\frac{y-y_{\rm s}}{r(x,y,z)^3}} \\ \\
+\displaystyle{\frac{z-z_{\rm s}}{r(x,y,z)^3}} \\ \\
+\end{array}
+\right]
+%\frac{x-x_{\rm s}}{r(x,y,z)^3},\; \frac{y-y_{\rm s}}{r(x,y,z)^3},\; \frac{z-z_{\rm s}}{r(x,y,z)^3}
+\label{forward}
+\\
+r(x,y,z) &=& \left[ (x-x_{\rm s})^2 + (y-y_{\rm s})^2 + (z-z_{\rm s})^2  \right]^{1/2}
+%\\
+%C &=& r_s^3 \Delta P \frac{1- \nu}{\mu} 
+%= \Delta V (1 - \nu) / \pi
+\end{eqnarray}
+%
+where $r$ is the distance from the Mogi source to $(x,y,z)$, and $\nu$ is the Poisson's ratio of the halfspace. In our problem we assume that $\nu$ is fixed. \refEq{forward} is an analytical solution to the elastostatic equation for a point source in a halfspace characterized by the parameter $\nu$. Elasticity is the physics that takes us from a source to ground displacement.
+
+The axes convention is that $x$ points east, $y$ points north, and $z$ points up. However, in the code the input values for $z$ are assumed to be {\em depth}, such that the Mogi source is at depth $z_{\rm s} > 0$. The observed interferogram is already corrected for the effect of topography, so the observations can be considered to be at $z=0$. 
+
+%
+%\begin{itemize}
+%\item $C$ is the amplitude of the displacement signal (combination of source and material properties)
+%\item $\Delta V$ is the change in volume of the Mogi source
+%\item $(x_{\rm s}, y_{\rm s}, z_{\rm s})$ is the location of the Mogi source
+%\item $r_s$ is the radius of the spherical source
+%\item $\Delta P$ is the change in pressure
+%\item $\nu$ is the Poisson ratio of the halfspace
+%\item $\mu$ is the rigidity of the halfspace
+%\end{itemize}
+
+%\clearpage\pagebreak
+\input{mogi_sketch}
+
+The satellite ``sees'' a projection of the 3D ground displacement $\bu$ onto the look vector $\bLh$, which points from the satellite to the target\footnote{The ``look vector'' is also known as the ``line-of-sight vector'' \citep[][Figure~10]{SimonsRosen2007}. We refer to the displacement in the direction of the look vector as the ``look displacement;'' alternatively this is referred to as the ``line-of-sight displacement''. We use ``look displacement'' to be consistent with the ``look angle''.}.
+Therefore, we are actually interested in the (signed magnitude of the) projection of $\bu$ onto $\bLh$ (\refFig{proj}). This is given by
+%
+\begin{eqnarray}
+\proj_{\bLh} \bu &=& (\bu^T\bLh)\bLh
+\\
+\bu^T\bLh &=& \bu \cdot \bLh = \|\bu\| \|\bLh\| \cos\alpha = \|\bu\| \cos\alpha 
+\\
+&=& u_x \hat{L}_x + u_y \hat{L}_y + u_z \hat{L}_z
+\label{UL}
+\end{eqnarray}
+%
+where the look vector is given by
+%
+\begin{eqnarray}
+%\bLh' = (-\sin l \cos t,\; \sin l \sin t,\; \cos l),
+\bLh &=& \hat{L}_x \bxh + \hat{L}_y \byh + \hat{L}_z \bzh
+= (\hat{L}_x, \hat{L}_y, \hat{L}_z)
+\\
+&=& \sin l \cos t\,\bxh -\sin l \sin t\,\byh -\cos l\,\bzh
+= (\sin l \cos t,\; -\sin l \sin t,\;  -\cos l)
+% (sin th cos ph, sin th sin ph, cos th )
+% --> t = -ph so -sin(t) = sin(-t) = sin(ph)
+% --> l = pi - th
+\label{L}
+\end{eqnarray}
+%
+where $l$ is the look angle measured from the nadir direction (``downward'') and $t$ is the satellite track angle measured clockwise from geographic north. The look direction, in map view, is perpendicular to the track direction and points to the right (\refFig{proj}). All vectors are represented in an east-north-up basis.
+
+Our forward model takes a Mogi source $(x_{\rm s},y_{\rm s},z_{\rm s},V)$ and computes the look displacement at any given $(x,y,z)$ point. Let us represent the $i$th point on our surface grid by $\bx_i = (x_i,y_i,z_i)$. The displacement vector is then $\bu_i = \bu(x_i,y_i,z_i)$, and the look displacement is
+%
+\begin{equation}
+d_i \equiv \bu_i \cdot \bLh
+\label{forwardLOS}
+\end{equation}
+%
+If there are $\ndata$ points (pixels) in our interferogram, then we would have an $\ndata \times 1$ vector $\dvec$ representing our observed look displacements and
+$\bd$ representing our predicted look displacements for a particular Mogi source.
+
+We represent a \textcolor{red}{\bf forward problem} as
+%
+\begin{equation}
+\bg(\bem) = \bd
+\end{equation}
+%
+where $\bg(\cdot)$ describes the forward model in \refEqii{forward}{forwardLOS}, $\bem$ is the (unknown) Mogi model, and $\bd$ is the predicted interferogram.
+
+The \textcolor{red}{\bf inverse problem} seeks to determine the optimal $\bem$ that minimizes the differences between predictions $\bg(\bem) = \bd$ and observations $\dvec$.
+
+%---------------
+
+\pagebreak
+\subsection*{Discussion questions [50 min]}
+
+\begin{enumerate}
+\item How many model parameters are represented within the forward model of \refEq{forward}? \\
+What are the entries of the model vector $\bem$? \\
+Check that the units of \refEq{forward} make sense.
+
+\vspace{1cm}
+
+\item 
+\begin{enumerate}
+\item To get a better sense of \refEq{forward}, write out the equation in full for the case of $\bu(x,0,0)$ for $x_s = 0$, $y_s = 0$, with $z_s < 0$.
+
+\vspace{1cm}
+
+\item Now let $z_s = -4$~km and let $x$ range from $-10$~km to 10~km. \\
+Sketch (or plot) $u_x(x)$ (the $x$-component of displacement) and $u_z(x)$ (the $z$-component of displacement).
+
+\vspace{4cm}
+
+\item Sketch (or plot) the vector field $(u_x(x), u_z(x))$ as a set of $\sim$20 arrows along the $x$-axis line $y = z = 0$ between $x = -10$ and $x = 10$.
+
+\vspace{4cm}
+
+\item Consider a range of $z_s$ and sketch how the curves of $u_z(x)$ change.
+\vspace{4cm}
+
+\end{enumerate}
+
+\item What are the entries of the data vector $\dvec$?
+
+\vspace{1.5cm}
+
+\item Write \refEq{forwardLOS} in terms of $l$, $t$, $x_i$, $y_i$, $z_i$, etc.
+
+\vspace{1cm}
+
+\item Is the forward model (\refeq{forward}) linear? \\
+Is it linear with any of the source parameters?
+
+\vspace{1cm}
+
+\item Define a misfit function that will minimize the sum of squares of the differences between a vector of observations $\dvec$ and a vector of predictions $\bg(\bem)$. 
+
+\vspace{1cm}
+
+\item Examine \refEqii{UL}{L}. What do the following angles imply about the satellite path, and what impact does it have on the displacement in the look direction?
+
+\renewcommand{\theenumi}{\Alph{enumi}}
+\begin{enumerate}
+\item $t=0^\circ$ \vspace{2cm}
+\item $l = 0^\circ$ \vspace{2cm}
+\item $l = 90^\circ$ (consider the motion of a mountain, vertically and horizontally) \vspace{2cm}
+\end{enumerate}
+
+\end{enumerate}
+
+%-------------------------------------------------------------
+\pagebreak
+\bibliographystyle{agu08}
+\bibliography{carl_abbrev,carl_main,carl_source,carl_him,carl_alaska,carl_gps}
+%-------------------------------------------------------------
+
+%-------------------------------------------------------------
+\end{document}
+%-------------------------------------------------------------

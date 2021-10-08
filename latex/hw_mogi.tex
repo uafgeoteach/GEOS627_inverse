@@ -1,0 +1,155 @@
+% dvips -t letter hw_mogi.dvi -o hw_mogi.ps ; ps2pdf hw_mogi.ps
+\documentclass[11pt,titlepage,fleqn]{article}
+
+\input{hw627_header}
+
+% for referencing anything in the supplement
+\usepackage{xr}
+\externaldocument{lab_mogi}
+
+%--------------------------------------------------------------
+\begin{document}
+%-------------------------------------------------------------
+
+\begin{spacing}{1.2}
+\centering
+{\large \bf Problem Set: Modeling subsurface volcanic sources using InSAR data} \\
+Franz Meyer, Carl Tape, Zhong Lu  %, Peter Webley
+\\
+GEOS 657: Microwave Remote Sensing \\
+GEOS 627: Inverse Problems and Parameter Estimation \\
+%GEOS 676: Remote Sensing of Volcanic Eruptions \\
+University of Alaska Fairbanks \\
+%Assigned: April 11, 2013 --- Due: April 16, 2013 \\
+%Assigned: April 9, 2015 --- Due: April 16, 2015 \\
+%Assigned: April 6, 2017 \\
+%Due: April 12, 2017 [Tape]; April 18, 2017 [Meyer] \\
+Assigned: November 6, 2019 --- Due: November 13, 2019 \\
+Last compiled: \today
+\end{spacing}
+
+%===============================
+
+\subsection*{Instructions}
+
+\begin{itemize}
+\item This problem set is an extension of the lab (\verb+lab_mogi.pdf+). Be sure that you have done the lab and answered the discussion questions before proceeding.
+
+\item The problem set involves reading, running, and writing some Matlab scripts. You are welcome to work together on the ``Questions for all students.''
+
+\item Primary Matlab scripts (note: for 627 students these are in the directory \verb+mogi+ within \repodir):
+\begin{itemize}
+\item \verb+read_data.m+: loads InSAR observations
+\item \verb+plot_model.m+: plots InSAR field, which can be observed or synthetic
+\item \verb+mogi2insar.m+: uses Mogi forward model to simulate InSAR surface deformation signals
+%\item \verb+xy_gridsearch.m+: grid search for finding the best-fitting geographic source location
+\end{itemize}
+
+\end{itemize}
+
+%------------------------
+
+\subsection*{Questions for all students (3 points)}
+
+\begin{enumerate}
+\item (0.4) Run \verb+read_data.m+ (or see \refFig{data} from the lab) and examine the interferogram. What is the sign of the look displacement of the prominent circular signal? What does this imply about the sign of the volume change?
+
+\item (0.4) What are reasonable ranges for each of the four model parameters? Try a few different models in \verb+mogi2insar.m+ to get an idea for what the ranges should be. Explain your choices.
+
+\item (0.6) Using the fixed values $z_{\rm s} = -2.58$~km and $V = 0.0034$~km$^3$, perform a grid search over $x_{\rm s}$ and $y_{\rm s}$ and evaluate the misfit function.
+%
+\begin{enumerate}
+\item (0.4) Make a 2D colored plot of the misfit function with axes $x_{\rm s}$ and $y_{\rm s}$.
+
+Start your Matlab script with the following lines:
+%
+\begin{verbatim}
+read_data;
+zs = -2.58;
+vs = 0.0034;
+bokay = ~isnan(obs_rngchg);
+\end{verbatim}
+%
+The variable \verb+bokay+ is needed so that you evaluate the misfit function only at non-NaN points in the interferogram. For example, the command \verb+sum(obs_rngchg(bokay(:)))+ will not return \verb+NaN+, whereas \verb+sum(obs_rngchg(:))+ will.
+
+\item (0.2) Find the minimum of your misfit function and list your best-fitting values for $x_{\rm s}$ and $y_{\rm s}$.
+
+\end{enumerate}
+
+\item (1.6) Now assume that the lateral location of the magma source is fixed with $x_{\rm s} = 20.6$~km and $y_{\rm s} = 21.8$~km. Search over $z_{\rm s}$ and $V$ and evaluate the misfit function to obtain best-fitting values for $z_{\rm s}$ and $V$. Modify the Matlab script \verb+xy_gridsearch.m+ to perform this analysis.
+%
+\begin{enumerate}
+\item (0.8) Provide a plot of the misfit function. Put $z_{\rm s}$ on the vertical axis.
+
+Note 1: Make sure that you do {\em not} use the command \verb+axis equal+. \\
+Note 2: You may want to adjust the color scale\footnote{You can adjust the color scale by specifying {\tt caxis([a b])}, where {\tt a} and {\tt b} are your values. This command needs to appear {\em before} you list the {\tt colorbar} command.}, in order to better see the shape of the misfit function.
+
+\item (0.4) Provide the best-fitting values for $z_{\rm s}$ and $V$. 
+
+\item (0.4) The $y_{\rm s}$-vs-$x_{\rm s}$ misfit function has a circular shape while the $z_{\rm s}$-vs-$V$ misfit function is elongated.
+Provide a physical interpretation for this elongated pattern.
+\end{enumerate}
+
+\end{enumerate}
+
+%------------------------
+
+%\pagebreak
+%\subsection*{GEOS 657 and 676 (to hand in)}
+\subsection*{Questions for Meyer//GEOS 657 (7 points)}
+
+\begin{enumerate}
+\item (4.0) {\bf Analysis of the Mogi forward model}. Run the forward model experiments using Matlab function \verb+mogi2insar.m+:
+\begin{itemize}
+\item Do a reference simulation with the following model parameters: $x_0 = 20.6$~km; $y_0 = 21.8$~km; $z_0 = -2.5$~km; $V_0 = 0.01$~km$^3$. Visualize the results.
+\item Change the depth of the source by a factor of 3 ($z_1 = -7.5$~km) while leaving the other parameters unchanged. Visualize the results. Discuss changes to the reference run. Describe how the strength and shape of the deformation signal has changed and provide a physical explanation.
+\item Now change the source volume by a factor of 3 ($V_1 = 0.03$~km$^3$ -- also reset source depth to $z_0 = -2.5$~km). Visualize the results and compare them to the reference run.
+\item Finally change both source volume and depth by a factor of three ($z_1 = -7.5$~km and $V_1 = 0.03$~km$^3$). Compare this result to the results of experiments 1--3.
+\end{itemize}
+
+\item (3.0) {\bf Error Analysis.} In a perfect world that includes noise-free data and a perfect model, there should be a combination of model parameters that reduces the misfit function to zero. However, in our case, the misfit function still shows large values, even for the best fitting model parameters. Provide and explain three reasons for why the differences between the model and the data are non-zero.
+\end{enumerate}
+
+%------------------------
+
+\pagebreak
+\subsection*{Questions for Tape//GEOS 627 (7 points)}
+
+\begin{enumerate}
+\item (0.4) Generalized least squares uses matrices for the data covariance $\covd$ and the prior model covariance $\cprior$. Write the misfit function for generalized least squares \citep{Tarantola2005}.
+
+\item (1.0)
+%The terms $\covd$ and $\cprior$ appear in the generalized least squares misfit function.
+For the Mogi source problem, what would be reasonable choices for $\covd$ and $\cprior$? Discuss some considerations and possibilities. Provide numbers where helpful.
+
+\item (0.6) After we have found the global minimum of the misfit function, how can uncertainties in model parameters be estimated? (For example, see \citet{Wright2003}.)
+
+%----------------
+
+\item (5.0) Explain---{\bf in words and equations, not in code}---how to set up and solve the following three problems.
+(You should be able to answer these questions without running any code, though if you're feeling ambitious, code it!) Use equations where helpful.
+
+\begin{enumerate}
+\item (2.0) Using the grid search, estimate a posterior probability distribution, and generate samples from the distribution.
+
+Hint: Recall Problem 7-1 of \citet{Tarantola2005}.
+
+\item (2.0) Instead of using the grid search, solve the problem using iterative (generalized) least squares. Use the steepest descent method.
+
+Hint: Consider the misfit function for generalized least squares. What is the matrix of partial derivatives for the forward model?
+
+\item (1.0) Include the Poisson ratio $\nu$ as a fifth model parameter in the grid search using generalized least squares. How do you expect the solution---$\mpost$ and $\cpost$---to change? How might the new parameter covary with the other four parameters? Note that a reasonable range for $\nu$ in the crust is $\nu = [0.2,0.3]$ \citep{ChristensenMooney1995}.
+
+\end{enumerate}
+
+\end{enumerate}
+
+%-------------------------------------------------------------
+\pagebreak
+\bibliographystyle{agu08}
+\bibliography{carl_abbrev,carl_main,carl_source,carl_him,carl_alaska,carl_calif}
+%-------------------------------------------------------------
+
+%-------------------------------------------------------------
+\end{document}
+%-------------------------------------------------------------

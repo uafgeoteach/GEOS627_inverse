@@ -1,0 +1,122 @@
+%dvips -t letter lab_pca.dvi -o lab_pca.ps ; ps2pdf lab_pca.ps
+\documentclass[11pt,titlepage,fleqn]{article}
+
+\input{hw627_header}
+
+\renewcommand{\baselinestretch}{1.1}
+
+% change the figures to ``Figure L3'', etc
+\renewcommand{\thefigure}{L\arabic{figure}}
+\renewcommand{\thetable}{L\arabic{table}}
+\renewcommand{\theequation}{L\arabic{equation}}
+\renewcommand{\thesection}{L\arabic{section}}
+
+%--------------------------------------------------------------
+\begin{document}
+%-------------------------------------------------------------
+
+\begin{spacing}{1.2}
+\centering
+{\large \bf Lab Exercise: Principal component analysis [pca]} \\
+GEOS 627: Inverse Problems and Parameter Estimation, Carl Tape \\
+Last compiled: \today
+\end{spacing}
+
+%------------------------
+
+\subsection*{Overview}
+
+In some problems it is unclear which variables are predictor variables and which variables are response variables. For such data sets, principal component analysis is a useful tool for characterizing the variance of the data.
+
+\begin{itemize}
+\item See class notes and recall the similarity between \verb+[U,S,V] = svd(X)+ and \verb+[V,US] = pca(X)+.
+
+%\item If you run the Matlab script from outside your local class directory, then you will probably need to specify the absolute path to the data directory as the variable \verb+ddir+ in \verb+load_pca_data.m+.
+
+\end{itemize}
+
+%------------------------
+
+%\pagebreak
+\subsection*{Part I: Quality of life in U.S. cities (Matlab tutorial)}
+
+Matlab provides some example data and for principal component analysis.
+
+\begin{enumerate}
+\item Open \verb+lab_pca_matlab.m+ and a web browser to follow the Matlab tutorial.
+
+Run \verb+lab_pca_matlab.m+ and describe the data set.
+
+\vertgap
+\vertgap
+\vertgap
+
+\item Uncomment the error statement, then generate the figures for the tutorial (Part I).
+
+\item Examine the relationships among cov, svd, eig, and pca in Part II in order to understand how PCA works.
+
+\vertgap
+\vertgap
+
+\item Interpret what PCA suggests about the ``profiles'' of cities in the U.S. and how they explain variations in quality of life.
+
+\vertgap
+\vertgap
+\vertgap
+
+%For example, the first principal component, on the horizontal axis, has positive coefficients for all nine variables. That is why the nine vectors are directed into the right half of the plot. The largest coefficients in the first principal component are the third and seventh elements, corresponding to the variables health and arts.
+
+%The second principal component, on the vertical axis, has positive coefficients for the variables education, health, arts, and transportation, and negative coefficients for the remaining five variables. This indicates that the second component distinguishes among cities that have high values for the first set of variables and low for the second, and cities that have the opposite.
+
+\end{enumerate}
+
+%------------------------
+
+\pagebreak
+\subsection*{Part II: Protein consumption in Europe (lab)}
+
+Copy the template file to \verb+lab_pca.m+.
+
+The file \verb+protein.dat+ contains data on the protein consumption in 25 European countries. The protein consumption (in grams per capita per year, for the year 1973) is broken down into nine food groups: red meat, white meat, eggs, milk, fish, cereals, starch, nuts, and fruits and vegetables.
+%
+\begin{enumerate}
+\item Examine the correlations among the nine food groups. What patterns can you detect?
+
+\label{p1}
+
+\vertgap
+\vertgap
+
+\item Perform a principal component analysis to determine how meat consumption is related to consumption of other foods. How many principal components do you need to account for 95\% of the variability in the data? Interpret the leading principal components qualitatively.
+
+\label{p2}
+
+\vertgap
+\vertgap
+
+\item Make scatterplots of principal component scores. Can you divide the diets into geographical groups? If so, what dietary characteristics distinguish the groups?
+
+Note: The command \verb+text(x,y,dlabs)+ will plot short text labels for each observation point at $(x,y)$. You will need this to assist in interpretations.
+
+\label{p3}
+
+\vertgap
+\vertgap
+
+\item Repeat (\ref{p2}) and (\ref{p3}) but perform a principal component analysis on a standardized version of the data. How do the results differ from those obtained before?
+
+\vertgap
+\vertgap
+
+\item Write a couple sentences that summarize the data set. ``Protein consumption in Europe falls into XX geographic regions: \ldots. These XX regions can be explained in terms of \ldots''
+
+\end{enumerate}
+
+%-------------------------------------------------------------
+%\bibliographystyle{agu08}
+%\bibliography{carl_abbrev,carl_main,carl_source,carl_him,carl_alaska}
+%-------------------------------------------------------------
+
+%-------------------------------------------------------------
+\end{document}
+%-------------------------------------------------------------

@@ -1,0 +1,174 @@
+% dvips -t letter lab_svdgeom.dvi -o lab_svdgeom.ps ; ps2pdf lab_svdgeom.ps
+\documentclass[11pt,titlepage,fleqn]{article}
+
+\input{hw627_header}
+
+\renewcommand{\baselinestretch}{1.1}
+
+% change the figures to ``Figure L3'', etc
+\renewcommand{\thefigure}{L\arabic{figure}}
+\renewcommand{\thetable}{L\arabic{table}}
+\renewcommand{\theequation}{L\arabic{equation}}
+\renewcommand{\thesection}{L\arabic{section}}
+
+%--------------------------------------------------------------
+\begin{document}
+%-------------------------------------------------------------
+
+\begin{spacing}{1.2}
+\centering
+{\large \bf Lab Exercise: Geometry of the singular value decomposition [svdgeom]} \\
+GEOS 627: Inverse Problems and Parameter Estimation, Carl Tape \\
+Last compiled: \today
+\end{spacing}
+
+%------------------------
+
+\subsection*{Instructions}
+
+%The singular value decomposition is featured in \citet{AsterE2}.
+The objective of this lab is to reinforce the geometrical concept of SVD \citep{TrefethenBau} presented in \verb+notes_svd.pdf+. {\bf You will need a ruler.}
+
+Following \verb+notes_svd.pdf+, \refFig{fig:2D} shows four examples of different ($2 \times 2$) $\bG$ representing the SVD.
+
+\begin{enumerate}
+\item Using \refFig{fig:ex1}, estimate $\Ucolor$, $\Vcolor$, $\bS$, and then calculate $\bG$.
+%(The prime notation is to distinguish your estimated matrices from the true matrices.)
+
+If your entries of $\bG$ are not close to integer values, please try again.
+
+Hint: Use a ruler, then make sure that your vectors are normalized. See Note \footnote{
+Measuring the coordinates of two basis vectors will not guarantee that the two vectors are orthogonal. For this, you could use a rotation matrix
+%
+\begin{equation}
+\bR_\theta = \left[
+\begin{array}{rr}
+\cos\theta & -\sin\theta \\ 
+\sin\theta & \cos\theta
+\end{array}
+\right]
+\end{equation}
+%
+This can be implemented as a Matlab in-line function. Provide a $\theta$, then the columns of $\bR_\theta$ will be the rotated standard basis vectors.
+
+To get $\Ucolor$ and $\Vcolor$, use $\bR_\theta$. You may also want to use
+%
+\begin{equation}
+\bZ = \left[
+\begin{array}{rr}
+0 & 1 \\ 
+1 & 0
+\end{array}
+\right],
+\end{equation}
+%
+since $\bA\bZ$ will swap the two column vectors of $\bA$.
+}
+
+\item Make sure you have the true $\bG$ before proceeding.
+
+\item In the {\bf top} of \refFig{fig:ex1}, sketch $\be_1$ and $\be_2$ in the left plot. \\
+Sketch $\bG\be_1$ and $\bG\be_2$ in the right plot.
+
+\item The {\bf bottom} of \refFig{fig:ex1} represents the mapping from $\bG^{\dagger}\Ucolor$. Sketch the following (note that you do not need $\bG^{\dagger}$ for the sketch):
+%
+\begin{itemize}
+\item $\bu_1$ and $\bu_2$ in the left plot
+\item appropriately scaled versions of $\bv_1$ and $\bv_2$ in the right plot
+\item the ellipse representing $\bG^{\dagger}\Ucolor$ in the right plot
+\end{itemize}
+
+\item Using Matlab's \verb+svd+, calculate $\Ucolor$, $\Vcolor$, and $\bS$, and then calculate $\bG^{\dagger}$. \\
+Sketch $\be_1$ and $\be_2$ in the lower left plot. \\
+Sketch $\bG^{\dagger}\be_1$ and $\bG^{\dagger}\be_2$ in the lower right plot.
+
+\item Does $\bG^{\dagger} = \bG^{-1}$? Why?
+
+\item Compute the eigenbasis of $\bG$ and then sketch eigenvectors $\{\bh_1,\bh_2\}$ and $\{\bG\bh_1,\bG\bh_2\}$ in your top plots.
+
+Note: You can't sketch the eigenvectors if they are complex.
+
+\item Get some more practice with three more examples in \refFigab{fig:ex2}{fig:ex4}.
+
+\item Open and run \verb+lab_svdgeom.m+ (copy \verb+lab_svdgeom_template.m+). By default, the code will generate a random $\bG$ with all have integer entries between $-2$ and 2.
+
+Try a few different $\bG$ to see what happens. \\
+You may want to try the four examples in \verb+notes_svd.pdf+. \\
+Check that your $\bG$ will generate \refFig{fig:ex1}.
+
+\item The top of \refFig{fig:ex1} represents $\Vcolor \rightarrow \bG \rightarrow \Ucolor$.
+
+Write some code to generate a plot representing $\Ucolor \rightarrow \bG^{\dagger} \rightarrow \Vcolor$. Stick to the coloring convention for $\Ucolor$ and $\Vcolor$.
+
+\end{enumerate}
+
+%-------------------------------------------------------------
+%\pagebreak
+\bibliographystyle{agu08}
+\bibliography{carl_abbrev,carl_main}
+%-------------------------------------------------------------
+
+\clearpage\pagebreak
+\begin{figure}
+\hspace{-1cm}
+\includegraphics[width=18cm]{svd_2D_both_5}
+\caption[]
+{{
+Example 1.
+\label{fig:ex1}
+}}
+\end{figure}
+
+\clearpage\pagebreak
+\begin{figure}
+\hspace{-1cm}
+\includegraphics[width=18cm]{svd_2D_both_6}
+\caption[]
+{{
+Example 2.
+\label{fig:ex2}
+}}
+\end{figure}
+
+\clearpage\pagebreak
+\begin{figure}
+\hspace{-1cm}
+\includegraphics[width=18cm]{svd_2D_both_7}
+\caption[]
+{{
+Example 3.
+\label{fig:ex3}
+}}
+\end{figure}
+
+\clearpage\pagebreak
+\begin{figure}
+\hspace{-1cm}
+\includegraphics[width=18cm]{svd_2D_both_8}
+\caption[]
+{{
+Example 4.
+\label{fig:ex4}
+}}
+\end{figure}
+
+\clearpage\pagebreak
+\pagestyle{empty}
+\begin{figure}
+\centering
+\begin{tabular}{c}
+\includegraphics[width=13cm]{svd_2D_5} \\
+\includegraphics[width=13cm]{svd_2D_6} \\
+\includegraphics[width=13cm]{svd_2D_7} \\
+\includegraphics[width=13cm]{svd_2D_8} 
+\end{tabular}
+\caption[]
+{{
+The matrix $\bG = \Ucolor\,\bS\,\Vcolor^T$ transforms the orthonormal basis vectors \textcolor{blue}{$\{\bv_i\}$} to the orthogonal vectors \textcolor{red}{$\{s_i\bu_i\}$}: \makebox{$\bG\Vcolor = \Ucolor\,\bS$}.
+\label{fig:2D}
+}}
+\end{figure}
+
+%-------------------------------------------------------------
+\end{document}
+%-------------------------------------------------------------

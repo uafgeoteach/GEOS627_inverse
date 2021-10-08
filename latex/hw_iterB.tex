@@ -1,0 +1,249 @@
+% dvips -t letter hw_iter.dvi -o hw_iter.ps ; ps2pdf hw_iter.ps
+\documentclass[11pt,titlepage,fleqn]{article}
+
+\input{hw627_header}
+
+\renewcommand{\baselinestretch}{1.1}
+
+%--------------------------------------------------------------
+\begin{document} 
+%-------------------------------------------------------------
+
+\begin{spacing}{1.2}
+\centering
+{\large \bf Problem Set 5: Iterative methods with generalized least squares, Part B [iterB]} \\
+GEOS 627: Inverse Problems and Parameter Estimation, Carl Tape \\
+Assigned: September 30, 2019 --- Due: October 9, 2019 \\
+Last compiled: \today
+\end{spacing}
+
+%------------------------
+
+%\pagebreak
+\subsection*{Problem 2 (4.0). Implementation of iterative methods}
+
+See the lab exercise on the quasi-Newton method (\verb+lab_iter.pdf+). There you were asked to adapt \verb+genlsq_template.m+ to write a functioning version of the quasi-Newton algorithm for the 4-parameter epicenter problem. Moving forward, it is important that your code is correct. Start with \verb+genlsq_sol_template.m+
+%
+\begin{verbatim}
+cp genlsq_sol_template.m genlsq_iter.m
+\end{verbatim}
+%
+Alternatively you can use your \verb+genlsq.m+ script, but, whichever you use, {\bf check your results for the quasi-Newton method with those listed in \refTab{tab}.}
+
+In this problem you will replace the quasi-Newton method with three other methods. You will not need to touch the code associated with the forward model (\verb+forward_epicenter.m+).
+
+\begin{enumerate}
+\item (1.5) Implement the {\bf steepest descent} method (Eq. 6.297). Use Eq. 6.309 for $\mu_n$. Use 8~iterations (\verb+niter=8+). Include the following:
+%
+\begin{enumerate}
+\item your code
+\item a plot of the misfit reduction with iteration (note: this plot is produced by default)
+\item a plot showing epicenter samples of the prior and posterior models (with $\bem_{\rm target}$ and $\bem_{\rm initial}$) (note: this plot is produced by default)
+\item the posterior model (in \refTab{tab}; list numbers to 0.0001 precision)
+\end{enumerate}
+
+\label{steep}
+
+\item (1.5) Repeat Problem 2-1 for the {\bf conjugate gradient} method (Eq. 6.329).
+%
+\begin{itemize}
+\item Use Eq. 6.333 for $\mu_n$.
+\item Use Eq. 6.331 for $\alpha_n$.
+\item Use $\bF_0 = \bI$ such that $\blambda_n = \bF_0\bgamma_n = \bgamma_n$. 
+\item Note that the search direction is initialized as $\bphi_0 = \blambda_0$ ($= \bgamma_0$).
+\end{itemize}
+
+\item (0.5) Repeat Problem 2-1 for the {\bf variable metric} method (Section 6.22.8).
+%
+\begin{itemize}
+\item Use Eq. 6.333 for $\mu_n$.
+\item Use $\bF_0 = \bI$.
+\item Use Eq.~6.356 for $\bF_{n+1}$, but note that there is a typo: there should be no transpose on the last $\bdelta\bgamma$ term in the denominator.
+\end{itemize}
+%
+Hint: Write the equations in non-hat notation, such as in Eq. 6.355. For example, note that $\bFh\bgammah = \bF\bgamma$.
+
+\item (0.5)
+%
+\begin{enumerate}
+\item (0.4) Compare and contrast these three methods \citep[see][]{Tarantola2005}.
+
+NOTE: This problem can be answered even if your implementations in 2-1, 2-2, 2-3 were unsuccessful.
+
+\item (0.1) Compare the performance of each method for our problem.
+\end{enumerate}
+
+\end{enumerate}
+
+%------------------------
+
+%\pagebreak
+\subsection*{Problem 3 (3.0). Revisiting \citet{Tarantola2005}, Problem 7-1}
+
+Your goal is to implement \citet{Tarantola2005}, Problem 7-1.
+%
+\begin{itemize}
+\item Prepare for this example by copying two files:
+%
+\begin{verbatim}
+cp genlsq_sol_template.m genlsq_crescent.m
+cp forward_epicenter.m forward_epicenter_crescent.m
+\end{verbatim}
+%
+Run \verb+genlsq_crescent.m+ and check your quasi-Newton results with those listed in \refTab{tab}.
+
+The file \verb+forward_epicenter_crescent.m+ will serve as a template for this problem.
+
+\item \verb+genlsq_crescent.m+ contains the iterative inverse problem, and it also calls the forward model \verb+forward_epicenter.m+. In \verb+genlsq_crescent.m+, replace the call to \verb+forward_epicenter.m+ with \verb+forward_epicenter_crescent.m+.
+
+\end{itemize}
+
+%-----------------------
+
+\begin{enumerate}
+
+\item (2.5) Adapt \verb+forward_epicenter_crescent.m+ for Problem 7-1 of \citet{Tarantola2005} (HW3). \textcolor{red}{\bf In addition to using the values used in Problem 7-1}, make the following additional choices:
+%
+\begin{itemize}
+\item Define $\mprior$ to be the center of the plotting grid used for HW3. The code you want to use is this:
+%
+\begin{verbatim}
+% range of model space (Tarantola Figure 7.1)
+xmin = 0; xmax = 22;
+ymin = -2; ymax = 30;
+xcen = (xmax+xmin)/2;
+ycen = (ymin+ymax)/2;
+
+% prior model
+mprior = [ xcen ycen ]';
+\end{verbatim}
+%
+Use the same $\sigma$ values for the prior epicenter as in \verb+forward_epicenter.m+ ($\sigma_{x_s} = \sigma_{y_s} = 10$~km). This prior model is chosen as an analog for the perspective that the epicenter could be anywhere within a large region (such as the plotting grid).
+
+\item $\bem_{\rm initial} = (15, 20)$.
+
+\item $\bem_{\rm target} = (15, 5)$. (This is probably what Tarantola used, though we can't be certain.)
+
+\item For the case of fixed data errors, set
+%
+\begin{verbatim}
+tobs = [3.12 3.26 2.98 3.12 2.84 2.98]';
+eobs = tobs - dtarget;
+\end{verbatim}
+%
+This allows us to remove the errors added to the arrival time data listed in Tarantola. (It gets added back in as {\tt dobs = dtarget + eobs}, which is \verb+tobs+.)
+
+\item \verb+axepi = [xmin xmax ymin ymax];+
+
+\end{itemize}
+
+Solve the problem using the quasi-Newton method with eight iterations.
+%
+\begin{enumerate}
+\item Include figures showing (a) the misfit reduction; (b) the prior and posterior samples, along with the initial model. (Note that these figures are automatically generated.)
+
+\item List the solution after eight iterations: $\bem_{\rm post}$, $\bC_{\rm post}$, and the correlation matrix $\rho_{\rm post}$. Complete \refTab{tab:epi}. 
+
+\item How many iterations are needed for convergence?
+\end{enumerate}
+
+%----------
+
+\item (0.5) See \citet[][p.~34--36]{AsterE2} for how to compute confidence regions. The key concept is that the inequality
+%
+\begin{equation*}
+\left(\bem - \bem_{\rm post} \right)^T \bC_{\rm post}^{-1} \left(\bem - \bem_{\rm post} \right) \le \Delta^2
+\end{equation*}
+%
+describes the interior region of an $\nparm$-dimensional ellipsoid (in our case, $\nparm=2$). For example, $\Delta^2$ can be chosen to represent the boundary of the $95\%$ confidence region.
+%
+\begin{enumerate}
+\item (0.1) Use \verb+eig+ to compute the eigen-decomposition of $\bC_{\rm post}$.
+
+Compute the quantity $\sqrt{\lambda_{\rm max}/\lambda_{\rm min}}$.
+
+\item (0.1) Use \verb+delta2 = chi2inv(0.95,2)+ to compute $\Delta^2$.
+
+Hint: See \verb+ex_2_1_1_uaf.m+ for an example of using \verb+chi2inv+.
+
+\item (0.1) Compute the lengths of the semi-major axis and semi-minor axis of the ellipse, where the length of the $k$th axis is $\Delta\sqrt{\lambda_k}$.
+
+\item (0.2) Plot the confidence region using \verb+plot_ellipse+. (You should see agreement between the locations of your samples of $\bC_{\rm post}$ and the ellipse.) Also include the ellipse axes in your plot (plus $\bem_{\rm post}$, $\bem_{\rm initial}$, $\bem_{\rm target}$, samples of prior and posterior, etc).
+\end{enumerate}
+
+NOTE: Even if you did not successfully implement \verb+forward_epicenter_crescent.m+, you can still do the confidence region for the epicenter associated with the forward problem of \verb+forward_epicenter.m+
+
+\end{enumerate}
+
+
+%------------------------
+
+%\pagebreak
+\subsection*{Problem} \howmuchtime\
+
+%-------------------------------------------------------------
+%\pagebreak
+\bibliographystyle{agu08}
+\bibliography{carl_abbrev,carl_main,carl_source,carl_him,carl_alaska}
+%-------------------------------------------------------------
+
+%\clearpage\pagebreak
+
+%-------------------------------------------------------------
+
+\vspace{4cm}
+
+\begin{table}[h]
+\centering
+\caption[]{
+Summary of results for the four iterative methods.
+Posterior models are listed for the eighth iteration: $\bem_{\rm post} = \bem_8$.
+QN = quasi-Newton; SD = steepest descent; CG = conjugate gradient; VM = variable metric.
+\textcolor{red}{List numbers to 0.0001 precision.}
+\label{tab}
+}
+\begin{spacing}{1.4}
+\begin{tabular}{r||r|r|r||r|r|r|r}
+\hline
+& prior & initial & target & QN & SD \hspace{1cm} & CG \hspace{1cm}  & VM \hspace{1cm}  \\
+\hline\hline 
+$x_s$, km & 35.0000 & 46.5236 & 21.2922 & 20.7327 & & \\ \hline
+$y_s$, km & 45.0000 & 40.1182 & 46.2974 & 45.7992 & & \\ \hline
+$t_s$, s  & 16.0000 & 15.3890 & 16.1314 & 15.6755 & & \\ \hline
+$v$       &  1.6094 &  1.7748 &  2.0903 &  1.9781 & & \\ \hline
+\end{tabular}
+\end{spacing}
+\end{table}
+
+\begin{table}
+\centering
+\caption[]{
+Epicenter problem after eight iterations with the quasi-Newton method.
+\textcolor{red}{List numbers to 0.0001 precision.}
+\label{tab:epi}
+}
+\begin{spacing}{1.4}
+\begin{tabular}{r||r|r|r||r}
+\hline
+& prior & initial & target & QN \\
+\hline\hline 
+$x_s$, km & \hspace{2cm} & \hspace{2cm} & \hspace{2cm} & \hspace{2cm} \\ \hline
+$y_s$, km & & & &  \\ \hline
+\end{tabular}
+\end{spacing}
+\end{table}
+
+% \begin{figure}
+% \centering
+% \includegraphics[width=15cm]{covC_LFACTOR2.eps}
+% \caption[]
+% {{
+% Covariance functions from {\tt covC.m} characterized by length scale $L'$ and amplitude $\sigma^2$. The Mat\'ern covariance functions include an additional parameter, $\nu$, that influences the shape: $\nu \rightarrow \infty$ for the Gaussian function (upper left), $\nu = 0.5$ for the exponential function (upper right).
+% Some reference e-folding depths are labeled; for example, the $y$-values of the top line is $y = \sigma^2 e^{-1/2} \approx 9.70$.
+% \label{fig:covC2}
+% }}
+% \end{figure}
+
+%-------------------------------------------------------------
+\end{document}
+%-------------------------------------------------------------
