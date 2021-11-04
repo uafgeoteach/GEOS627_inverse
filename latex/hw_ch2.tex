@@ -22,7 +22,7 @@ Last compiled: \today
 \subsection*{Instructions}
 
 \begin{itemize}
-\item These problems are from \citet{AsterE2}, Chapters 2 and 3. Be sure you understand Examples 2-1, 2-2, and 3-1; template scripts\footnote{These scripts come with the Matlab toolbox from the book. I have made minor changes and added the {\tt \_uaf} to distinguish these versions from those in the toolbox.}  for these are saved as \verb+ex_2_1_2_uaf.m+ and \verb+ex_3_1_uaf.m+ in the class directory.
+\item These problems are from \citet{Aster}, Chapters 2 and 3. Be sure you understand Examples 2-1, 2-2, and 3-1; template scripts\footnote{These scripts come with the Matlab toolbox from the book. I have made minor changes and added the {\tt \_uaf} to distinguish these versions from those in the toolbox.}  for these are saved as \verb+ex_2_1_2_uaf.m+ and \verb+ex_3_1_uaf.m+ in the class directory.
 \item Wherever it says ``calculate \ldots'' or ``compute \ldots,'' please list the numerical output.
 \item List units for all answers.
 \end{itemize}
@@ -183,7 +183,7 @@ to the $m=20$ noise-free data points
 
 \begin{enumerate}
 \item Write the expression for the solution $\bem_{\rm lsq}$ to the least squares problem.
-\item Use the QR factorization of $\bG$ to write the expression for the solution $\bem_{\rm qr}$ for \makebox{$\bG\bem = \bd$}. Hint: \citet[][Appendix A]{AsterE2}.
+\item Use the QR factorization of $\bG$ to write the expression for the solution $\bem_{\rm qr}$ for \makebox{$\bG\bem = \bd$}. Hint: \citet[][Appendix A]{Aster}.
 
 \item Use the SVD factorization of $\bG$ to write the expression for the solution $\bem_{\rm svd}$ for \makebox{$\bG\bem = \bd$}.
 \end{enumerate}
@@ -227,7 +227,7 @@ Show that $\bG^{\dagger} = \bV_p \bS_p^{-1} \bU_p^T$ satisfies these four proper
 
 \subsection*{Problem 5 (2.0). Aster 3-2.}
 
-Example~3.1 in \citet{AsterE2}---which we explored in \verb+lab_ch2.pdf+---presented a resolution test for a ``spike model'' in a tomography problem.
+Example~3.1 in \citet{Aster}---which we explored in \verb+lab_ch2.pdf+---presented a resolution test for a ``spike model'' in a tomography problem.
 Another resolution test commonly performed in tomography studies is a {\bf checkerboard test}, which consists of using a test model composed of alternating positive and negative perturbations. Perform a checkerboard test on the tomography problem in Example~3.1 using the test model
 %
 \begin{equation*}
@@ -292,7 +292,7 @@ List the standard deviations associated with $\cpost$.
 \pagebreak
 
 %-------------------------------------------------------------
-\nocite{AsterE2}
+\nocite{Aster}
 \bibliographystyle{agu08}
 \bibliography{carl_abbrev,carl_main,carl_source,carl_him,carl_alaska}
 %-------------------------------------------------------------
@@ -302,7 +302,7 @@ List the standard deviations associated with $\cpost$.
 \section{Aside: model parameters as perturbations}
 \label{sec:pert}
 
-The tomography problem was introduced in Example~1.12 with the unknown entries of the model vector being slowness values $s_k = 1/v_k$, where $v_k > 0$ is the velocity of the medium. In \citet{AsterE2} Example 3.1, there are negative entries in $\bem$, which is not permitted for slowness. The entries of $\bem$ should be thought of as {\em perturbations} in slowness from some uniform value, $s_0$. Then the entries in the data vector should be thought of as {\em perturbations} in travel time from the reference travel time, $\bd_0 = \bG\bem_0$, where $\bem_0$ has $s_0$ in each entry. We can rewrite our problem as
+The tomography problem was introduced in Example~1.12 with the unknown entries of the model vector being slowness values $s_k = 1/v_k$, where $v_k > 0$ is the velocity of the medium. In \citet{Aster} Example 3.1, there are negative entries in $\bem$, which is not permitted for slowness. The entries of $\bem$ should be thought of as {\em perturbations} in slowness from some uniform value, $s_0$. Then the entries in the data vector should be thought of as {\em perturbations} in travel time from the reference travel time, $\bd_0 = \bG\bem_0$, where $\bem_0$ has $s_0$ in each entry. We can rewrite our problem as
 %
 \begin{eqnarray}
 \bG\bem &=& \bd
