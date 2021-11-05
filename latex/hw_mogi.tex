@@ -14,10 +14,9 @@
 \begin{spacing}{1.2}
 \centering
 {\large \bf Problem Set: Modeling subsurface volcanic sources using InSAR data} \\
-Franz Meyer, Carl Tape, Zhong Lu  %, Peter Webley
-\\
-GEOS 657: Microwave Remote Sensing \\
-GEOS 627: Inverse Problems and Parameter Estimation \\
+%Franz Meyer, Carl Tape, Zhong Lu, Peter Webley
+GEOS 657: Microwave Remote Sensing, Franz Meyer \\
+\cltag\ \\
 %GEOS 676: Remote Sensing of Volcanic Eruptions \\
 University of Alaska Fairbanks \\
 %Assigned: April 11, 2013 --- Due: April 16, 2013 \\
@@ -33,7 +32,7 @@ Last compiled: \today
 \subsection*{Instructions}
 
 \begin{itemize}
-\item This problem set is an extension of the lab (\verb+lab_mogi.pdf+). Be sure that you have done the lab and answered the discussion questions before proceeding.
+\item This problem set is an extension of the lab (\verb+lab_mogi.pdf+) and originated with a data set provided by Dr.~Zhong Lu. Be sure that you have done the lab and answered the discussion questions before proceeding.
 
 \item The problem set involves reading, running, and writing some Matlab scripts. You are welcome to work together on the ``Questions for all students.''
 
@@ -138,17 +137,14 @@ Hint: Recall Problem 7-1 of \citet{Tarantola2005}.
 
 Hint: Consider the misfit function for generalized least squares. What is the matrix of partial derivatives for the forward model?
 
-\item (1.0) Include the Poisson ratio $\nu$ as a fifth model parameter in the grid search using generalized least squares. How do you expect the solution---$\mpost$ and $\cpost$---to change? How might the new parameter covary with the other four parameters? Note that a reasonable range for $\nu$ in the crust is $\nu = [0.2,0.3]$ \citep{ChristensenMooney1995}.
+\item (1.0) \ptag\ Include the Poisson ratio $\nu$ as a fifth model parameter in the grid search using generalized least squares. How do you expect the solution---$\mpost$ and $\cpost$---to change? How might the new parameter covary with the other four parameters? Note that a reasonable range for $\nu$ in the crust is $\nu = [0.2,0.3]$ \citep{ChristensenMooney1995}.
 
 \end{enumerate}
 
 \end{enumerate}
 
 %-------------------------------------------------------------
-\pagebreak
-\bibliographystyle{agu08}
 \bibliography{carl_abbrev,carl_main,carl_source,carl_him,carl_alaska,carl_calif}
-%-------------------------------------------------------------
 
 %-------------------------------------------------------------
 \end{document}

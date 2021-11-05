@@ -12,7 +12,7 @@
 \begin{spacing}{1.2}
 \centering
 {\large \bf Problem Set 6: Aster Ch. 2 [ch2]} \\
-GEOS 627: Inverse Problems and Parameter Estimation, Carl Tape \\
+\cltag\ \\
 Assigned: October 9, 2019 --- Due: October 16, 2019 \\
 Last compiled: \today
 \end{spacing}
@@ -128,7 +128,7 @@ Hint: Review \verb+notes_taylor.pdf+.
 
 %-------
 
-\item (0.3) Show that \refEq{min} is equivalent to the linear least squares problem
+\item (0.3) \ptag\ Show that \refEq{min} is equivalent to the linear least squares problem
 %
 \begin{equation}
 \min\left\|  \covd^{-1/2}\bG\bem - \covd^{-1/2}\bd  \right\|_2^2
@@ -138,7 +138,7 @@ where $\covd^{-1/2}$ is the matrix square root, \ie $\covdi = \covd^{-1/2} \covd
 
 %-------
 
-\item (0.3) The Cholesky factorization of $\covdi$ can be used instead of the matrix square root. Show that \refEq{min} is equivalent to the linear least squares problem
+\item (0.3) \ptag\ The Cholesky factorization of $\covdi$ can be used instead of the matrix square root. Show that \refEq{min} is equivalent to the linear least squares problem
 %
 \begin{equation}
 \min\left\|  \bR\bG\bem - \bR\bd  \right\|_2^2
@@ -198,7 +198,7 @@ to the $m=20$ noise-free data points
 \end{enumerate}
 
 
-\item (0.3) To demonstrate the instability of the solution, compute the least-squares solution \verb+mlsqmod = inv(G'*G)*G'*y+. (Note \footnote{This equation is based on a non-square $\bG$, but of course our $\bG$ is square. Do not motify our $\bG$.})
+\item (0.3) \ptag\ To demonstrate the instability of the solution, compute the least-squares solution \verb+mlsqmod = inv(G'*G)*G'*y+. (Note \footnote{This equation is based on a non-square $\bG$, but of course our $\bG$ is square. Do not motify our $\bG$.})
 %
 \begin{enumerate}
 \item How does this model and its predictions compare with the previous results?
@@ -270,7 +270,7 @@ What parameters are perfectly recovered? Plot the vector.
 \item (0.2) What is the formula for the covariance matrix $\cpost$ associated with $\bem_{\dagger}$? \\ Assume that $\covd = \sigma^2\bI$.
 \item (0.2) Compute the covariance matrix $\cpost$ using $\sigma = 1$~s. \\
 List the standard deviations associated with $\cpost$.
-\item (0.2) Compute and plot the correlation matrix $\rhopost$. List the correlation coefficient between the 2nd and 4th model parameters.
+\item (0.2) \ptag\ Compute and plot the correlation matrix $\rhopost$. List the correlation coefficient between the 2nd and 4th model parameters.
 \end{enumerate}
 
 \begin{itemize}
@@ -293,7 +293,6 @@ List the standard deviations associated with $\cpost$.
 
 %-------------------------------------------------------------
 \nocite{Aster}
-\bibliographystyle{agu08}
 \bibliography{carl_abbrev,carl_main,carl_source,carl_him,carl_alaska}
 %-------------------------------------------------------------
 
@@ -335,7 +334,6 @@ Setup for the tomography problem.
 \label{fig:index}
 }}
 \end{figure} 
-
 
 %-------------------------------------------------------------
 \end{document}
