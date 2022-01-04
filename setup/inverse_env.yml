@@ -1,0 +1,16 @@
+name: inverse_env
+channels:
+  - conda-forge
+  - default
+dependencies:
+  - python=3.8
+  - ipywidgets
+  - jupyter
+  - jupyter_contrib_nbextensions
+  - jupyter_nbextensions_configurator
+  - jupyter-resource-usage
+  - matplotlib
+  - numpy
+  - pandas
+  - scipy
+
