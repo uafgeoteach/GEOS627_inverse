@@ -12,7 +12,7 @@
 \begin{spacing}{1.2}
 \centering
 {\large \bf Problem Set 4: Covariance functions and Gaussian random fields [cov]} \\
-GEOS 627: Inverse Problems and Parameter Estimation, Carl Tape \\
+\cltag\ \\
 Assigned: September 23, 2019 --- Due: September 30, 2019 \\
 Last compiled: \today
 \end{spacing}
@@ -28,7 +28,7 @@ Last compiled: \today
 \item Reading:
 \begin{itemize}
 \item \citet{Tarantola2005}: Ch.~2 (note Example 2.1) and Sections 5.1, 5.2, 5.3 (note 5.3.3).
-\item \citet{AsterE2}: Appendix B
+\item \citet{Aster}: Appendix B
 \item class notes
 \end{itemize}
 
@@ -52,7 +52,7 @@ Last compiled: \today
 %\pagebreak
 \subsection*{Problem 1 (1.0). Gaussian and exponential PDFs}
 
-% The exponential and Gaussian probability density functions are given by \citep[\eg][Appendix~B]{AsterE2}
+% The exponential and Gaussian probability density functions are given by \citep[\eg][Appendix~B]{Aster}
 % %
 % \begin{eqnarray}
 % f_1(x) &=& \frac{1}{\sigma\sqrt{2}} \exp\left(-\frac{\sqrt{2}|x - \mu|}{\sigma} \right)
@@ -100,7 +100,7 @@ f_Y(y) &=& k_y \exp\left(-\frac{(y-\mu_y)^2}{2\sigma_y^2} \right)
 
 Hints:
 \begin{itemize}
-\item \citet[][eq. B.28]{AsterE2}
+\item \citet[][eq. B.28]{Aster}
 \item What does ``mean zero'' and ``circular Gaussian'' imply about $f(x,y)$?
 \item Try the integration using polar coordinates (it is clean).
 \end{itemize}
@@ -171,7 +171,7 @@ b = 5\sqrt{12}
 %------------------
 
 \pagebreak
-\item (1.3) The {\bf central limit theorem} is stated in \citet[][Section B.6]{AsterE2}:
+\item (1.3) The {\bf central limit theorem} is stated in \citet[][Section B.6]{Aster}:
 %
 \begin{quote}
 Let $X_1$, $X_2$, \ldots, $X_n$ be independent and identically distributed (IID) random variables with a finite expected value $\mu$ and variance $\sigma^2$. Let
@@ -203,7 +203,7 @@ Note: Your answer should not have $\mu$ or $\sigma$ in the expressions, since th
 \item What are the minimum and maximum values of $Z_2$?
 \end{itemize}
 
-\item (0.8) By generating samples ($X$) from your $f_U(x)$, demonstrate the central limit theorem by showing a set of histograms of $Z_1$, $Z_2$, $Z_3$, and $Z_{10}$. To obtain each distribution of $Z_n$ (\refeq{Zn}), you will need to repeat the experiment $p$ times; try $p = 10^5$. Center your histograms between $\pm 4$.
+\item (0.8) \ptag\ By generating samples ($X$) from your $f_U(x)$, demonstrate the central limit theorem by showing a set of histograms of $Z_1$, $Z_2$, $Z_3$, and $Z_{10}$. To obtain each distribution of $Z_n$ (\refeq{Zn}), you will need to repeat the experiment $p$ times; try $p = 10^5$. Center your histograms between $\pm 4$.
 
 Hint:
 \begin{itemize}
@@ -389,7 +389,7 @@ NOTE: Matlab's \verb+norm+ command will {\em not} be useful here. In calculating
 
 %----------
 
-\item (0.8) Now generate a new $\bC$ using \verb+covC.m+ by making {\em only} one change: change \verb+icov+ to either 1 or 2. Repeat Problem 4-1 using the same set of Gassian random vectors $\bw_j$, as before. This will allow for a true comparison between samples from the Gaussian or exponential covariance functions.
+\item (0.8) \ptag\ Now generate a new $\bC$ using \verb+covC.m+ by making {\em only} one change: change \verb+icov+ to either 1 or 2. Repeat Problem 4-1 using the same set of Gassian random vectors $\bw_j$, as before. This will allow for a true comparison between samples from the Gaussian or exponential covariance functions.
 
 \begin{enumerate}
 \item Generate samples of the new $\bC$, add $\bmu_{1000}$ to each sample. Plot the the first 8 samples.
@@ -400,7 +400,7 @@ NOTE: Matlab's \verb+norm+ command will {\em not} be useful here. In calculating
 
 %----------
 
-\item (0.2) Repeat Problem 4-2 for the set of 2000 samples from the new $\bC$.
+\item (0.2) \ptag\ Repeat Problem 4-2 for the set of 2000 samples from the new $\bC$.
 
 \end{enumerate}
 
@@ -409,10 +409,7 @@ NOTE: Matlab's \verb+norm+ command will {\em not} be useful here. In calculating
 \pagebreak
 \subsection*{Problem} \howmuchtime\
 
-%-------------------------------------------------------------
-\bibliographystyle{agu08}
 \bibliography{carl_abbrev,carl_main,carl_source,carl_him,carl_alaska}
-%-------------------------------------------------------------
 
 %-------------------------------------------------------------
 

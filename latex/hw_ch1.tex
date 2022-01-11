@@ -12,7 +12,7 @@
 \begin{spacing}{1.2}
 \centering
 {\large \bf Problem Set 2: Aster Ch. 1 [ch1]} \\
-GEOS 627: Inverse Problems and Parameter Estimation, Carl Tape \\
+\cltag\ \\
 Assigned: September 4, 2019 --- Due: September 11, 2019 \\
 Last compiled: \today
 \end{spacing}
@@ -21,7 +21,7 @@ Last compiled: \today
 
 \subsection*{Instructions}
 
-Review Appendix A of \citet{AsterE2}. In your solutions, be sure to explain your steps. Be clear to distinguish scalars ($k$), vectors ($\bv$), matrices ($\bG$), and operators ($G$). If your answers are hand-written, you might want to put single bars under vectors and double bars under matrices.
+Review Appendix A of \citet{Aster}. In your solutions, be sure to explain your steps. Be clear to distinguish scalars ($k$), vectors ($\bv$), matrices ($\bG$), and operators ($G$). If your answers are hand-written, you might want to put single bars under vectors and double bars under matrices.
 
 %\pagebreak
 \subsection*{Problem 1 (1.0). Aster 1-1.}
@@ -50,7 +50,7 @@ Hints:
 \subsection*{Problem 2 (2.0). Aster 1-2 modified.}
 
 Consider the ballistic problem in Section 1.2.
-The mathematical model is \citep[][Eq.~1.13]{AsterE2}
+The mathematical model is \citep[][Eq.~1.13]{Aster}
 %
 \begin{equation}
 y(t) = m_1 + m_2 t - \sfrac{1}{2} m_3 t^2.
@@ -255,14 +255,14 @@ and compare this with $\bd^{\rm exact}$ by superimposing the two curves in a plo
 
 %-----
 
-\item (0.5) Generate a noisy travel time vector where independent normally distributed noise with a standard deviation of 0.05~ms ($5 \times 10^{-5}$~s) is added to the elements of $\bd^{\rm exact}$. (Hint: Matlab command \verb+randn+) Re-solve the system for $\bem$ and again compare your results graphically with $\bem_{\rm true}$. How has the model changed?
+\item (0.5) \ptag\ Generate a noisy travel time vector where independent normally distributed noise with a standard deviation of 0.05~ms ($5 \times 10^{-5}$~s) is added to the elements of $\bd^{\rm exact}$. (Hint: Matlab command \verb+randn+) Re-solve the system for $\bem$ and again compare your results graphically with $\bem_{\rm true}$. How has the model changed?
 
 
 \label{calc3}
 
 %-----
 
-\item (0.5) Repeat parts \ref{calc1}, \ref{calc2}, and \ref{calc3}, but for just $\nparm=4$ sensor depths and corresponding slowness intervals. Keep the maximum depth as the same as before (20~m), and note that $\Delta z$ is no longer 0.2~m.
+\item (0.5) \ptag\ Repeat parts \ref{calc1}, \ref{calc2}, and \ref{calc3}, but for just $\nparm=4$ sensor depths and corresponding slowness intervals. Keep the maximum depth as the same as before (20~m), and note that $\Delta z$ is no longer 0.2~m.
 
 Is the recovery of the true model improved? Explain in terms of the condition numbers (Aster Section A.8; Matlab command \verb+cond+) of your $\bG$ matrices.
 
@@ -292,11 +292,9 @@ Find a journal article that discusses the solution of an inverse problem in a di
 \subsection*{Problem} \howmuchtime\
 
 %-------------------------------------------------------------
-\nocite{AsterE2}
+\nocite{Aster}
 
-\bibliographystyle{agu08}
 \bibliography{carl_abbrev,carl_main,carl_source,carl_him,carl_alaska}
-%-------------------------------------------------------------
 
 %-------------------------------------------------------------
 \end{document}

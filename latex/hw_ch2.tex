@@ -12,7 +12,7 @@
 \begin{spacing}{1.2}
 \centering
 {\large \bf Problem Set 6: Aster Ch. 2 [ch2]} \\
-GEOS 627: Inverse Problems and Parameter Estimation, Carl Tape \\
+\cltag\ \\
 Assigned: October 9, 2019 --- Due: October 16, 2019 \\
 Last compiled: \today
 \end{spacing}
@@ -22,7 +22,7 @@ Last compiled: \today
 \subsection*{Instructions}
 
 \begin{itemize}
-\item These problems are from \citet{AsterE2}, Chapters 2 and 3. Be sure you understand Examples 2-1, 2-2, and 3-1; template scripts\footnote{These scripts come with the Matlab toolbox from the book. I have made minor changes and added the {\tt \_uaf} to distinguish these versions from those in the toolbox.}  for these are saved as \verb+ex_2_1_2_uaf.m+ and \verb+ex_3_1_uaf.m+ in the class directory.
+\item These problems are from \citet{Aster}, Chapters 2 and 3. Be sure you understand Examples 2-1, 2-2, and 3-1; template scripts\footnote{These scripts come with the Matlab toolbox from the book. I have made minor changes and added the {\tt \_uaf} to distinguish these versions from those in the toolbox.}  for these are saved as \verb+ex_2_1_2_uaf.m+ and \verb+ex_3_1_uaf.m+ in the class directory.
 \item Wherever it says ``calculate \ldots'' or ``compute \ldots,'' please list the numerical output.
 \item List units for all answers.
 \end{itemize}
@@ -128,7 +128,7 @@ Hint: Review \verb+notes_taylor.pdf+.
 
 %-------
 
-\item (0.3) Show that \refEq{min} is equivalent to the linear least squares problem
+\item (0.3) \ptag\ Show that \refEq{min} is equivalent to the linear least squares problem
 %
 \begin{equation}
 \min\left\|  \covd^{-1/2}\bG\bem - \covd^{-1/2}\bd  \right\|_2^2
@@ -138,7 +138,7 @@ where $\covd^{-1/2}$ is the matrix square root, \ie $\covdi = \covd^{-1/2} \covd
 
 %-------
 
-\item (0.3) The Cholesky factorization of $\covdi$ can be used instead of the matrix square root. Show that \refEq{min} is equivalent to the linear least squares problem
+\item (0.3) \ptag\ The Cholesky factorization of $\covdi$ can be used instead of the matrix square root. Show that \refEq{min} is equivalent to the linear least squares problem
 %
 \begin{equation}
 \min\left\|  \bR\bG\bem - \bR\bd  \right\|_2^2
@@ -183,7 +183,7 @@ to the $m=20$ noise-free data points
 
 \begin{enumerate}
 \item Write the expression for the solution $\bem_{\rm lsq}$ to the least squares problem.
-\item Use the QR factorization of $\bG$ to write the expression for the solution $\bem_{\rm qr}$ for \makebox{$\bG\bem = \bd$}. Hint: \citet[][Appendix A]{AsterE2}.
+\item Use the QR factorization of $\bG$ to write the expression for the solution $\bem_{\rm qr}$ for \makebox{$\bG\bem = \bd$}. Hint: \citet[][Appendix A]{Aster}.
 
 \item Use the SVD factorization of $\bG$ to write the expression for the solution $\bem_{\rm svd}$ for \makebox{$\bG\bem = \bd$}.
 \end{enumerate}
@@ -198,7 +198,7 @@ to the $m=20$ noise-free data points
 \end{enumerate}
 
 
-\item (0.3) To demonstrate the instability of the solution, compute the least-squares solution \verb+mlsqmod = inv(G'*G)*G'*y+. (Note \footnote{This equation is based on a non-square $\bG$, but of course our $\bG$ is square. Do not motify our $\bG$.})
+\item (0.3) \ptag\ To demonstrate the instability of the solution, compute the least-squares solution \verb+mlsqmod = inv(G'*G)*G'*y+. (Note \footnote{This equation is based on a non-square $\bG$, but of course our $\bG$ is square. Do not motify our $\bG$.})
 %
 \begin{enumerate}
 \item How does this model and its predictions compare with the previous results?
@@ -227,7 +227,7 @@ Show that $\bG^{\dagger} = \bV_p \bS_p^{-1} \bU_p^T$ satisfies these four proper
 
 \subsection*{Problem 5 (2.0). Aster 3-2.}
 
-Example~3.1 in \citet{AsterE2}---which we explored in \verb+lab_ch2.pdf+---presented a resolution test for a ``spike model'' in a tomography problem.
+Example~3.1 in \citet{Aster}---which we explored in \verb+lab_ch2.pdf+---presented a resolution test for a ``spike model'' in a tomography problem.
 Another resolution test commonly performed in tomography studies is a {\bf checkerboard test}, which consists of using a test model composed of alternating positive and negative perturbations. Perform a checkerboard test on the tomography problem in Example~3.1 using the test model
 %
 \begin{equation*}
@@ -270,7 +270,7 @@ What parameters are perfectly recovered? Plot the vector.
 \item (0.2) What is the formula for the covariance matrix $\cpost$ associated with $\bem_{\dagger}$? \\ Assume that $\covd = \sigma^2\bI$.
 \item (0.2) Compute the covariance matrix $\cpost$ using $\sigma = 1$~s. \\
 List the standard deviations associated with $\cpost$.
-\item (0.2) Compute and plot the correlation matrix $\rhopost$. List the correlation coefficient between the 2nd and 4th model parameters.
+\item (0.2) \ptag\ Compute and plot the correlation matrix $\rhopost$. List the correlation coefficient between the 2nd and 4th model parameters.
 \end{enumerate}
 
 \begin{itemize}
@@ -292,8 +292,7 @@ List the standard deviations associated with $\cpost$.
 \pagebreak
 
 %-------------------------------------------------------------
-\nocite{AsterE2}
-\bibliographystyle{agu08}
+\nocite{Aster}
 \bibliography{carl_abbrev,carl_main,carl_source,carl_him,carl_alaska}
 %-------------------------------------------------------------
 
@@ -302,7 +301,7 @@ List the standard deviations associated with $\cpost$.
 \section{Aside: model parameters as perturbations}
 \label{sec:pert}
 
-The tomography problem was introduced in Example~1.12 with the unknown entries of the model vector being slowness values $s_k = 1/v_k$, where $v_k > 0$ is the velocity of the medium. In \citet{AsterE2} Example 3.1, there are negative entries in $\bem$, which is not permitted for slowness. The entries of $\bem$ should be thought of as {\em perturbations} in slowness from some uniform value, $s_0$. Then the entries in the data vector should be thought of as {\em perturbations} in travel time from the reference travel time, $\bd_0 = \bG\bem_0$, where $\bem_0$ has $s_0$ in each entry. We can rewrite our problem as
+The tomography problem was introduced in Example~1.12 with the unknown entries of the model vector being slowness values $s_k = 1/v_k$, where $v_k > 0$ is the velocity of the medium. In \citet{Aster} Example 3.1, there are negative entries in $\bem$, which is not permitted for slowness. The entries of $\bem$ should be thought of as {\em perturbations} in slowness from some uniform value, $s_0$. Then the entries in the data vector should be thought of as {\em perturbations} in travel time from the reference travel time, $\bd_0 = \bG\bem_0$, where $\bem_0$ has $s_0$ in each entry. We can rewrite our problem as
 %
 \begin{eqnarray}
 \bG\bem &=& \bd
@@ -335,7 +334,6 @@ Setup for the tomography problem.
 \label{fig:index}
 }}
 \end{figure} 
-
 
 %-------------------------------------------------------------
 \end{document}

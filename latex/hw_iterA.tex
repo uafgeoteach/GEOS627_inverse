@@ -12,7 +12,7 @@
 \begin{spacing}{1.2}
 \centering
 {\large \bf Problem Set 5: Iterative methods with generalized least squares, Part A [iterA]} \\
-GEOS 627: Inverse Problems and Parameter Estimation, Carl Tape \\
+\cltag\ \\
 Assigned: September 30, 2019 --- Due: October 9, 2019 \\
 Last compiled: \today
 \end{spacing}
@@ -106,7 +106,7 @@ After you are done, reset \verb+idouble=1+; from here on out, we will use \verb+
 
 \item (0.2) Compute the mean and standard deviation of each sample from the set of 1000 samples. Plot the means and standard deviations as two histograms.
 
-\item (1.0) Generate a Gaussian random field with (a) Gaussian covariance, (b) exponential covariance, and (c) circular covariance. In each case, {\em use the same Gaussian random vector} (note: this requires coding). Use \verb+nx = 2^7+, \verb+ichol=0+, \verb+ifourier=1+, \verb+idouble=1+, and keep all other parameters fixed (as defaults).
+\item (1.0) \ptag\ Generate a Gaussian random field with (a) Gaussian covariance, (b) exponential covariance, and (c) circular covariance. In each case, {\em use the same Gaussian random vector} (note: this requires coding). Use \verb+nx = 2^7+, \verb+ichol=0+, \verb+ifourier=1+, \verb+idouble=1+, and keep all other parameters fixed (as defaults).
 %
 \begin{enumerate}
 \item Show the GRFs in a $3 \times 1$ subplot figure. \\
@@ -119,15 +119,12 @@ Hint: Use the template code provided at the end of \verb+covrand2D.m+ and see \v
 %When you generate the first Gaussian random field, save the Gaussian random vectors as \verb+A+ and \verb+B+ in \verb+grf2.m+. Then pass these vectors into \verb+grf2.m+ for the other two sets of samples.
 \end{enumerate}
 
-\item (0.5) Choose a covariance function (pick any \verb+icov+), then plot six Gaussian random fields, each with a different length scale $L'$. Use the same Gaussian random vector to generate each GRF. Include a $3 \times 2$ subplot figure showing your GRFs.
+\item (0.5) \ptag\ Choose a covariance function (pick any \verb+icov+), then plot six Gaussian random fields, each with a different length scale $L'$. Use the same Gaussian random vector to generate each GRF. Include a $3 \times 2$ subplot figure showing your GRFs.
 
 \end{enumerate}
 
 %------------------------
 
-%-------------------------------------------------------------
-%\pagebreak
-\bibliographystyle{agu08}
 \bibliography{carl_abbrev,carl_main,carl_source,carl_him,carl_alaska}
 %-------------------------------------------------------------
 
