@@ -1,4 +1,4 @@
-name: inverse_env
+name: inverse
 channels:
   - conda-forge
   - default
