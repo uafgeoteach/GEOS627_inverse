@@ -20,6 +20,7 @@ def xy2distance_row1(nx,ny):
     iD2row1 = (xref-ix)**2 + (yref-iy)**2
     return np.sqrt(iD2row1),ix0,iy0
 
+
 def xy2distance(nx,ny):
     # integer index vectors
     # NOTE: these start with 0 for convenience in the FFT algorithm
@@ -35,6 +36,7 @@ def xy2distance(nx,ny):
 
     return iD,ix0,iy0
 
+
 def k_of_x(x):
     N      = np.max(x.shape)
     dx     = x[1]-x[0]
@@ -42,6 +44,7 @@ def k_of_x(x):
     inull  = N/2
     k      = dk*(np.linspace(1,N,N)-inull)
     return k
+
 
 def x_of_k(k):
     N      = np.max(k.shape)
@@ -69,6 +72,8 @@ def mhfft2(x,y,f):
     jnull      = Ny/2
     ft         = (Periodx/Nx)*(Periody/Ny)*np.roll(np.roll(np.fft.fft2(f),int(jnull-1),axis=0),int(inull-1),axis=1)
     return k,l,ft
+
+
 def grf2(k,m,C,n,*argv):
     Nx         = np.max(k.shape)
     Ny         = np.max(m.shape)
@@ -90,6 +95,8 @@ def grf2(k,m,C,n,*argv):
     phi=np.sqrt(Periodx*Periody*Cmtx/2)*(A+B*1j)
     phi[np.isnan(phi)]=0
     return phi, A,B
+
+
 def mhifft2(k,l,ft,rflag):
     # 2D Fast Fourier Transform of (x,y,f) into (k,l,ft).  The length of 
     # x,y  and f must be an even number, preferably a power of two.  The index of

@@ -4,6 +4,7 @@ import numpy as np
 import scipy
 import matplotlib.pyplot as plt
 
+
 def phi(x):
     # Parameter Estimation and Inverse Problems, 3rd edition, 2018
     # by R. Aster, B. Borchers, C. Thurber
@@ -25,6 +26,8 @@ def phi(x):
     else:
         z = 1 - phi(-x)
     return z
+
+
 def chi2cdf(x,m):
     # Parameter Estimation and Inverse Problems, 3rd edition, 2018
     # by R. Aster, B. Borchers, C. Thurber
@@ -50,6 +53,8 @@ def chi2cdf(x,m):
         z = (x - m + 2 / 3 - 0.08 / m) * np.sqrt((m - 1)*np.log((m - 1)/x)+x-(m - 1)) / np.abs(x-m+1);
         p = phi(z)
     return p
+
+
 def chi2inv(p,nu):
     # Parameter Estimation and Inverse Problems, 3rd edition, 2018
     # by R. Aster, B. Borchers, C. Thurber
@@ -93,6 +98,7 @@ def chi2inv(p,nu):
             l = m
     return (l+r)/2
 
+
 def shaw(n):
     # Initialization.
     h = np.pi / n
@@ -123,6 +129,8 @@ def shaw(n):
     x = a1 * np.exp(-c1*(-np.pi / 2 + np.arange(0.5,n+0.5) * h - t1)**2)+ a2 * np.exp(-c2*(-np.pi / 2 + np.arange(0.5,n+0.5) * h - t2)**2)
     b = A * x
     return A,b,x
+
+
 def ex_getG(iex,*argv):
 # %EX_GETG return G for several examples in Aster
 # %
@@ -231,6 +239,7 @@ def ex_getG(iex,*argv):
         plt.colorbar()
         plt.title('G matrix [%i x %i] for %s' %(G.shape[0],G.shape[1],stlab))
     return G
+
 
 def collocate(xmin,xmax,n):
     #COLLOCATE simple collocation discretization

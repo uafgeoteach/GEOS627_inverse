@@ -52,16 +52,14 @@ def covC(id,parms):
         b = scipy.special.kv(nu, np.sqrt(2*nu)*id/iL)
         Cd = sigma**2 * (1/(scipy.special.gamma(nu)*2**(nu-1))) * (np.sqrt(2*nu)*id/iL)**nu * b
 
-
     return Cd
-
-
 
 
 def cart2pol(x, y):
     rho = np.sqrt(x**2 + y**2)
     phi = np.arctan2(y, x)
     return(rho, phi)
+
 
 def pol2cart(rho, phi):
     x = rho * np.cos(phi)
@@ -82,6 +80,7 @@ def plotconst_mod(x,l,r,color,lw):
     myy=myy[1:l2+1]
     plt.plot(myx,myy,color,lw=lw)
 
+    
 def tsvd(g, X, rvec):
 #     %TSVD regularization using truncated singular value decomposition
 # %
@@ -114,7 +113,6 @@ def tsvd(g, X, rvec):
     #print(n,p)
     q           = np.min([n, p])
     nr          = len(rvec)
-
 
     #initialize outputs
     f_r         = np.zeros((p, nr))            # set of r models
@@ -186,16 +184,53 @@ def fftvec(t):
     #f1 = linspace(-fNyq,fNyq-df,n)'
     #f = [f1(n/2+1:n) ; f1(1:n/2)];
 
-    #==========================================================================
     
+def gridvec(xmin,xmax,numx,ymin,ymax):
+    """  This function inputs specifications for creating a grid 
+         of uniformly spaced points, reshaped into column vectors
+         of the x- and y-coordinates.  Note that dx = dy."""
+    
+    xvec0 = np.linspace(xmin,xmax,numx)
+    dx = xvec0[1] - xvec0[0]
+    yvec0 = np.arange(ymin, ymax+dx, dx)
+    
+    X, Y = np.meshgrid(xvec0,yvec0)
+    a,b = X.shape
+    xvec = np.reshape(X,(a*b,1))
+    yvec = np.reshape(Y,(a*b,1))
+    
+    numy = len(yvec0)
+    
+    return xvec, yvec, numy, X, Y
 
-
-
+#def gridvec(xmin,xmax,numx,ymin,ymax,returnXY=False):
+#    """  This function inputs specifications for creating a grid 
+#         of uniformly spaced points, reshaped into column vectors
+#         of the x- and y-coordinates.  Note that dx = dy."""
+#    
+#    xvec0 = np.linspace(xmin,xmax,numx)
+#    dx = xvec0[1] - xvec0[0]
+#    yvec0 = np.arange(ymin, ymax+dx, dx)
+#    
+#    X, Y = np.meshgrid(xvec0,yvec0)
+#    a,b = X.shape
+#    xvec = np.reshape(X,(a*b,1))
+#    yvec = np.reshape(Y,(a*b,1))
+#    
+#    numy = len(yvec0)
+#    
+#    if returnXY:
+#        return xvec, yvec, numy, X, Y
+#    else:
+#        return xvec, yvec, numy
+    
+    
 def randomvec(xmin0,xmax0,n):
     xmin=np.min([xmin0,xmax0])
     xmax = np.max([xmin0,xmax0])
     x = (xmax - xmin)*np.random.rand(int(n),1) + xmin
     return x
+
 
 def plot_histo(hdat,edges,itype=2,make_plot=True):
     #PLOT_HISTO plot a histogram with cyan bars and black boundaries
@@ -240,6 +275,7 @@ def plot_histo(hdat,edges,itype=2,make_plot=True):
     
     plt.tight_layout()
 
+    
 def fftvec(t):
     # Python version of fftvec.m made by Carl tape
     # FFTVEC provides frequency vector for Matlab's fft convention
@@ -280,8 +316,7 @@ def fftvec(t):
     #f1 = linspace(-fNyq,fNyq-df,n)'
     #f = [f1(n/2+1:n) ; f1(1:n/2)];
 
-    #==========================================================================
-    
+
 def svdall(G):
     [U, svec, VH]   = np.linalg.svd(G) 
     S=scipy.linalg.diagsvd(svec,*G.shape)                  # vector of singular values
