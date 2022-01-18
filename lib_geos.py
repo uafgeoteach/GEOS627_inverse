@@ -282,3 +282,16 @@ def fftvec(t):
 
     #==========================================================================
     
+def svdall(G):
+    [U, svec, VH]   = np.linalg.svd(G) 
+    S=scipy.linalg.diagsvd(svec,*G.shape)                  # vector of singular values
+    V=VH.T
+    p=np.linalg.matrix_rank(G)
+    Sp=S[:p,:p]
+    Vp=V[:,:p]
+    V0=V[:,p:]
+    Up=U[:,:p]
+    U0=U[:,p:]
+    Rm=Vp@Vp.T
+    Rd=Up@Up.T
+    return Up,Sp,Vp,U0,V0,Rm,Rd,p
