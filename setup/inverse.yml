@@ -14,4 +14,4 @@ dependencies:
   - pandas
   - scipy
   - statsmodels
-
+  - sympy
