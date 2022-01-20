@@ -20,7 +20,6 @@ def xy2distance_row1(nx,ny):
     iD2row1 = (xref-ix)**2 + (yref-iy)**2
     return np.sqrt(iD2row1),ix0,iy0
 
-
 def xy2distance(nx,ny):
     # integer index vectors
     # NOTE: these start with 0 for convenience in the FFT algorithm
@@ -35,7 +34,13 @@ def xy2distance(nx,ny):
     iD=np.sqrt((MX-MX.T)**2+(MY-MY.T)**2)
 
     return iD,ix0,iy0
-
+def x2distance(xmin,xmax,nx):
+    ix0 = np.arange(nx)
+    Dx=xmax-xmin
+    [X1,X2] = np.meshgrid(ix0,ix0)
+    iD=np.abs(X1-X2)
+    dx=Dx/(nx-1)
+    return iD,dx,ix0
 
 def k_of_x(x):
     N      = np.max(x.shape)
@@ -45,7 +50,6 @@ def k_of_x(x):
     k      = dk*(np.linspace(1,N,N)-inull)
     return k
 
-
 def x_of_k(k):
     N      = np.max(k.shape)
     dk     = k[1]-k[0]
@@ -53,6 +57,14 @@ def x_of_k(k):
     x      = dx*(np.linspace(1,N,N)-1)
     return x
 
+def mhfft(x,f):
+    Nx         = np.max(x.shape)
+    k          = k_of_x(x)
+    Periodx    = Nx*(x[1]-x[0])
+
+    inull      = Nx/2
+    ft         = (Periodx/Nx)*np.roll(np.fft.fft(f),int(inull-1))
+    return k,ft
 
 def mhfft2(x,y,f):
     # 2D Fast Fourier Transform of (x,y,f) into (k,l,ft).  The length of 
@@ -72,8 +84,6 @@ def mhfft2(x,y,f):
     jnull      = Ny/2
     ft         = (Periodx/Nx)*(Periody/Ny)*np.roll(np.roll(np.fft.fft2(f),int(jnull-1),axis=0),int(inull-1),axis=1)
     return k,l,ft
-
-
 def grf2(k,m,C,n,*argv):
     Nx         = np.max(k.shape)
     Ny         = np.max(m.shape)
@@ -95,8 +105,6 @@ def grf2(k,m,C,n,*argv):
     phi=np.sqrt(Periodx*Periody*Cmtx/2)*(A+B*1j)
     phi[np.isnan(phi)]=0
     return phi, A,B
-
-
 def mhifft2(k,l,ft,rflag):
     # 2D Fast Fourier Transform of (x,y,f) into (k,l,ft).  The length of 
     # x,y  and f must be an even number, preferably a power of two.  The index of
@@ -117,3 +125,36 @@ def mhifft2(k,l,ft,rflag):
     if rflag==1:
         f=np.real(f)
     return x,y,f
+
+
+def mhfft(x,f):
+    Nx         = np.max(x.shape)
+    k          = k_of_x(x)
+    Periodx    = Nx*(x[1]-x[0])
+
+    inull      = Nx/2
+    ft         = (Periodx/Nx)*np.roll(np.fft.fft(f),int(inull-1))
+    return k,ft
+
+def grf1(k,C,n):
+    Nx         = np.max(k.shape)
+    dk=k[1]-k[0]
+    Periodx    =2*np.pi/dk
+    Cmtx=np.repeat(C[:, np.newaxis], n, axis=1)
+    #Cmtx=Cmtx.reshape((n,Nx))
+    A = np.random.randn(Nx,n) 
+    B = np.random.randn(Nx,n)
+    phi=np.sqrt(Periodx*Cmtx/2)*(A+B*1j)
+    phi[np.isnan(phi)]=0
+    return phi
+
+def mhifft(k,f):
+    Nx         = np.max(k.shape)
+    x          = x_of_k(k)
+    Periodx    = Nx*(x[1]-x[0])
+
+    inull      = Nx/2
+    ft         = (Nx/Periodx)*np.fft.ifft(np.roll(f,-int(inull-1)),axis=0)
+    return k,ft
+
+
