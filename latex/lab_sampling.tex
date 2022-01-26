@@ -29,26 +29,28 @@ Last compiled: \today
 \begin{itemize}
 \item The purpose of this exercise is to understand one particular method of generating samples from an arbitrary probability distribution. The sampling method, known as the {\em rejection method}, was introduced by \citet{vonNeumann1951} and is also discussed in Section 2.3.2 of \citet{Tarantola2005}. One example of its application can be found in \citet{SilwalTape2016} for the case of a three-dimensional model parameter space defining the orientation of an earthquake source mechanism.
 
-We use the rejection method to generate samples of an arbitrary distribution. As far as I know, there is no such function in Matlab to do this. (Let me know if you find one!)
+We use the rejection method to generate samples of an arbitrary distribution. As far as I know, there is no such function in Python to do this. (Let me know if you find one!)
 %    http://www.mathworks.com/help/stats/common-generation-methods.html#br5k9hi-4
 
-\item A secondary purpose is to become familiar with using in-line functions in Matlab. These are functions that are defined in a single line within a Matlab script, such as
+\item A secondary purpose is to become familiar with using custom functions in Python. These are functions that are defined by you within a Python script, such as
 
-\verb+p = @(x) ( A1*exp(-(x-x1).^2/(2*sig1^2)) );+
+\verb+ def p(x): ( A1*np.exp(-(x-x1)**2/(2*sig1**2)) );+
 
-in our lab. These functions are useful for writing down code that is as close to the mathematics as possible, such as
+in our lab. These functions can be useful for writing down code that is as close to the mathematics as possible, such as
 %
 \begin{equation}
 p(x) = A_1\,e^{-(x-x_1)^2/(2\sigma_1^2)}
 \end{equation}
 
-\item We will also get some practice plotting 2D functions in Matlab.
+\item We will also get some practice plotting 2D functions in Python.
 
-\item Make a copy of the template script:
+\item We will be using the template script \verb+lab_sampling.ipynb+.
+
+%\item Make a copy of the template script:
 %
-\begin{verbatim}
-cp lab_sampling_template.m lab_sampling.m
-\end{verbatim}
+%\begin{verbatim}
+%cp lab_sampling_template.m lab_sampling.m
+%\end{verbatim}
 
 \end{itemize}
 
@@ -60,7 +62,7 @@ cp lab_sampling_template.m lab_sampling.m
 \subsection*{Exercises}
 
 \begin{enumerate}
-\item Review \verb+lab_linefit.m+. What does the Matlab function \verb+randn+ do? Describe how the histogram plotted achieves its shape.
+\item Review \verb+lab_linefit.ipynb+. What does the Numpy function \verb+np.random.random()+ do? Describe how the histogram plotted achieves its shape.
 
 \vertgap
 
@@ -68,9 +70,9 @@ cp lab_sampling_template.m lab_sampling.m
 
 \vertgap
 
-\item What does the custom function \verb+plot_histo+ do?
+%\item What does the custom function \verb+plot_histo+ do?
 
-\vertgap
+%\vertgap
 
 \item Run the example script to generate the figure in \refFig{fig}. The script will generate samples of a specified function that we can think of as a probability density function.
 
@@ -88,7 +90,7 @@ Define $A = \max(p(x))$.
 \end{enumerate}
 \end{spacing}
 
-\item Explain the pattern in \refFig{fig}c and how it occurs. Comment out the first \verb+error+ statement to annotate the plot in (a) to help your understanding.
+\item Explain the pattern in \refFig{fig}c and how it occurs. Run the next block of code to annotate (a) to help your understanding.
 
 What fraction of $p(x_i)/A$ are $<$0.05?
 
@@ -96,7 +98,7 @@ What fraction of $p(x_i)/A$ are $>$0.95?
 
 \vertgap
 
-\item Comment out the second \verb+error+ statement. Make sure you understand the relationships among the four subplots. (Note that only the fourth subplot is new.)
+\item Run the next cell. Make sure you understand the relationships among the four subplots. (Note that only the fourth subplot is new.)
 
 \vertgap
 
@@ -117,7 +119,7 @@ Why is a high value, $p(x_i)/A > 0.95$, generally going to be kept?
 
 \vertgap
 
-\item Now try a more interesting function by uncommenting the sum of two Gaussians.
+\item Now try a more interesting function by changing \verb+ifun=2+ in the 2nd cell block to see the sum of two Gaussians.
 
 What fraction of samples were kept for your run?
 
@@ -130,9 +132,9 @@ What is $\int p(x)/A \, dx$?
 \subsection*{Practice}
 
 \begin{enumerate}
-\item Now that you've used an in-line function for one variable, try writing one for two variables, $f(x,y)$. This will be useful for Problem 1 of the epicenter homework.
+\item Now that you've used a function for one variable, try writing one for two variables, $f(x,y)$. This will be useful for Problem 1 of the epicenter homework.
 
-In the space at the bottom of \verb+lab_sampling.m+, write an in-line function for 
+In the space at the bottom of \verb+lab_sampling.ipynb+, write a function for 
 %
 \begin{equation*}
 p(x,y) = A\,e^{-(x^2+y^2)},
@@ -140,7 +142,7 @@ p(x,y) = A\,e^{-(x^2+y^2)},
 %
 then evaluate the function for some $A$ at some input values $(x_i,y_i)$, and check the output $p(x_i,y_i)$ with the direct calculation of $A\,e^{-(x^2+y^2)}$.
 
-\item If your function is properly defined, then you should be able to plot it using the lines in \verb+lab_sampling.m+. Make sure you understand the three different ways of plotting this function. Note that you can pass any dimensional array (scalar, vector, matrix, etc) as \verb+x+ and \verb+y+ into \verb+p(x,y)+.
+\item If your function is properly defined, then you should be able to plot it using the lines in \verb+lab_sampling.ipynb+. Make sure you understand the three different ways of plotting this function. Note that you can pass any dimensional array (scalar, vector, matrix, etc) as \verb+x+ and \verb+y+ into \verb+p(x,y)+.
 
 \end{enumerate}
 
@@ -160,78 +162,78 @@ Here {\tt xmin = -15} and {\tt xmax = 12}.
 %------------------------------------------
 
 \clearpage\pagebreak
-\appendix
+%\appendix
 
-\section{Excerpt from {\tt lab$\_$sampling.m}}
-\label{sec:code}
+%\section{Excerpt from {\tt lab$\_$sampling.m}}
+%\label{sec:code}
 
-\tiny
-\begin{spacing}{1.0}
-\begin{verbatim}
+%\tiny
+%\begin{spacing}{1.0}
+%\begin{verbatim}
 % limits for x to consider
 % OUTSIDE THESE LIMITS WE ASSUME THAT p(x) = 0
-xmin = -15; xmax = 12;
+%xmin = -15; xmax = 12;
 
 % define in-line function p(x)
 % note that parameters like A1, A2, x1, x2 must be assigned before p()
-x1 = -2; A1 = 2; sig1 = 2;
-x2 =  4; A2 = 1; sig2 = 0.5;
-ifun = 1;
-switch ifun
-    case 1
-        p = @(x) ( A1*exp(-(x-x1).^2/(2*sig1^2)) );
-    case 2
-        p = @(x) ( A1*exp(-(x-x1).^2/(2*sig1^2)) + A2*exp(-(x-x2).^2/(2*sig2^2)) );
-end
+%x1 = -2; A1 = 2; sig1 = 2;
+%x2 =  4; A2 = 1; sig2 = 0.5;
+%ifun = 1;
+%switch ifun
+%    case 1
+%        p = @(x) ( A1*exp(-(x-x1).^2/(2*sig1^2)) );
+%    case 2
+%        p = @(x) ( A1*exp(-(x-x1).^2/(2*sig1^2)) + A2*exp(-(x-x2).^2/(2*sig2^2)) );
+%end
 
 % KEY TECHNICAL POINT: f is a function, not a numerical array
 % (note that x is not a stored array)
-whos
+%whos
 
 % analytical curve
-xcurve = linspace(xmin,xmax,1000);
-pcurve = p(xcurve);
+%xcurve = linspace(xmin,xmax,1000);
+%pcurve = p(xcurve);
 
 % generate samples
 % KEY: what does rand do?
-NTRY = 1e5;
-xtry = xmin + (xmax-xmin)*rand(NTRY,1);
+%NTRY = 1e5;
+%xtry = xmin + (xmax-xmin)*rand(NTRY,1);
 
 % sample the function
-A = max([A1 A2]);           % note: only true for our choice of p(x)
+%A = max([A1 A2]);           % note: only true for our choice of p(x)
 %A = max(pcurve);            % (will work for any densely discretized p(x))
-ptry = p(xtry) / A;         % SET A: values between 0 and 1
-chance = rand(NTRY,1);      % SET B: values between 0 and 1
+%ptry = p(xtry) / A;         % SET A: values between 0 and 1
+%chance = rand(NTRY,1);      % SET B: values between 0 and 1
 
 % plot
-figure; nr=3; nc=2;
-edges1 = [xmin:0.2:xmax]; ne1 = length(edges1);
-edges2 = [0:0.05:1];      ne2 = length(edges2);
-subplot(nr,nc,1); plot(xcurve,pcurve/A);
-xlabel('x'); ylabel('p(x) / A'); title('(a)'); axis([xmin xmax 0 1.2]);
-subplot(nr,nc,2); plot_histo(xtry,edges1); xlim([xmin xmax]);
-xlabel('xtry'); title('(b)'); 
-subplot(nr,nc,3); plot_histo(ptry,edges2);
-xlabel('p(xtry) / A'); title('(c)'); 
-subplot(nr,nc,4); plot_histo(chance,edges2);
-xlabel('chance'); title('(d)'); 
+%figure; nr=3; nc=2;
+%edges1 = [xmin:0.2:xmax]; ne1 = length(edges1);
+%edges2 = [0:0.05:1];      ne2 = length(edges2);
+%subplot(nr,nc,1); plot(xcurve,pcurve/A);
+%xlabel('x'); ylabel('p(x) / A'); title('(a)'); axis([xmin xmax 0 1.2]);
+%subplot(nr,nc,2); plot_histo(xtry,edges1); xlim([xmin xmax]);
+%xlabel('xtry'); title('(b)'); 
+%subplot(nr,nc,3); plot_histo(ptry,edges2);
+%xlabel('p(xtry) / A'); title('(c)'); 
+%subplot(nr,nc,4); plot_histo(chance,edges2);
+%xlabel('chance'); title('(d)'); 
 
 % KEY COMMAND: compare pairs of test samples in sets A and B,
 %              then accept or reject the test sample
-ikeep = find(ptry > chance);
-xkeep = xtry(ikeep);
+%ikeep = find(ptry > chance);
+%xkeep = xtry(ikeep);
 
-subplot(nr,nc,5); plot_histo(xkeep,edges1); xlim([xmin xmax]);
-xlabel('xkeep'); title('(e)');
+%subplot(nr,nc,5); plot_histo(xkeep,edges1); xlim([xmin xmax]);
+%xlabel('xkeep'); title('(e)');
 
 % if p is a probability density and F is the misfit function, then
 %    p(x) = exp(-F(x))
 %    F(x) = -ln(p(x))
-subplot(nr,nc,6); plot(xcurve,-log(pcurve));
-axis([xmin xmax -1 1.1*max(-log(pcurve))]);
-xlabel('x'); ylabel('F(x) = -ln(p(x))'); title('(f)');
-\end{verbatim}
-\end{spacing}
+%subplot(nr,nc,6); plot(xcurve,-log(pcurve));
+%axis([xmin xmax -1 1.1*max(-log(pcurve))]);
+%xlabel('x'); ylabel('F(x) = -ln(p(x))'); title('(f)');
+%\end{verbatim}
+%\end{spacing}
 
 %-------------------------------------------------------------
 \end{document}
