@@ -33,11 +33,8 @@ If the number of model parameters is very small (say, less than 10) and if the c
 
 \item Problem 2 involves sampling the probability distribution obtained in Problem 1. You will use the {\em rejection method of sampling}, which is introduced in Section 2.3.2 of \citet{Tarantola2005} (``The Rejection Method''). This method was featured in \verb+lab_sampling.pdf+. The method is attributed to \citet{vonNeumann1951}.
 
-\item For some homework problems, like this one, I provide a template script. Make a copy of this script, then work with \verb+epicenter.m+:
+\item For some homework problems, like this one, I provide a template script: \verb+hw_epi.ipynb+:
 %
-\begin{verbatim}
-cp epicenter_template.m epicenter.m
-\end{verbatim}
 \end{itemize}
 
 %------------------------
@@ -58,7 +55,7 @@ cp epicenter_template.m epicenter.m
 
 %---------------------
 
-\item (3.3) Using Matlab, implement the misfit function of Tarantola's Problem 7-1 (p.~253), which can be written in the following ways:
+\item (3.3) Using Python and the Jupyter notebook provided, implement the misfit function of Tarantola's Problem 7-1 (p.~253), which can be written in the following ways:
 %
 \begin{eqnarray}
 F(\bem) &=& \frac{1}{2} \sum_{i=1}^6 \frac{\left(t_i(\bem) - t_i^{\rm obs}\right)^2}{\sigma^2}
@@ -71,13 +68,17 @@ F(\bem) &=& \frac{1}{2} \sum_{i=1}^6 \frac{\left(t_i(\bem) - t_i^{\rm obs}\right
 where $\sigma$, $t_i^{\rm obs}$, and the forward model $t_i(\bem)$ are provided in \citet{Tarantola2005}, and the model vector represents the epicenter $\bem = (x^s,y^s)$. Here $\bt(\bem)$ is a $6 \times 1$ vector of predicted arrival times, and $\bt^{\rm obs}$ is a $6 \times 1$ vector of observed arrival times.
 
 \begin{enumerate}
-\item (2.8) Produce a colored 2D plot showing the $F(\bem)$. This will involve evaluating $F(\bem)$ for a grid of $\bem$ (see \verb+epicenter.m+).
+\item (2.8) Produce a colored 2D plot showing the $F(\bem)$. This will involve evaluating $F(\bem)$ for a grid of $\bem$ (see \verb+hw_epi.ipynb+).
 
 \begin{itemize}
 \item For discretizing model parameter space, use the model parameter ranges $x = [0,\;22]$ and $y = [-2,\;30]$.
 \item For all spatial plots in this problem set, use the following axes command,
 
-\verb+axis equal, axis([0 22 -2 30])+
+\verb+plt.axis([0, 22, -2, 30])+
+
+\item You may find it useful when initializing a figure to set the figure size:
+
+\verb+plt.figure(figsize=(9,10))+
 \end{itemize}
 
 \item (0.5) Does the pattern of the misfit function seem reasonable, given the experiment? Discuss.
@@ -88,11 +89,11 @@ Some tips:
 \begin{itemize}
 \item {\bf Be certain that you have entered the input parameters (\eg station locations, travel times) correctly!} (Your results will be wrong if you enter the input incorrectly.)
 
-\item You may find it useful to define in-line functions (see \verb+lab_sampling.pdf+). I have provided \verb+epicenter.m+ as a starting point. This template includes code for generating a set of points covering the 2D model space (you can change \verb+dx+). Note that I have already used variable names that you need to fill with numbers (\eg \verb+tobs+).
+\item You may find it useful to define your own functions (see \verb+lab_sampling.pdf+). I have provided \verb+hw_epi.ipynb+ as a starting point. This template includes code for generating a set of points covering the 2D model space (you can change \verb+dx+). Note that I have already used variable names that you need to fill with numbers (\eg \verb+tobs+).
 
-\item The code in \verb+epicenter.m+ implies that you search over the grid of $\bem$ using a single for loop. This will store the vector of values $f_i = F(x_i,y_i)$; in order to plot this, you will need to apply a reshape command, as we did in \verb+lab_linefit.m+. (Or you could use \verb+scatter+) To use \verb+pcolor+ (or related commands), you need to provide same-size matrices of \verb+X+, \verb+Y+, and \verb+F+, as in \verb+pcolor(X,Y,F); shading flat+. (See \verb+lab_linefit.m+ for an example.)
+\item The code in \verb+hw_epi.ipynb+ implies that you search over the grid of $\bem$ using a single for loop. This will store the vector of values $f_i = F(x_i,y_i)$; in order to plot this, you will need to apply a reshape command, as we did in \verb+lab_linefit.ipynb+. (Or you could use \verb+plt.scatter()+) To use \verb+plt.pcolor()+ (or related commands), you need to provide same-size matrices of \verb+X+, \verb+Y+, and \verb+F+, as in \verb+plt.pcolor(X,Y,F,cmap='jet')+. (See \verb+lab_linefit.ipynb+ for an example.)
 
-\item Plot your 6 stations on your plots. To do so, you need to type \verb+hold on+ after the figure has been made (or after the first thing had been plotted).
+\item Plot your 6 stations on your plots. 
 
 \item Since you will be varying the data vector, $\bt^{\rm obs}$, in Problem 3, you might want to implement the misfit functions as $F(\bem,\bt^{\rm obs})$.
 
@@ -170,7 +171,7 @@ Use the same fixed axes scale as before.
 Hints:
 %
 \begin{itemize}
-\item For background on the rejection method, see \verb+lab_sampling.m+ and \citet[][Section~2.3.2]{Tarantola2005}. (Note that the example in \verb+lab_sampling.m+ was for a function of one variable, not two.) 
+\item For background on the rejection method, see \verb+lab_sampling.ipynb+ and \citet[][Section~2.3.2]{Tarantola2005}. (Note that the example in \verb+lab_sampling.ipynb+ was for a function of one variable, not two.) 
 
 \item You will need to ``try'' some much larger number of samples (\verb+NTRY+) in order to get at least 50 samples that pass the test and are therefore representative of $\sigma_{\rm M}(\bem)$. If you do not get 50 samples that pass the rejection test, try increasing \verb+NTRY+.
 
@@ -184,13 +185,13 @@ Hints:
 \item (0.5) Perform the following statistical analysis on the $\ge50$ samples. (The trends look better if you use more samples.)
 %
 \begin{enumerate}
-\item (0.2) Plot two histograms, one for $x^s$ and one for $y^s$. (Consider using \verb+plot_histo.m+)
+\item (0.2) Plot two histograms, one for $x^s$ and one for $y^s$. (Consider using \verb+plot_histo.py+)
 Does either parameter appear to be Gaussian-distributed?
 
 \item (0.1) Compute the standard deviations of $x^s$ and $y^s$.
 Do these quantities capture the spread exhibited by the samples?
 
-\item (0.2) Compute the correlation coefficient (hint: \verb+corr+) between $x^s$ and $y^s$ for the samples.
+\item (0.2) Compute the correlation coefficient (hint: \verb+np.corrcoef()+) between $x^s$ and $y^s$ for the samples.
 Does this quantity capture the relationship between $x^s$ and $y^s$?
 
 \end{enumerate}
