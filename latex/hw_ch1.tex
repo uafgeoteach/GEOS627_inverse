@@ -13,7 +13,7 @@
 \centering
 {\large \bf Problem Set 2: Aster Ch. 1 [ch1]} \\
 \cltag\ \\
-Assigned: September 4, 2019 --- Due: September 11, 2019 \\
+Assigned: January 24, 2022 --- Due: January 31, 2022 \\
 Last compiled: \today
 \end{spacing}
 
@@ -119,7 +119,7 @@ Plot or sketch an example, as before.
 Plot or sketch an example, as before.
 \end{enumerate}
 %
-Hint: Row-reducing the $3 \times 3$ system of equations (perhaps with an online tool) may provide insights. 
+Hint: Row-reducing the $3 \times 3$ system of equations (perhaps with an online tool) may provide insights, though you do not need this in order to answer the question completely. 
 % THIS WAS DONE IN MATHEMATICA
 In order to row-reduce the augmented matrix, I typed the following command into the online Mathematica platform {\em Wolfram Development Platform}: \\
 \verb+Simplify[MatrixForm[RowReduce[({{1,t1,-t1^2/2,y1},{1,t2,-t2^2/2,y2},{1,t3,-t3^2/2,y3}})]]]+
@@ -249,14 +249,13 @@ and compare this with $\bd^{\rm exact}$ by superimposing the two curves in a plo
 
 %-----
 
-\item (0.5) Using $\bd^{\rm exact}$, solve for the slowness $\bem$ as a function of depth using your $\bG$ matrix and the Matlab backslash operator (\verb+\+). Compare your $\bem$ and $\bem_{\rm true}$  graphically by superimposing the two curves in a plot of $s(z)$ (slowness) vs $z$ (interval midpoint depth).
+\item (0.5) Using $\bd^{\rm exact}$, solve for the slowness $\bem$ as a function of depth using your $\bG$ matrix and the code options in \verb+lab_linefit.ipynb+. Compare your $\bem$ and $\bem_{\rm true}$  graphically by superimposing the two curves in a plot of $s(z)$ (slowness) vs $z$ (interval midpoint depth).
 
 \label{calc2}
 
 %-----
 
-\item (0.5) \ptag\ Generate a noisy travel time vector where independent normally distributed noise with a standard deviation of 0.05~ms ($5 \times 10^{-5}$~s) is added to the elements of $\bd^{\rm exact}$. (Hint: Matlab command \verb+randn+) Re-solve the system for $\bem$ and again compare your results graphically with $\bem_{\rm true}$. How has the model changed?
-
+\item (0.5) \ptag\ Generate a noisy travel time vector where independent normally distributed noise with a standard deviation of 0.05~ms ($5 \times 10^{-5}$~s) is added to the elements of $\bd^{\rm exact}$. (Hint: Python command \verb+numpy.random.randn+) Re-solve the system for $\bem$ and again compare your results graphically with $\bem_{\rm true}$. How has the model changed?
 
 \label{calc3}
 
@@ -264,7 +263,7 @@ and compare this with $\bd^{\rm exact}$ by superimposing the two curves in a plo
 
 \item (0.5) \ptag\ Repeat parts \ref{calc1}, \ref{calc2}, and \ref{calc3}, but for just $\nparm=4$ sensor depths and corresponding slowness intervals. Keep the maximum depth as the same as before (20~m), and note that $\Delta z$ is no longer 0.2~m.
 
-Is the recovery of the true model improved? Explain in terms of the condition numbers (Aster Section A.8; Matlab command \verb+cond+) of your $\bG$ matrices.
+Is the recovery of the true model improved? Explain in terms of the condition numbers (Aster Section A.8; Matlab command \verb+numpy.linalg.cond+) of your $\bG$ matrices.
 
 \end{enumerate}
 
@@ -297,5 +296,67 @@ Find a journal article that discusses the solution of an inverse problem in a di
 \bibliography{carl_abbrev,carl_main,carl_source,carl_him,carl_alaska}
 
 %-------------------------------------------------------------
+
+\appendix
+
+\pagebreak
+
+\section{Notes on discretizing}
+
+This is based on Section~1.4 of \citet{Aster}.
+
+Let's consider the integration of $f(x)$ over the interval $[a,b]$:
+%
+\begin{equation}
+F = \int_a^b f(x)\,\rmd x
+\end{equation}
+%
+We discretize the domain into $n$ points (see below), with each point $x_j$ centered on an interval with width $\Delta x$:
+%
+\begin{eqnarray}
+x_j &=& a + \frac{\Delta x}{2} + (j-1)\Delta x
+\\
+\Delta x &=& \frac{b-a}{n}
+\end{eqnarray}
+%
+Then
+%
+\begin{equation}
+F = \int_a^b f(x)\,\rmd x \approx \sum_{j-1}^n f_j\,\Delta x = \left( \frac{b-a}{n} \right) \sum_{j-1}^n f_j .
+\end{equation}
+%
+The sum of the areas of the rectangles is an approximation for the true area under the curve.
+
+\vspace{1cm}
+\includegraphics[width=12cm]{discretize}
+
+
+%-------------------------------------------------------------
 \end{document}
 %-------------------------------------------------------------
+
+\iffalse
+Consider the expression
+%
+\begin{equation}
+F = \int_{-\infty}^\infty f(x)\,\rmd x
+\end{equation}
+%
+Let's assume that outside some interval $[a,b]$, $f(x) = 0$:
+%
+\begin{eqnarray}
+f(x) &=& \left\{
+\begin{array}{ll} g(x) \;\;\;\;
+&  a \le x \le b
+\\
+0 & {\rm otherwise}
+\end{array}
+\right.
+\end{eqnarray}
+%
+Then 
+%
+\begin{equation}
+F = \int_a^b g(x)\,\rmd x
+\end{equation}
+\fi

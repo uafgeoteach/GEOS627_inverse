@@ -27,7 +27,7 @@ Last compiled: \today
 \subsection*{Overview}
 
 \begin{itemize}
-\item The purpose of this exercise is to understand one particular method of generating samples from an arbitrary probability distribution. The sampling method, known as the {\em rejection method}, was introduced by \citet{vonNeumann1951} and is also discussed in Section 2.3.2 of \citet{Tarantola2005}. One example of its application can be found in \citet{SilwalTape2016} for the case of a three-dimensional model parameter space defining the orientation of an earthquake source mechanism.
+\item The purpose of this exercise is to understand one particular method of generating samples from an arbitrary probability distribution. The sampling method, known as the {\em rejection method}, was introduced by \citet{vonNeumann1951} and is also discussed in Section 2.3.2 of \citet{Tarantola2005}. An example of its application can be found in \citet{SilwalTape2016} for the case of a three-dimensional model parameter space defining the orientation of an earthquake source mechanism.
 
 We use the rejection method to generate samples of an arbitrary distribution. As far as I know, there is no such function in Python to do this. (Let me know if you find one!)
 %    http://www.mathworks.com/help/stats/common-generation-methods.html#br5k9hi-4
@@ -44,7 +44,7 @@ p(x) = A_1\,e^{-(x-x_1)^2/(2\sigma_1^2)}
 
 \item We will also get some practice plotting 2D functions in Python.
 
-\item We will be using the template script \verb+lab_sampling.ipynb+.
+\item We will be starting with the template notebook \verb+lab_sampling.ipynb+.
 
 %\item Make a copy of the template script:
 %
@@ -70,11 +70,11 @@ p(x) = A_1\,e^{-(x-x_1)^2/(2\sigma_1^2)}
 
 \vertgap
 
-\item What does the custom function \verb+plot_histo+ do?
+\item The notebook calls the custom function \verb+plot_histo+ from \verb+lib_geos.ipynb+. What does \verb+plot_histo+ do?
 
 \vertgap
 
-\item Run the example script to generate the figure in \refFig{fig}. The script will generate samples of a specified function that we can think of as a probability density function.
+\item Run the notebook to generate the figure in \refFig{fig}. The script will generate samples of a specified function that we can think of as a probability density function.
 
 \item Read the code and determine what is being plotted in each subplot of \refFig{fig}. \\
 Define $A = \max(p(x))$.
@@ -90,7 +90,9 @@ Define $A = \max(p(x))$.
 \end{enumerate}
 \end{spacing}
 
-\item Explain the pattern in \refFig{fig}c and how it occurs. Run the next block of code to annotate (a) to help your understanding.
+\item Explain the pattern in \refFig{fig}c and how it occurs. 
+
+Set \verb+iannot = 1+ to annoate \refFig{fig}a to help your understanding.
 
 What fraction of $p(x_i)/A$ are $<$0.05?
 
@@ -98,7 +100,7 @@ What fraction of $p(x_i)/A$ are $>$0.95?
 
 \vertgap
 
-\item Run the next cell. Make sure you understand the relationships among the four subplots. (Note that only the fourth subplot is new.)
+\item There is a plot containing four subplots. Make sure you understand the relationships among the four subplots. (Note that only the fourth subplot is new.)
 
 \vertgap
 
@@ -142,7 +144,7 @@ p(x,y) = A\,e^{-(x^2+y^2)},
 %
 then evaluate the function for some $A$ at some input values $(x_i,y_i)$, and check the output $p(x_i,y_i)$ with the direct calculation of $A\,e^{-(x^2+y^2)}$.
 
-\item If your function is properly defined, then you should be able to plot it using the lines in \verb+lab_sampling.ipynb+. Make sure you understand the three different ways of plotting this function. Note that you can pass any dimensional array (scalar, vector, matrix, etc) as \verb+x+ and \verb+y+ into \verb+p(x,y)+.
+\item If your function is properly defined, then you should be able to plot it using the lines in \verb+lab_sampling.ipynb+. Make sure you understand the different ways of plotting this function. Note that you can pass any dimensional array (scalar, vector, matrix, etc) as \verb+x+ and \verb+y+ into \verb+p(x,y)+.
 
 \end{enumerate}
 
