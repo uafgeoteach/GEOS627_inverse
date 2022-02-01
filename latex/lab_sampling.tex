@@ -62,7 +62,7 @@ p(x) = A_1\,e^{-(x-x_1)^2/(2\sigma_1^2)}
 \subsection*{Exercises}
 
 \begin{enumerate}
-\item Review \verb+lab_linefit.ipynb+. What does the Numpy function \verb+np.random.random()+ do? Describe how the histogram plotted achieves its shape.
+\item Review \verb+lab_linefit.ipynb+. What does the Numpy function \verb+np.random.random()+ do? What would a histogram look like for values generated using this function?
 
 \vertgap
 
@@ -117,7 +117,12 @@ Why is a high value, $p(x_i)/A > 0.95$, generally going to be kept?
 
 \vertgap
 
-\item Integrate $p(x)/A$ numerically to get the area under the curve. (Hint: You will probably need \verb+dx+) Divide this number by \verb+xmax - xmin+, which represents the area under the curve for the (normalized) uniform distribution. How does this result compare with the fraction of samples that were kept?
+\item Integrate $p(x)/A$ numerically to get the area under the curve. \\
+Hint: What is \verb+dx+? See the Appendix in \verb+hw_ch1.pdf+.
+
+\vertgap
+
+\item Divide this number by \verb+xmax - xmin+, which represents the area under the curve for the (normalized) uniform distribution. How does this result compare with the fraction of samples that were kept?
 
 \vertgap
 

@@ -24,16 +24,16 @@ Last compiled: \today
 \subsection*{Overview and Instructions}
 
 \begin{itemize}
-\item This is the first problem from the Problems chapter in \citet{Tarantola2005}. It is an example of a problem that is computationally small enough such that the misfit function can be evaluated almost anywhere in the space of model parameters. This allows for a purely probabilistic solution to the problem.
+\item This is the first problem from the Problems chapter in \citet{Tarantola2005} (see p.~253). It is an example of a problem that is computationally small enough such that the misfit function can be evaluated almost anywhere in the space of model parameters. This allows for a purely probabilistic solution to the problem.
 
 Quoting \citet[][p.~38]{Tarantola2005}:
 \begin{quote}
 If the number of model parameters is very small (say, less than 10) and if the computation of the numerical value of $\sigma_{\rm M}(\bem)$ for an arbitrary $\bem$ is inexpensive (i.e., not consuming too much computer time), we can define a grid over the model space, compute $\sigma_{\rm M}(\bem)$ everywhere in the grid, and directly use these results to discuss the information obtained on the model parameters. This is certainly the most general way of solving the inverse problem. Problem 7.1 gives an illustration of the method.
 \end{quote}
 
-\item Problem 2 involves sampling the probability distribution obtained in Problem 1. You will use the {\em rejection method of sampling}, which is introduced in Section 2.3.2 of \citet{Tarantola2005} (``The Rejection Method''). This method was featured in \verb+lab_sampling.pdf+. The method is attributed to \citet{vonNeumann1951}.
+\item Problem 3 involves sampling the probability distribution obtained in Problem 2. You will use the {\em rejection method of sampling}, which is introduced in Section 2.3.2 of \citet{Tarantola2005} (``The Rejection Method''). This method was featured in \verb+lab_sampling.pdf+. The method is attributed to \citet{vonNeumann1951}.
 
-\item For some homework problems, like this one, I provide a template script: \verb+hw_epi.ipynb+:
+\item The template notebook is \verb+hw_epi.ipynb+:
 %
 \end{itemize}
 
@@ -55,7 +55,7 @@ If the number of model parameters is very small (say, less than 10) and if the c
 
 %---------------------
 
-\item (3.3) Using Python and the Jupyter notebook provided, implement the misfit function of Tarantola's Problem 7-1 (p.~253), which can be written in the following ways:
+\item (3.3) Using Python and the Jupyter notebook provided, implement the misfit function of Tarantola's Problem 7-1 (p.~253), which can be written in the following ways\footnote{Tarantola never defines the misfit function explicitly int he problem, but it can bee seen within Eq.~7.7.}:
 %
 \begin{eqnarray}
 F(\bem) &=& \frac{1}{2} \sum_{i=1}^6 \frac{\left(t_i(\bem) - t_i^{\rm obs}\right)^2}{\sigma^2}
@@ -87,13 +87,13 @@ where $\sigma$, $t_i^{\rm obs}$, and the forward model $t_i(\bem)$ are provided 
 Some tips:
 %
 \begin{itemize}
-\item {\bf Be certain that you have entered the input parameters (\eg station locations, travel times) correctly!} (Your results will be wrong if you enter the input incorrectly.)
+\item {\bf Be certain that you have entered the input parameters (\eg receiver locations, travel times) correctly!} (Your results will be wrong if you enter the input incorrectly.)
 
 \item You may find it useful to define your own functions (see \verb+lab_sampling.pdf+). I have provided \verb+hw_epi.ipynb+ as a starting point. This template includes code for generating a set of points covering the 2D model space (you can change \verb+dx+). Note that I have already used variable names that you need to fill with numbers (\eg \verb+tobs+).
 
 \item The code in \verb+hw_epi.ipynb+ implies that you search over the grid of $\bem$ using a single for loop. This will store the vector of values $f_i = F(x_i,y_i)$; in order to plot this, you will need to apply a reshape command, as we did in \verb+lab_linefit.ipynb+. (Or you could use \verb+plt.scatter()+) To use \verb+plt.pcolor()+ (or related commands), you need to provide same-size matrices of \verb+X+, \verb+Y+, and \verb+F+, as in \verb+plt.pcolor(X,Y,F,cmap='jet')+. (See \verb+lab_linefit.ipynb+ for an example.)
 
-\item Plot your 6 stations on your plots. 
+\item Plot your 6 receivers on your plots. 
 
 \item Since you will be varying the data vector, $\bt^{\rm obs}$, in Problem 3, you might want to implement the misfit functions as $F(\bem,\bt^{\rm obs})$.
 
@@ -206,7 +206,7 @@ Does this quantity capture the relationship between $x^s$ and $y^s$?
 Here we revisit Problem~1. Use the grid discretization of \verb+dx = 0.2+ km for this problem.
 
 \begin{enumerate}
-\item (0.5) Create an outlier measurement by setting the arrival time at the sixth station to be 1.0~s:
+\item (0.5) Create an outlier measurement by setting the arrival time at the sixth receiver to be 1.0~s:
 %
 \begin{equation}
 t_6^{\rm obs} = 1.0\;{\rm s}
