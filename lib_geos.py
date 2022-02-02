@@ -245,9 +245,10 @@ def plot_histo(hdat,edges,itype=2,make_plot=True):
     
     # bin width (only relevant if bins are the same width)
     dbin = edges[1] - edges[0]
-    hedges=np.append(edges,edges[-1]+5)
+    hedges=np.append(edges,edges[-1]+dbin)
     Ntotal = len(hdat);
     N,b = np.histogram(hdat,hedges);
+
     if itype ==1:
         Nplot = N; xlab = 'Count'
     if itype ==2: 
@@ -263,12 +264,12 @@ def plot_histo(hdat,edges,itype=2,make_plot=True):
         print('itype = %i -- it must be 1,2, or 3'%(itype)) 
 
     if make_plot==True:
-        plt.bar(edges,Nplot, width=0.8*dbin);
+        plt.bar(edges, Nplot, width=0.8*dbin, align='edge');
         plt.xlim([min(edges), max(edges)]);
         plt.ylabel('%s (N=%i)'% (xlab,Ntotal))
         
         if len(hdat) != np.sum(N):
-            print('(plot_histo.m): You may want to extend the histogram edges -->');
+            print('(plot_histo): You may want to extend the histogram edges -->');
             print(' there are %i/%i input that are outside the specified range'%
                 (len(hdat)-np.sum(N),len(hdat)))
             #disp(sprintf(' the number of input (%i) does not equal the sum of bin counts (%i).',length(hdat),sum(N)));
