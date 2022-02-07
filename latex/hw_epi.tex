@@ -68,7 +68,15 @@ F(\bem) &=& \frac{1}{2} \sum_{i=1}^6 \frac{\left(t_i(\bem) - t_i^{\rm obs}\right
 where $\sigma$, $t_i^{\rm obs}$, and the forward model $t_i(\bem)$ are provided in \citet{Tarantola2005}, and the model vector represents the epicenter $\bem = (x^s,y^s)$. Here $\bt(\bem)$ is a $6 \times 1$ vector of predicted arrival times, and $\bt^{\rm obs}$ is a $6 \times 1$ vector of observed arrival times.
 
 \begin{enumerate}
-\item (2.8) Produce a colored 2D plot showing the $F(\bem)$. This will involve evaluating $F(\bem)$ for a grid of $\bem$ (see \verb+hw_epi.ipynb+).
+\item (1.0) Check that
+%
+\begin{equation*}
+F_0 = F(x_0,y_0) = 95.7738
+\end{equation*}
+%
+where the 0-subscript denotes the first discretized epicenter in the grid defined by \verb+x+ and \verb+y+.
+
+\item (1.8) Produce a colored 2D plot showing the $F(\bem)$. This will involve evaluating $F(\bem)$ for a grid of $\bem$ (see \verb+hw_epi.ipynb+).
 
 \begin{itemize}
 \item For discretizing model parameter space, use the model parameter ranges $x = [0,\;22]$ and $y = [-2,\;30]$.
