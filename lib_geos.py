@@ -1,7 +1,7 @@
 # Tools library of GEOS627 inverse course
 # Coded by Yuan Tian at UAF 2021.01
 import numpy as np
-import scipy
+import scipy.special as special
 import matplotlib.pyplot as plt
 
 
@@ -49,8 +49,8 @@ def covC(id,parms):
         # http://en.wikipedia.org/wiki/Mat%C3%A9rn_covariance_function
         # note this uses the built-in functions gamma and besselk
         iL = iL / LFACTOR
-        b = scipy.special.kv(nu, np.sqrt(2*nu)*id/iL)
-        Cd = sigma**2 * (1/(scipy.special.gamma(nu)*2**(nu-1))) * (np.sqrt(2*nu)*id/iL)**nu * b
+        b = special.kv(nu, np.sqrt(2*nu)*id/iL)
+        Cd = sigma**2 * (1/(special.gamma(nu)*2**(nu-1))) * (np.sqrt(2*nu)*id/iL)**nu * b
 
     return Cd
 
