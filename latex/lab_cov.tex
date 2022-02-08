@@ -25,9 +25,12 @@ Last compiled: \today
 
 %------------------------
 
-\subsection*{Problem}
+\vspace{-0.5cm}
+\subsection*{Overview}
 
-See class notes \verb+notes_tarantola.pdf+ for background.
+This lab is preparation for \verb+hw_cov+. See class notes \verb+notes_tarantola.pdf+ for background. \verb+lab_cov.ipynb+ is provided as a template notebook.
+
+\subsection*{Problem}
 
 \begin{enumerate}
 \item Consider the two vectors
@@ -51,28 +54,32 @@ Calculate the following by hand:
 \item $\bb \ba^T$
 \end{itemize}
 
-\item Use \verb+randn+ to generate $\nsample$ samples of $\nparm \times 1$ vectors $\bw$ that have unit covariance, $\bC = \bI$.
+\item Use \verb+numpy.random.randn+ to generate $\nsample$ samples of $\nparm \times 1$ vectors $\bw$ that have unit covariance, $\bC = \bI$.
 This means that the entries of $\bw$ will have mean $\mu \approx 0$ and standard deviation $\sigma \approx 1$. \\
-Use $\nsample = 500$ and $\nparm = 100$.
+Use $\nsample = 500$ (\verb+nsamp+) and $\nparm = 100$ (\verb+nparm+).
 
 It may help to think of sample $\bw_p$ as a profile of a topographic transect or as a seismogram; in any case, there are $\nparm$ discretization points per sample. You have $\nsample$ samples.
 
-\item Using \verb+plot_histo.m+, plot histograms of 12 or so $\bw$ to convince yourself that each $\bw$ appears to be a Gaussian distribution with $\mu \approx 0$ and $\sigma \approx 1$. (You can increase $\nparm$ to make this more clear.)
+\item Using \verb+plot_histo+, plot histograms of 12 or so $\bw$ to convince yourself that each $\bw$ appears to be a Gaussian distribution with $\mu \approx 0$ and $\sigma \approx 1$. (You can increase $\nparm$ to make this more clear.)
 
 \item Calculate the mean sample $\bar{\bw}$ for the set of $\nsample$ samples. Make sure it is $\nparm \times 1$.
 
 \item Using a for loop, calculate the estimated covariance matrix \verb+Csamp+ for the set of $\nsample$ samples.
 
-\item Check that your \verb+Csamp+ matches what you get when you use Matlab's \verb+cov+ function.
+\item Check that your \verb+Csamp+ matches what you get when you use Python's \verb+cov+ function.
 
-\item Plot your estimated covariance matrix using \verb+imagesc(Csamp)+. \\
-To make the comparison, use these commands for each plot: \\
-\verb+axis equal, axis tight, caxis([0 1]), colorbar+
+\item Plot your estimated covariance matrix following the example commands in the notebook. Plot with the color axis range of \verb+[0 1]+.
 
 \item What is the theoretical covariance matrix? Plot it using the same settings.
 
-\item Plot the residual between the two matrices. Use \verb+caxis(0.1*[-1 1])+ \\
+\vertgap
+
+\item Plot the residual between the two matrices using the color axis range \verb+[-0.1 0.1]+.
 Is the residual matrix symmetric? Why or why not?
+
+\vertgap
+\vertgap
+
 
 \item Explain why the matrix-square-root method would give the same kinds of samples as the method above. In other words, given an $\nparm \times \nparm$ covariance matrix $\bC$, how can you generate an $\nparm \times \nparm$ representative sample $\bx$? (And what happens if $\bC = \bI$?)
 
