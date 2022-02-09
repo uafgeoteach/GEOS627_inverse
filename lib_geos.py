@@ -1,9 +1,8 @@
 # Tools library of GEOS627 inverse course
-# Coded by Yuan Tian at UAF 2021.01
+# Coded by Yuan Tian at UAF 2022-01-01
 import numpy as np
 import scipy.special as special
 import matplotlib.pyplot as plt
-
 
 def covC(id,parms):
 #COVC evaluate covariance function C(d) at an array of distances d
@@ -20,14 +19,14 @@ def covC(id,parms):
 #   (1) iL and id are indices for a spatial grid
 #   (2) iL and id are actual lengths for a spatial grid
 #
-    nparm=len(parms)
-    icov=parms[0]
+    nparm = len(parms)
+    icov  = parms[0]
     iL    = parms[1]
     sigma = parms[2]
-    nu=[]
+    nu    = []
     if nparm==4:
-        nu=parms[3]
-    LFACTOR=2
+        nu = parms[3]
+    LFACTOR = 2
     if icov==1:
         # Gaussian covariance
         # --> The factor of 2 in (2*iL^2) leads to smoother models
@@ -68,16 +67,16 @@ def pol2cart(rho, phi):
 
 
 def plotconst_mod(x,l,r,color,lw):
-    n=len(x)
-    delta =(r-l)/n
-    myx=np.array([0])
-    myy=np.array([0])
+    n = len(x)
+    delta = (r-l)/n
+    myx = np.array([0])
+    myy = np.array([0])
     for i in range(n):
-        myx=np.concatenate((myx,np.arange(i*delta+l,(i+1)*delta+l,(delta/20))))
-        myy=np.concatenate((myy,np.arange(i*delta+l,(i+1)*delta+l,(delta/20))))
-    l2=len(myx)
-    myx=myx[1:l2+1]
-    myy=myy[1:l2+1]
+        myx = np.concatenate((myx,np.arange(i*delta+l,(i+1)*delta+l,(delta/20))))
+        myy = np.concatenate((myy,np.arange(i*delta+l,(i+1)*delta+l,(delta/20))))
+    l2 = len(myx)
+    myx = myx[1:l2+1]
+    myy = myy[1:l2+1]
     plt.plot(myx,myy,color,lw=lw)
 
     
@@ -115,29 +114,29 @@ def tsvd(g, X, rvec):
     nr          = len(rvec)
 
     #initialize outputs
-    f_r         = np.zeros((p, nr))            # set of r models
-    rss         = np.zeros((nr, 1))            # RSS for each model
-    f_r_ss      = np.zeros((nr, 1))             # norm of each model
+    f_r         = np.zeros((p, nr))       # set of r models
+    rss         = np.zeros((nr, 1))       # RSS for each model
+    f_r_ss      = np.zeros((nr, 1))       # norm of each model
 
     #compute SVD of X
     [U, s, VH]   = np.linalg.svd(X) 
-    S=scipy.linalg.diagsvd(s,*X.shape)                  # vector of singular values
+    S=scipy.linalg.diagsvd(s,*X.shape)    # vector of singular values
 
     # 'Fourier' coefficients (fc) in expansion of solution in terms of right singular vectors
     # note: these are also referred to as Picard ratios
     beta        = U[:, :q].T@g            # note data g
     fc          = beta / s
-    V=VH.T
+    V = VH.T
     # treat each truncation parameter separately
-    f_r=V[:, :rvec[0]] @ fc[:rvec[0]]
+    f_r = V[:, :rvec[0]] @ fc[:rvec[0]]
     #print((V[:, :rvec[0]] @ fc[:rvec[0]]).shape)
     for j in range(nr):
         k         = rvec[j]               # current truncation parameter
         if j>0:
-            f_r =np.vstack((f_r, V[:, :k] @ fc[:k]))    # truncated SVD estimated model vector
-        f_r_ss[j] = np.sum(fc[:k]**2);        # the squared norm of f_r
-        rss[j]    = np.sum(beta[k:q]**2)    # residual sum of squares
-    f_r=f_r.T
+            f_r = np.vstack((f_r, V[:, :k] @ fc[:k]))    # truncated SVD estimated model vector
+        f_r_ss[j] = np.sum(fc[:k]**2);    # the squared norm of f_r
+        rss[j]    = np.sum(beta[k:q]**2)  # residual sum of squares
+    f_r = f_r.T
     # in overdetermined case, add rss of least-squares problem
     if (n > p):
         rss = rss + np.sum((g - U[:, :q]@beta)**2)   # note data g
@@ -198,9 +197,7 @@ def gridvec(xmin,xmax,numx,ymin,ymax):
     a,b = X.shape
     xvec = np.reshape(X,(a*b,1))
     yvec = np.reshape(Y,(a*b,1))
-    
     numy = len(yvec0)
-    
     return xvec, yvec, numy, X, Y
 
 #def gridvec(xmin,xmax,numx,ymin,ymax,returnXY=False):
@@ -225,10 +222,11 @@ def gridvec(xmin,xmax,numx,ymin,ymax):
 #        return xvec, yvec, numy
     
     
-def randomvec(xmin0,xmax0,n):
-    xmin=np.min([xmin0,xmax0])
-    xmax = np.max([xmin0,xmax0])
-    x = (xmax - xmin)*np.random.rand(int(n),1) + xmin
+def randomvec(a,b,n):
+    # this allows a or b to be the larger of the two
+    xmin = np.min([a,b])
+    xmax = np.max([a,b])
+    x    = (xmax - xmin)*np.random.rand(int(n),1) + xmin
     return x
 
 
@@ -244,9 +242,10 @@ def plot_histo(hdat,edges,itype=2,make_plot=True):
     #barcolor = [1, 1, 1]*0.8;
     
     # bin width (only relevant if bins are the same width)
-    dbin = edges[1] - edges[0]
-    hedges=np.append(edges,edges[-1]+dbin)
+    dbin   = edges[1] - edges[0]
+    hedges = np.append(edges,edges[-1]+dbin)
     Ntotal = len(hdat);
+    # key command
     N,b = np.histogram(hdat,hedges);
 
     if itype ==1:
@@ -276,58 +275,17 @@ def plot_histo(hdat,edges,itype=2,make_plot=True):
     
     plt.tight_layout()
 
-    
-def fftvec(t):
-    # Python version of fftvec.m made by Carl tape
-    # FFTVEC provides frequency vector for Matlab's fft convention
-    # 
-    # This is the bare-bones FFT example for teaching purposes in the sense
-    # that there is no padding with zeros, no odd-number time series, no
-    # all-positive frequencies, and no use of fftshift.
-    #
-    # EXAMPLE:
-    #   t = np.arange(2,9.0,0.4); n=len(t); f = fftvec(t); ix = 4; 
-    #   dt = t[1]-t[0]; df = 1/(2*dt)/(n/2) 
-    #   fig=plt.figure();plt.plot(f,'-'); 
-    #   fig2=plt.figure(); plt.plot(np.fft.fftshift(f),'-');
-    #
-    # NOTE: I chose to set fNyq as the negative frequency such that
-    #       fftshift(fftvec(t)) will give a vector increasing uniformly from
-    #       -fNyq to just less than fNyq, with f=0 at index n/2+1
-    #
-    # NOTE: If you want to consider all-positive frequencies, then use abs(f)
-    # 
-    n = len(t)
-    if n % 2 == 1:
-       print('error(time series must have an even number of points)')
-
-    dt = t[2] - t[1];       # sample rate
-    fNyq = 1/(2*dt);        # Nyquist frequency
-    
-    # first half of frequency vector (note: first entry is f=0)
-    f1 = np.transpose(np.linspace(0, float(fNyq), int((n/2)+1)));
-    # full frequency vector
-    #f = [f1 ; -f1(end-1:-1:2)];        % fNyq > 0
-    
-    f = np.concatenate([f1[0:int(n/2)] , -f1[:0:-1]])    # fNyq < 0
-    return f
-    
-    # alternatively (for fNyq < 0)
-    #df = 1/(n*dt);          % =2*fNyq/n
-    #f1 = linspace(-fNyq,fNyq-df,n)'
-    #f = [f1(n/2+1:n) ; f1(1:n/2)];
-
 
 def svdall(G):
-    [U, svec, VH]   = np.linalg.svd(G) 
-    S=scipy.linalg.diagsvd(svec,*G.shape)                  # vector of singular values
-    V=VH.T
-    p=np.linalg.matrix_rank(G)
-    Sp=S[:p,:p]
-    Vp=V[:,:p]
-    V0=V[:,p:]
-    Up=U[:,:p]
-    U0=U[:,p:]
-    Rm=Vp@Vp.T
-    Rd=Up@Up.T
+    [U, svec, VH] = np.linalg.svd(G) 
+    S  = scipy.linalg.diagsvd(svec,*G.shape)  # vector of singular values
+    V  = VH.T
+    p  = np.linalg.matrix_rank(G)
+    Sp = S[:p,:p]
+    Vp = V[:,:p]
+    V0 = V[:,p:]
+    Up = U[:,:p]
+    U0 = U[:,p:]
+    Rm = Vp@Vp.T
+    Rd = Up@Up.T
     return Up,Sp,Vp,U0,V0,Rm,Rd,p
