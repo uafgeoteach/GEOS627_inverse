@@ -20,36 +20,39 @@ def covC(id,parms):
 #   (1) iL and id are indices for a spatial grid
 #   (2) iL and id are actual lengths for a spatial grid
 #
-    nparm = len(parms)
-    icov  = parms[0]
-    iL    = parms[1]
-    sigma = parms[2]
-    nu    = []
+    nparm   = len(parms)
+    icov    = parms[0]
+    iLprime = parms[1]
+    sigma   = parms[2]
+    nu      = []
     if nparm==4:
         nu = parms[3]
+    
+    # see Appendix A of hw_cov.pdf
     LFACTOR = 2
+    #LFACTOR = 1
+    iL = iLprime / LFACTOR
+    
     if icov==1:
-        # Gaussian covariance
+        # Gaussian covariance (Tarantola, 2005, Eq. 5.28)
         # --> The factor of 2 in (2*iL^2) leads to smoother models
-        iL = iL / LFACTOR
         Cd = sigma**2 * np.exp(-id**2 / (2*iL**2) )
     if icov==2:
-        # exponential covariance
-        iL = iL / LFACTOR;
+        # exponential covariance (Tarantola, 2005, Eq. 5.27)
         Cd = sigma**2 * np.exp(-id / iL )
     if icov== 3:
-        # circular covariance
+        # circular covariance (Tarantola, 2005, Eq. 5.29)
         # here iL represents the diameter of the two intersecting discs
-        icirc = (id <= iL)
-        Cd =np.zeros_like(id) 
-        beta = 2*np.arcsin(id[icirc] / iL)
+        iL = iLprime
+        icirc     = (id <= iL)
+        Cd        = np.zeros_like(id) 
+        beta      = 2*np.arcsin(id[icirc] / iL)
         Cd[icirc] = sigma**2 * (1 - (beta + np.sin(beta))/np.pi )
     if icov==4:
         # Matern covariance
         # http://en.wikipedia.org/wiki/Mat%C3%A9rn_covariance_function
         # note this uses the built-in functions gamma and besselk
-        iL = iL / LFACTOR
-        b = special.kv(nu, np.sqrt(2*nu)*id/iL)
+        b  = special.kv(nu, np.sqrt(2*nu)*id/iL)
         Cd = sigma**2 * (1/(special.gamma(nu)*2**(nu-1))) * (np.sqrt(2*nu)*id/iL)**nu * b
 
     return Cd
