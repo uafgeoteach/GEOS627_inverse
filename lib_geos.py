@@ -1,5 +1,6 @@
 # Tools library of GEOS627 inverse course
 # Coded by Yuan Tian at UAF 2022-01-01
+# Contributers: Amanda McPherson
 import numpy as np
 import scipy.special as special
 import matplotlib.pyplot as plt
@@ -289,3 +290,67 @@ def svdall(G):
     Rm = Vp@Vp.T
     Rd = Up@Up.T
     return Up,Sp,Vp,U0,V0,Rm,Rd,p
+
+
+def vm_F_chi(chi,F0,icprior,u,v):
+    # VM_F_CHI variable metric algorithm without matrices
+
+    # This function is based on Tarantola (2005), Section 6.22, Eq. 6.347.
+    # It computes the operation of F on an arbitrary vector chi by storing a
+    # set of vectors (u_k) and scalars (v_k).
+
+    # EVERYTHING HERE IS ASSUMED TO BE IN THE NONHAT-NOTATION.
+
+    # INPUT:
+    #    chi     nparm x 1 vector
+    #    F0      nparm x nparm initial preconditioner
+    #    icprior nparm x nparm prior covariance matrix
+    #    u       nparm x niter matrix of nparm x 1 vectors
+    #    v       niter x 1 vector of stored values
+
+    # OUTPUT:
+    #    Fchi   nparm x 1 vector of F*chi
+
+    # CARL TAPE, 05-June-2007
+    # Amanda McPherson, 15 Feb 2022
+
+    _,niter = u.shape
+
+    # compute F*chi
+    Fchi = F0@chi
+    for jj in range(niter):
+        vtmp = chi.T@icprior@u[:,jj]
+        Fchi = Fchi + (vtmp/v[jj] * u[:,jj].reshape((len(u[:,jj]),1)))
+        
+    return Fchi
+
+
+def vm_F(F0,icprior,u,v):
+    # VM_F construct F by repeatedly calling vm_F_chi
+
+    # See vm_F_chi for details.
+
+    # INPUT:
+    #    F0      nparm x nparm initial preconditioner
+    #    icprior nparm x nparm prior covariance matrix
+    #    u       nparm x niter matrix of nparm x 1 vectors
+    #    v       niter x 1 vector of stored values
+    
+    # OUTPUT:
+    #    F      nparm x nparm preconditioner that estimates the curvature H^(-1)
+    #
+    # calls vm_F_chi.m
+    #
+    # Carl Tape, 05-June-2007
+    # Amanda McPherson, 15 Feb 2022
+    
+    _,nparm = F0.shape
+
+    F = np.zeros((nparm,nparm))
+    for ii in range(nparm):
+        chi = np.zeros((nparm,1))
+        chi[ii] = 1
+        Fchi = vm_F_chi(chi,F0,icprior,u,v)
+        F[:,ii] = Fchi.flatten()
+
+    return F
