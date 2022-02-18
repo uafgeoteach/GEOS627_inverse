@@ -1,6 +1,8 @@
 # FFT related tools library of GEOS627 inverse course
 # Coded by Yuan Tian at UAF 2021.01
+# Contributers: Amanda McPherson
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 def xy2distance_row1(nx,ny):
@@ -18,7 +20,7 @@ def xy2distance_row1(nx,ny):
     iD2row1 = (xref-ix)**2 + (yref-iy)**2
     return np.sqrt(iD2row1),ix0,iy0
 
-def xy2distance(nx,ny):
+def xy2distance(nx,ny,bdisplay=False):
     # integer index vectors
     # NOTE: these start with 0 for convenience in the FFT algorithm
     ix0 = np.arange(nx)
@@ -28,10 +30,119 @@ def xy2distance(nx,ny):
     [iX,iY] = np.meshgrid(ix0,iy0)
     ix = iX.flatten(order='F')
     iy = iY.flatten(order='F')
+    
+    n = nx*ny               # number of points in 2D grid
+    nd = 0.5*(n**2 - n)     # number of unique distances
+    
+    # indexing matrices
+    [PA,PB] = np.meshgrid(np.arange(n),np.arange(n))
+    
     MX,MY=np.meshgrid(ix,iy)
     iD=np.sqrt((MX-MX.T)**2+(MY-MY.T)**2)
+    
+    if bdisplay:
+        id = iD.flatten(order='F')
+        pA = PA.flatten(order='F')
+        pB = PB.flatten(order='F')
+        print('---------------------------')
+        print('%i (x) by %i (y) = %i gridpoints'% (nx,ny,n))
+        print('%i total number of distances, %i of which are unique pairs'% (n**2,nd))
+        
+        for ii in range(n**2):
+            print('%i-%i (%i, %i)-(%i, %i) = %i'% (pA[ii],pB[ii],ix[pA[ii]],iy[pA[ii]],ix[pB[ii]],iy[pB[ii]],id[ii]))
+            
 
-    return iD,ix0,iy0
+        print('---------------------------')
+        
+        # Plot figures
+        ind = np.arange(n)
+        ax0 = [-1, nx, -1, ny]
+        ax1 = [-1, n, -1, n]
+    
+        # print some output
+        print(ind)
+        print(ix)
+        print(iy)
+        
+        print(PA, PB, iD)
+        ud = np.unique(id)
+        print('%i unique nonzero entries:'% (len(ud)-1))
+        print(ud[1:])
+        
+        plt.figure(figsize=(8,14))
+        plt.plot(ix,iy,'.',ms='16')
+        for kk in range(len(ix)):
+            plt.text(ix[kk],iy[kk],str(ind[kk]))
+            
+        plt.axis(ax0)
+        plt.grid()
+        plt.xlabel('x (unshifted and unscaled)')
+        plt.ylabel('y (unshifted and unscaled)')
+        plt.title('Indexing of points in the mesh')
+    
+        plt.figure(figsize=(8,14))
+        nr=2; nc=1;
+        plt.subplot(nr,nc,1)
+        plt.imshow(PA,vmin=1,vmax=n)
+        plt.axis(ax1)
+        plt.colorbar()
+        plt.title('Point A index')
+    
+        plt.subplot(nr,nc,2)
+        plt.imshow(PB,vmin=1,vmax=n)
+        plt.axis(ax1)
+        plt.colorbar()
+        plt.title('Point B index')
+    
+    
+        plt.figure(figsize=(8,14))
+        nr=2; nc=1;
+        plt.subplot(nr,nc,1)
+        plt.imshow(iD)
+        plt.axis(ax1)
+        plt.colorbar()
+        plt.xlabel('Index of point B')
+        plt.ylabel('Index of point A')
+        plt.title('Index distance between points A and B, max(iD) = %.2f'%(np.amax(iD.flatten(order='F'))))
+        
+        #-----------------------------------------------------
+        # the next figures are related to an assumed covariance function
+    
+        # compute covariance matrix
+        iL = 1
+        sigma = 1
+        stit = '(nx,ny,n) = (%i,%i,%i), iL = %i, sigma = %i' % (nx,ny,n,iL,sigma)
+        stit2 = '%i x %i block Toeplitz with %i x %i (%i) blocks, each %i x %i' % (n,n,nx,nx,nx*nx,ny,ny)
+        R = sigma**2 * np.exp(-iD**2 / (2*iL**2) )
+    
+        plt.subplot(nr,nc,2)
+        plt.imshow(R)
+        plt.axis(ax1)
+        plt.colorbar()
+        plt.xlabel('Index of point A')
+        plt.ylabel('Index of point B')
+        plt.title('Gaussian covariance between points A and B\n' + stit2)
+    
+        # Gaussian sample
+        A = np.linalg.cholesky(R)
+        g = A@np.random.randn(n,1)
+        
+        plt.figure(figsize=(10,8))
+        plt.imshow(g.reshape((ny,nx)),vmin=-3*sigma,vmax=3*sigma) 
+        #set(gca,'ydir','normal');
+        plt.plot(ix,iy,'o',mfc='w',mec='b')
+        for kk in range(len(ix)):
+            plt.text(ix[kk],iy[kk],str(ind[kk]))
+            
+        plt.axis([ax0[0],ax0[1],ax0[2],ax0[3]])
+        plt.colorbar()
+        plt.xlabel('x (unshifted and unscaled)')
+        plt.ylabel('y (unshifted and unscaled)')
+        plt.title(' Cm sample: %s' % (stit))
+        
+    return iD,ix0,iy0,ix,iy,PA,PB
+
+
 def x2distance(xmin,xmax,nx):
     ix0 = np.arange(nx)
     Dx=xmax-xmin
