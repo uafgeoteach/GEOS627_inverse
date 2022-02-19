@@ -5,6 +5,11 @@
 
 \renewcommand{\baselinestretch}{1.1}
 
+\newcommand{\tfile}{{\tt hw\_genlsq.ipynb}}
+\newcommand{\tfileOM}{{\tt optimization\_method.ipynb}}
+\newcommand{\tfileFE}{{\tt forward\_epicenter.ipynb}}
+\newcommand{\tfileFEC}{{\tt forward\_epicenter\_crescent.ipynb}}
+
 %--------------------------------------------------------------
 \begin{document} 
 %-------------------------------------------------------------
@@ -13,22 +18,24 @@
 \centering
 {\large \bf Problem Set 5: Iterative methods with generalized least squares, Part B [iterB]} \\
 \cltag\ \\
-Assigned: September 30, 2019 --- Due: October 9, 2019 \\
+Assigned: February 22, 2022 --- Due: March 8, 2022 \\
 Last compiled: \today
 \end{spacing}
 
 %------------------------
 
-%\pagebreak
-\subsection*{Problem 2 (4.0). Implementation of iterative methods}
+\subsection*{Background}
 
-See the lab exercise on the quasi-Newton method (\verb+lab_iter.pdf+). There you were asked to adapt \verb+genlsq_template.m+ to write a functioning version of the quasi-Newton algorithm for the 4-parameter epicenter problem. Moving forward, it is important that your code is correct. Start with \verb+genlsq_sol_template.m+
+See the lab exercise on the quasi-Newton method (\verb+lab_iter.pdf+). There you were asked to write a functioning version of the quasi-Newton algorithm for the 4-parameter epicenter problem. Moving forward, it is important that your code is correct. Start with \verb+genlsq_sol_template.m+
 %
 \begin{verbatim}
 cp genlsq_sol_template.m genlsq_iter.m
 \end{verbatim}
 %
 Alternatively you can use your \verb+genlsq.m+ script, but, whichever you use, {\bf check your results for the quasi-Newton method with those listed in \refTab{tab}.}
+
+%\pagebreak
+\subsection*{Problem 2 (4.0). Implementation of iterative methods}
 
 In this problem you will replace the quasi-Newton method with three other methods. You will not need to touch the code associated with the forward model (\verb+forward_epicenter.m+).
 
@@ -83,18 +90,11 @@ NOTE: This problem can be answered even if your implementations in 2-1, 2-2, 2-3
 Your goal is to implement \citet{Tarantola2005}, Problem 7-1.
 %
 \begin{itemize}
-\item Prepare for this example by copying two files:
-%
-\begin{verbatim}
-cp genlsq_sol_template.m genlsq_crescent.m
-cp forward_epicenter.m forward_epicenter_crescent.m
-\end{verbatim}
-%
-Run \verb+genlsq_crescent.m+ and check your quasi-Newton results with those listed in \refTab{tab}.
+\item Prepare for this example by copying a file: \verb+cp+ \tfileFE\ \tfileFEC.
 
-The file \verb+forward_epicenter_crescent.m+ will serve as a template for this problem.
+Set \verb+iforward=2+ in \tfile\ and then check that your quasi-Newton results with those listed in \refTab{tab}.
 
-\item \verb+genlsq_crescent.m+ contains the iterative inverse problem, and it also calls the forward model \verb+forward_epicenter.m+. In \verb+genlsq_crescent.m+, replace the call to \verb+forward_epicenter.m+ with \verb+forward_epicenter_crescent.m+.
+%\item \verb+genlsq_crescent.m+ contains the iterative inverse problem, and it also calls the forward model \verb+forward_epicenter.m+. In \verb+genlsq_crescent.m+, replace the call to \verb+forward_epicenter.m+ with \verb+forward_epicenter_crescent.m+.
 
 \end{itemize}
 
@@ -102,10 +102,10 @@ The file \verb+forward_epicenter_crescent.m+ will serve as a template for this p
 
 \begin{enumerate}
 
-\item (2.5) Adapt \verb+forward_epicenter_crescent.m+ for Problem 7-1 of \citet{Tarantola2005} (HW3). \textcolor{red}{\bf In addition to using the values used in Problem 7-1}, make the following additional choices:
+\item (2.5) Adapt \tfileFEC\ for Problem 7-1 of \citet{Tarantola2005} (\verb+hw_epi+). \textcolor{red}{\bf In addition to using the values used in Problem 7-1}, make the following additional choices:
 %
 \begin{itemize}
-\item Define $\mprior$ to be the center of the plotting grid used for HW3. The code you want to use is this:
+\item Define $\mprior$ to be the center of the plotting grid used for \verb+hw_epi+. The code you want to use is this:
 %
 \begin{verbatim}
 % range of model space (Tarantola Figure 7.1)
@@ -118,7 +118,7 @@ ycen = (ymin+ymax)/2;
 mprior = [ xcen ycen ]';
 \end{verbatim}
 %
-Use the same $\sigma$ values for the prior epicenter as in \verb+forward_epicenter.m+ ($\sigma_{x_s} = \sigma_{y_s} = 10$~km). This prior model is chosen as an analog for the perspective that the epicenter could be anywhere within a large region (such as the plotting grid).
+Use the same $\sigma$ values for the prior epicenter as in \tfileFE\ ($\sigma_{x_s} = \sigma_{y_s} = 10$~km). This prior model is chosen as an analog for the perspective that the epicenter could be anywhere within a large region (such as the plotting grid).
 
 \item $\bem_{\rm initial} = (15, 20)$.
 
@@ -164,14 +164,14 @@ Compute the quantity $\sqrt{\lambda_{\rm max}/\lambda_{\rm min}}$.
 
 \item (0.1) Use \verb+delta2 = chi2inv(0.95,2)+ to compute $\Delta^2$.
 
-Hint: See \verb+ex_2_1_1_uaf.m+ for an example of using \verb+chi2inv+.
+Hint: See \verb+ex2p1_ex2p2.ipynb+ for an example of using \verb+chi2inv+, which is in \verb+lib_peip.py+.
 
 \item (0.1) Compute the lengths of the semi-major axis and semi-minor axis of the ellipse, where the length of the $k$th axis is $\Delta\sqrt{\lambda_k}$.
 
-\item (0.2) Plot the confidence region using \verb+plot_ellipse+. (You should see agreement between the locations of your samples of $\bC_{\rm post}$ and the ellipse.) Also include the ellipse axes in your plot (plus $\bem_{\rm post}$, $\bem_{\rm initial}$, $\bem_{\rm target}$, samples of prior and posterior, etc).
+\item (0.2) Plot the confidence region using \verb+plot_ellipse+, which is a function defined in \tfile. (You should see agreement between the locations of your samples of $\bC_{\rm post}$ and the ellipse.) Also include the ellipse axes in your plot (plus $\bem_{\rm post}$, $\bem_{\rm initial}$, $\bem_{\rm target}$, samples of prior and posterior, etc).
 \end{enumerate}
 
-NOTE: Even if you did not successfully implement \verb+forward_epicenter_crescent.m+, you can still do the confidence region for the epicenter associated with the forward problem of \verb+forward_epicenter.m+
+NOTE: Even if you did not successfully implement \tfileFEC, you can still do the confidence region for the epicenter associated with the forward problem of \tfileFE.
 
 \end{enumerate}
 

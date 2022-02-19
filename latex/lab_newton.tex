@@ -30,18 +30,16 @@ Last compiled: \today
 
 \subsection*{Instructions}
 
-Open \verb+lab_newton.ipynb+.
-%Create a copy of the template program: \verb+cp lab_newton_template.m lab_newton.m+
-%
 \begin{enumerate}
 \item Consider the equation $\bH\bem = \bg$. \\
-If $\bH$ is invertible, what is the solution for $\bg$? \\
-If $\bH$ is a scalar, why should these commands be equivalent: \verb+inv(6)*2+ and \verb+1/6*2+. \\
-(Type \verb+LA.inv?+ for details. In fact, it won't work with a scalar.)
+If $\bH$ is invertible, what is the solution for $\bem$? \\
+If $\bH$ is a scalar, what is the solution for $Hm = g$? (Note \footnote{In Matlab, the commands \texttt{6}\textbackslash\texttt{2} (the backslash operator \textbackslash\ is a pseudoinverse), \texttt{inv(6)*2}, and \texttt{1/6*2} are all \texttt{3}.})
+
+%(Type \verb+LA.inv?+ for details. In fact, it won't work with a scalar.)
 
 \vertgap
 
-\item What are \verb+F+, \verb+g+, and \verb+H+?
+\item Open \verb+lab_newton.ipynb+. What are \verb+F+, \verb+g+, and \verb+H+?
 
 \vertgap
 
@@ -74,9 +72,7 @@ Try several different starting values of $\bem$ to make sure it works.
 
 \item Repeat the experiment for a {\bf quadratic function}. What happens?
 
-
-
-\item For the {\bf quadratic function}, solve for the analytical minimum $\bem_{\rm min}$ and also $F(\bem_{\rm min})$. Start be writing out $F(m)$ in simplest form.
+\item For the {\bf quadratic function}, solve for the analytical minimum $\bem_{\rm min}$ and also $F(\bem_{\rm min})$. Start by writing out $F(m)$ in simplest form.
 
 \vspace{6cm}
 

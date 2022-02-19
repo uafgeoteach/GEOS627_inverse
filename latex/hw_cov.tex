@@ -3,6 +3,8 @@
 
 \input{hw627_header}
 
+\newcommand{\tfile}{{\tt hw\_cov.ipynb}}
+
 \renewcommand{\baselinestretch}{1.1}
 
 %--------------------------------------------------------------
@@ -13,7 +15,7 @@
 \centering
 {\large \bf Problem Set 4: Covariance functions and Gaussian random fields [cov]} \\
 \cltag\ \\
-Assigned: September 23, 2019 --- Due: September 30, 2019 \\
+Assigned: February 10, 2022 --- Due: February 16, 2022 \\
 Last compiled: \today
 \end{spacing}
 
@@ -29,11 +31,11 @@ Last compiled: \today
 \begin{itemize}
 \item \citet{Tarantola2005}: Ch.~2 (note Example 2.1) and Sections 5.1, 5.2, 5.3 (note 5.3.3).
 \item \citet{Aster}: Appendix B
-\item class notes
+\item \verb+notes_tarantola.pdf+
 \end{itemize}
 
-\item (\verb+git pull+) \verb+cp covrand_template.m covrand.m+
-
+\item The template notebook is \tfile
+\item The function \verb+covC()+ is in \verb+lib_geos.py+. Example plots, such as in \refFig{fig:covC2}, are generated in \verb+covC_plot.ipynb+
 \end{enumerate}
 
 % \begin{figure}[h]
@@ -65,7 +67,7 @@ Last compiled: \today
 % XXX MAKE THIS PROBLEM WORTH MORE POINTS IN THE FIGURE XXX
 \item (0.5) Consider the normal distribution $f_N(x)$.
 \begin{enumerate}
-\item (0.1) What is the exact expression and approximate value of $f_N(\mu\pm\sigma)$?
+\item (0.1) What is the exact expression and approximate value\footnote{By ``approximate'', I mean to use decimal numbers in the expression (as in 0.717 instead of $e^{-3}$).} of $f_N(\mu\pm\sigma)$?
 \item (0.1) What is the exact expression and approximate value of $f_N(\mu)$?
 \item (0.1) Sketch or make a plot of $f_N(x)$. (If you're plotting, then use $\mu = 0$ and $\sigma = 1$.)
 \item (0.2) Label $\sigma$, $\mu$, and $f_N(\pm\sigma)$ on your plot, and plot the three points $(\mu,f_N(\mu))$, $(-\sigma,f_N(-\sigma))$, and $(\sigma,f_N(\sigma))$.
@@ -135,7 +137,7 @@ E[g(X)] &=& \int_{-\infty}^{\infty} g(x)\;f_X(x) \,dx
 
 \begin{enumerate}
 \item (0.2) Write the expression for a uniform distribution, $f_U(x)$, on the interval $[a,b]$. \\
-Write the Matlab\footnote{or whatever computing language you are using} command to generate $n$ samples of $f_U(x)$.
+Write the command to generate $n$ samples of $f_U(x)$.
 \label{fu}
 
 %------------------
@@ -153,7 +155,7 @@ Hint: You will probably need to use polynomial long division.
 %------------------
 
 %\pagebreak
-\item (0.0) In Matlab, generate $10^5$ or so samples of $f_U(x)$ (remember: a sample of $f_U(x)$ will be a random number between $a$ and $b$), and check that the mean ($\mu$) and variance ($\sigma^2$) of the samples are close to the theoretical values, \ie $\mu \approx E[X]$ and $\sigma^2 \approx \Var[X]$. For the sake of comparison, use
+\item (0.0) In Python, generate $10^5$ or so samples of $f_U(x)$ (remember: a sample of $f_U(x)$ will be a random number between $a$ and $b$), and check that the mean ($\mu$) and variance ($\sigma^2$) of the samples are close to the theoretical values, \ie $\mu \approx E[X]$ and $\sigma^2 \approx \Var[X]$. For the sake of comparison, use
 %
 \begin{equation*}
 a = -\sqrt{12},
@@ -219,14 +221,14 @@ Hint:
 \pagebreak
 \subsection*{Problem 3 (3.5). Estimating a covariance matrix from a set of samples}
 
-See the template script \verb+covrand.m+. Let $\nsample$ be the number of samples and $\nparm$ be the number of model parameters describing a single sample. The $j$th sample is represented by the $\nparm \times 1$ vector
+See the template script \tfile. Let $\nsample$ be the number of samples and $\nparm$ be the number of model parameters describing a single sample. The $j$th sample is represented by the $\nparm \times 1$ vector
 %
 \begin{equation}
 \bem_j = \bmu + \bem_j^{\rm C}
 \label{mj}
 \end{equation}
 %
-where $\bmu$ is a mean vector and $\bem_j^{\rm C}$ is a sample generated from covariance matrix $\bC$. Our subscript notation for $\bmu_\nsample$ and $\bC_\nsample$ denotes that these quantities are estimated from a set of $\nsample$ samples $\bem_j$.
+where $\bmu$ is a mean vector and $\bem_j^{\rm C}$ is a sample generated from covariance matrix $\bC$.
 
 It may (or may not) help to attach some physical meaning to these $\bem_j$ samples. Think of each sample as the functional variation in a single dimension. The set of $\nsample$ samples might represent, for example:
 %
@@ -239,16 +241,30 @@ It may (or may not) help to attach some physical meaning to these $\bem_j$ sampl
 
 \end{itemize}
 %
-\textcolor{red}{In this problem, the goal is to compute a sample covariance matrix $\bC_\nsample$ from $\nsample$ samples. Then to use $\bC_\nsample$ to estimate the covariance function $C(d)$ that characterizes the samples.}
+Our subscript notation for $\bmu_\nsample$ and $\bC_\nsample$ denotes that these quantities are estimated from a set of $\nsample$ samples $\bem_j$.
+
+\medskip\noindent
+\textcolor{red}{In this problem, the goal is to compute a sample covariance matrix $\bC_\nsample$ from $\nsample$ samples. In Problem~4, the goal is to use $\bC_\nsample$ to estimate the covariance function $C(d)$ that characterizes the samples, where $d$ is the distance between two points.}
 
 %--------------
 
 \begin{enumerate}
 
-\item (0.0) Run \verb+covrand.m+. Identify the key variables (and their dimensions) that are loaded into Matlab, then comment the \verb+break+ statement and proceed.
+\item (0.0) Run \tfile. Identify the key variables (and their dimensions) that are loaded. This should be helpful:
+%
+\begin{eqnarray}
+\bM &=& 
+\left[ \begin{array}{cccccc}
+| & | & | & | & | & | \\
+\bem_1 & \bem_2 & \cdots & \bem_j & \cdots & \bem_\nsample \\
+| & | & | & | & | & | \\
+\end{array} \right],
+\end{eqnarray}
+%
+where $\bem_j$ is the $j$th sample.
 
 % XXX MAKE THIS WORTH MORE POINTS XXX
-\item (0.3) Plot 8 samples in a $4 \times 2$ subplot figure, with one sample per subplot and with the same axis scale for each subplot (use \verb+ax0+ from \verb+covrand.m+). Plot each sample using the spatial discretization given by \verb+x+. Either use a default plotting style or \verb+'-.'+(but not \verb+'.'+).
+\item (0.3) Plot 8 samples in a $4 \times 2$ subplot figure, with one sample per subplot and with the same axis scale for each subplot (use \verb+ax0+ from \tfile). Plot each sample using the spatial discretization given by \verb+x+. Either use a default plotting style or \verb+'-.'+(but not \verb+'.'+).
 
 {\em For all $\nparm$-dimensional vectors in the rest of the problem, plot them using the same $y$-axis range and with the spatial discretization given by \verb+x+.}
 
@@ -260,10 +276,10 @@ It may (or may not) help to attach some physical meaning to these $\bem_j$ sampl
 %
 \begin{enumerate}
 \item (0.3) Compute and plot the mean, $\bmu_{10}$.
-\item (0.7) Compute and plot the covariance matrix, $\bC_{10}$ (use \verb+imagesc+). Show your code to compute $\bC_{10}$, and do not use the black-box \verb+cov+ function\footnote{If you use {\tt cov} to check, you may need to transpose your matrix of samples to ensure that the resultant matrix is $\nparm \times \nparm$.}.
-\item (0.5) Make a scatterplot (use \verb+plot+) of $(\bC_{10})_{kk'}$ versus $D_{kk'} = |x_k - x_{k'}|$, where $\bD$ is provided in \verb+covrand.m+. 
+\item (0.7) Compute and plot the covariance matrix, $\bC_{10}$ (use \verb+imshow+). Show your code to compute $\bC_{10}$, and do not use the black-box \verb+cov+ function\footnote{If you use {\tt cov} to check, you may need to transpose your matrix of samples to ensure that the resultant matrix is $\nparm \times \nparm$.}.
+\item (0.5) Make a scatterplot (use \verb+plot+) of $(\bC_{10})_{kk'}$ versus $D_{kk'} = |x_k - x_{k'}|$, where $\bD$ is provided in \tfile. 
 
-Hint: Try \verb+plot(D,Csamp,'b.');+ where \verb+Csamp+ represents $\bC_{10}$.
+Hint: Try \verb+plot(D,Csamp,'b.')+ where \verb+Csamp+ represents $\bC_{10}$.
 \end{enumerate}
 
 %--------------
@@ -274,26 +290,10 @@ Hint: Try \verb+plot(D,Csamp,'b.');+ where \verb+Csamp+ represents $\bC_{10}$.
 
 %--------------
 
-\item (0.2) Examine the script \verb+covC.m+.
+\item (0.2) Examine the function \verb+covC()+.
 %, which will be needed in Problems 3-\ref{prob:covC} and 4.
-Some example plots using \verb+covC.m+ are shown in \refFig{fig:covC2}. Two of the functions plotted are
-%
-\begin{eqnarray}
-C_{\rm gaus}(d) &=&
-%\sigma^2 \exp \left( - \frac{ d^2}{2L^2} \right) =
-\sigma^2 \exp \left( - \frac{2 d^2}{L'^2} \right) 
-\label{Cgaus1}
-\\
-C_{\rm exp}(d) &=&
-%\sigma^2 \exp \left( - \frac{d}{L} \right) =
-\sigma^2 \exp \left( - \frac{2 d}{L'} \right)
-,
-\label{Cexp1}
-\end{eqnarray}
-%
-where $d$ is the distance between $\bx$ and $\bx'$. In our 1D example, $d(x,x') = |x - x'|$. Note~\footnote{
-I have used the notation $L' = 2L$ to distinguish our $L'$ from the $L$ that appears in \citet{Tarantola2005}.}.
-%The function \verb+covC.m+ inputs $L'$ (assuming that \verb+LFACTOR=2+).
+Some example plots using \verb+covC()+ are shown in \refFig{fig:covC2}. Two of the functions plotted are \refEqii{Cgaus1}{Cexp1} (see \refApp{sec:matern}), where $d$ is the distance between $\br$ and $\br'$. In our 1D example, $d(\br,\br') = d(x,x') = |x - x'|$.
+%The function \verb+covC()+ inputs $L'$ (assuming that \verb+LFACTOR=2+).
 %
 $C$~takes in a distance between two points and outputs a value. It can alternatively be written as a function of the two input points, $x$ and $x'$:
 %
@@ -328,18 +328,18 @@ Note: Only integers and variables should appear in your answers.
 
 %--------------
 
-\item (0.0) Run the example listed in \verb+covC.m+ and make sure you understand what the input parameters are.
+\item (0.0) Run the example listed in \verb+covC()+ and make sure you understand what the input parameters are.
 
 %--------------
 
-\item (0.5) Use \verb+covC.m+ to find a covariance function, $C(d)$, that reasonably fits the scatterplot of $(\bC_{1000})_{kk'}$ versus $D_{kk'}$ from Problem 3-\ref{prob:Cd}.
+\item (0.5) Use \verb+covC()+ to find a covariance function $C(d)$ that reasonably fits the scatterplot of $(\bC_{1000})_{kk'}$ versus $D_{kk'}$ from Problem 3-\ref{prob:Cd}.
 %
 \begin{enumerate}
 \item List your values of the parameters that describe $C(d)$.
 \item Include a plot with $C(d)$ superimposed on the scatterplot of $(\bC_{1000})_{kk'}$ versus $D_{kk'}$.
 \item Let $\bC$ be the covariance matrix corresponding to $C(d)$. \\
 What are the diagonal entries of $\bC$ and why?
-\item Include a plot of $\bC$ (use \verb+imagesc+).
+\item Include a plot of $\bC$ (use \verb+imshow+).
 \end{enumerate}
 
 \label{prob:covC}
@@ -360,6 +360,7 @@ What are the diagonal entries of $\bC$ and why?
 \noindent
 In Problem 3, you used a set of 1000 samples and computed a mean $\bmu_{1000}$ and a covariance matrix $\bC_{1000}$. You used $\bC_{1000}$ to estimate a covariance function $C(d)$ with corresponding covariance matrix $\bC$. Here you will use $\bmu_{1000}$ and $\bC$ (not $\bC_{1000}$) to generate a set of samples that (hopefully) resembles the original samples.
 
+%\pagebreak
 \begin{enumerate}
 \item (1.5) 
 
@@ -369,8 +370,10 @@ In Problem 3, you used a set of 1000 samples and computed a mean $\bmu_{1000}$ a
 Hints:
 %
 \begin{itemize}
-\item \verb+A = chol(C,'lower');+
+\item \verb+A = np.linalg.cholesky(C)+
+%\item \verb+A = chol(C,'lower');+
 \item If $\bx = \bA\bw$ is a sample of $\bC$, what are $\bA$ and $\bw$?
+\item You may want to use the suffix \verb+.flatten()+ when saving each sample $\bx$ into a matrix of samples.
 \end{itemize}
 
 \item (0.4) Add $\bmu_{1000}$ to each $\bem^{\rm C}$, then plot the first 8 samples (as in Problem 3-\ref{samps}). \\
@@ -385,11 +388,11 @@ Superimpose $\bmu_{1000}$ in each subplot.
 
 Compute the mean (\verb+mean+), standard deviation (\verb+std+), and norm of each of the 2000 $\bem^{\rm C}$, and show your results in three histogram plots. Do your results check with what you expect?
 
-NOTE: Matlab's \verb+norm+ command will {\em not} be useful here. In calculating the norm, you will need to use a modified covariance matrix, $\nparm\bC$, where $\nparm\times\nparm$ is the dimension of $\bC$. This will ensure that the norm of each $\bem^{\rm C}$ is about~1.
+NOTE: Python's \verb+norm+ command will {\em not} be useful here. In calculating the norm, you will need to use a modified covariance matrix, $\nparm\bC$, where $\nparm\times\nparm$ is the dimension of $\bC$. This will ensure that the norm of each $\bem^{\rm C}$ is about~1.
 
 %----------
 
-\item (0.8) \ptag\ Now generate a new $\bC$ using \verb+covC.m+ by making {\em only} one change: change \verb+icov+ to either 1 or 2. Repeat Problem 4-1 using the same set of Gassian random vectors $\bw_j$, as before. This will allow for a true comparison between samples from the Gaussian or exponential covariance functions.
+\item (0.8) \ptag\ Now generate a new $\bC$ using \verb+covC()+ by making {\em only} one change: change \verb+icov+ to either 1 or 2. Repeat Problem 4-1 using the same set of Gassian random vectors $\bw_j$, as before. This will allow for a true comparison between samples from the Gaussian or exponential covariance functions.
 
 \begin{enumerate}
 \item Generate samples of the new $\bC$, add $\bmu_{1000}$ to each sample. Plot the the first 8 samples.
@@ -413,6 +416,68 @@ NOTE: Matlab's \verb+norm+ command will {\em not} be useful here. In calculating
 
 %-------------------------------------------------------------
 
+\pagebreak
+
+\appendix
+
+\section{The length scale factor in {\tt covC()}}
+\label{sec:matern}
+
+\refFig{fig:covC2} is generated by \verb+covC_plot.ipynb+, which calls \verb+covC()+, which resides in \verb+lib_geos.py+. It shows examples of four types of covariance functions: Gaussian, exponential, circular, and Mat\'ern. The first three are listed in \citet[][p.~111-113]{Tarantola2005}, and the Mat\'ern definition can be found in Wikipedia. The Gaussian and exponential functions are:
+%
+\begin{eqnarray}
+C_{\rm gaus}(d) &=& \sigma^2 \exp \left( - \frac{ d^2}{2L^2} \right)
+\label{Cgaus0}
+\\
+C_{\rm exp}(d) &=& \sigma^2 \exp \left( - \frac{d}{L} \right)
+\label{Cexp0}
+\end{eqnarray}
+%
+Redefining the length scale as
+%
+\begin{equation}
+L' = 2L,
+\end{equation}
+%
+we get
+%
+\begin{eqnarray*}
+C_{\rm gaus}(d) &=& \sigma^2 \exp \left( - \frac{ d^2}{2(L'/2)^2} \right) 
+= \sigma^2 \exp \left( - \frac{2 d^2}{L'^2} \right) 
+\\
+C_{\rm exp}(d) &=& \sigma^2 \exp \left( - \frac{d}{L'/2} \right)
+= \sigma^2 \exp \left( - \frac{2 d}{L'} \right)
+\end{eqnarray*}
+%
+Adopting $L'$ as the length scale, we can list all four covariance functions:
+%
+\begin{eqnarray}
+C_{\rm gaus}(d) &=& \sigma^2 \exp \left( - \frac{2 d^2}{L'^2} \right) 
+\label{Cgaus1}
+\\
+C_{\rm exp}(d) &=& \sigma^2 \exp \left( - \frac{2 d}{L'} \right)
+\label{Cexp1}
+\\
+C_{\rm circ}(d) &=& \left\{
+\begin{array}{ll}
+\sigma^2\left(1 - \frac{\beta + \sin\beta}{\pi} \right) & d \le L'
+\\
+0 \;\;\;\; & d > L'
+\end{array}
+\right.
+\\
+\beta &=& 2 \sin^{-1}\left( \frac{r}{L'} \right)
+\nonumber
+\\
+C_\nu(d) &=& \sigma^2 \frac{2^{1-\nu}}{\Gamma(\nu)} \left(\sqrt{2\nu}\frac{d}{L'} \right)^\nu K_\nu\left(\sqrt{2\nu} \frac{d}{L'}\right),
+\end{eqnarray}
+%
+where $\Gamma$ is the gamma function, $K_\nu$ is the modified Bessel function of the second kind, and $\nu$ is a positive number. The value of $C(L')$ are similar for all four covariance functions, as desired.
+
+We will work with $L'$ in the equations and \verb+Lprime+ in the code.
+
+%-------------------------------------------------------------
+
 % generated in covC_plot.m
 \clearpage\pagebreak
 \begin{figure}
@@ -420,13 +485,27 @@ NOTE: Matlab's \verb+norm+ command will {\em not} be useful here. In calculating
 \includegraphics[width=15cm]{covC_LFACTOR2.eps}
 \caption[]
 {{
-Covariance functions from {\tt covC.m} characterized by length scale $L'$ and amplitude $\sigma^2$.
+Covariance functions from {\tt covC()} characterized by length scale $L'$ and amplitude $\sigma^2$.
 See \citet[][Section 5.3.3, p. 113]{Tarantola2005}.
 Some reference $e$-folding depths are labeled; for example, the $y$-values of the top line is $y = \sigma^2 e^{-1/2} \approx 9.70$.
-The Mat\'ern covariance functions include an additional parameter, $\nu$, that influences the shape: $\nu \rightarrow \infty$ for the Gaussian function (upper left), $\nu = 0.5$ for the exponential function (upper right).
+The Mat\'ern covariance functions include an additional parameter $\nu$ that influences the shape: $\nu \rightarrow \infty$ for the Gaussian function (upper left), $\nu = 0.5$ for the exponential function (upper right).
 \label{fig:covC2}
 }}
 \end{figure}
+
+\iffalse
+% generated in covC_plot.m
+\clearpage\pagebreak
+\begin{figure}
+\centering
+\includegraphics[width=15cm]{covC_LFACTOR1.eps}
+\caption[]
+{{
+Same as \refFig{fig:covC2}, but for LFACTOR = 1.
+\label{fig:covC1}
+}}
+\end{figure}
+\fi
 
 %-------------------------------------------------------------
 \end{document}

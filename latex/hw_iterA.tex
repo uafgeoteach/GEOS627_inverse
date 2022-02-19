@@ -5,6 +5,8 @@
 
 \renewcommand{\baselinestretch}{1.1}
 
+\newcommand{\tfile}{{\tt hw\_cov2D.ipynb}}
+
 %--------------------------------------------------------------
 \begin{document} 
 %-------------------------------------------------------------
@@ -13,7 +15,7 @@
 \centering
 {\large \bf Problem Set 5: Iterative methods with generalized least squares, Part A [iterA]} \\
 \cltag\ \\
-Assigned: September 30, 2019 --- Due: October 9, 2019 \\
+Assigned: February 22, 2022 --- Due: March 8, 2022 \\
 Last compiled: \today
 \end{spacing}
 
@@ -24,7 +26,7 @@ Last compiled: \today
 \begin{enumerate}
 \item Reading: Section 6.22 of \citet{Tarantola2005}
 
-\item {\bf Problem 1.} In HW4 you explored Gaussian random fields with prescribed covariance (exponential or Gaussian) for a 1D spatial field. This problem deals with 2D Gaussian random fields. Your goal is to understand how these fields are generated, and to get some intuitive sense for how certain parameters change the appearance of the 2D fields.
+\item {\bf Problem 1.} In \verb+hw_cov+ you explored Gaussian random fields with prescribed covariance (exponential or Gaussian) for a 1D spatial field. This problem deals with 2D Gaussian random fields. Your goal is to understand how these fields are generated, and to get some intuitive sense for how certain parameters change the appearance of the 2D fields.
 
 The Matlab scripts for computing Gaussian random fields in the frequency domain were provided by Miranda Holmes, who wrote them as part of the study \citet{BuhlerHolmes2009}. She also wrote a useful set of notes, ``Generating stationary Gaussian random fields,'' which is available as \verb+ft_summary.pdf+ in the same directory containing the Matlab scripts (\verb+~/+\repodir\verb+/util_grf/+).
 
@@ -32,7 +34,7 @@ Why do we care about the statistical characteristics of spatial random fields? B
 
 \item {\bf Problem 2.} Iterative methods are needed for nonlinear problems, which are characterized by a nonlinear forward model $\bg(\bem)$. In many problems it is not computationally feasible to evaluate the misfit function dozens of times, let alone millions (or billions) of times needed to cover the $\nparm$-dimensional model space. The basic strategy is to evaluate the misfit function at one point, then use the gradient (and Hessian) at that point to guide the choice of the next point. This problem will build upon the lab exercie \verb+lab_iter.pdf+.
 
-\item {\bf Problem 3.} Here we revisit \citet{Tarantola2005}, Problem 7-1. See HW3 for background.
+\item {\bf Problem 3.} Here we revisit \citet{Tarantola2005}, Problem 7-1. See \verb+hw_epi+ for background.
 
 \end{enumerate}
 
@@ -44,13 +46,7 @@ Why do we care about the statistical characteristics of spatial random fields? B
 In this problem, a ``sample'' is a 2D spatial field that is $n_x \times n_y$.
 %
 \begin{enumerate}
-\item (0.2) Make a copy of the template code:
-%
-\begin{verbatim}
-cp covrand2D_template.m covrand2D.m
-\end{verbatim}
-%
-Run \verb+covrand2D.m+, which will generate 1000 samples of a 2D Gaussian random field with prescribed covariance; eight samples are plotted.
+\item (0.2) Use the template code \tfile. Run it. It will will generate 1000 samples of a 2D Gaussian random field with prescribed covariance; eight samples are plotted.
 
 Compute and plot the sample mean $\bmu_{1000}$ with a colorbar.
 
@@ -58,7 +54,8 @@ Throughout this problem, when plotting samples, use the same plotting commands\f
 
 \verb+axis equal, axis(ax1aex), caxis(3*sigma*[-1 1])+
 
-\item (0.3) Open \verb+xy2distance.m+ (note \footnote{This is in the subfolder {\tt util$\_$grf}), which will be in your Matlab path (type {\tt open xy2distance}) if you ran {\tt covrand2D.m} in the previous problem.}, set \verb+idisplay=1+, then run the example at the bottom.
+\item (0.3) Open \verb+xy2distance.m+ (NEED TO BE UPDATED)
+%(note \footnote{This is in the subfolder {\tt util$\_$grf}), which will be in your Matlab path (type {\tt open xy2distance}) if you ran {\tt covrand2D.m} in the previous problem.}, set \verb+idisplay=1+, then run the example at the bottom.
 %
 \begin{enumerate}
 \item (0.0) Explain how the points are ordered within the distance index matrix \verb+iD+.
@@ -71,7 +68,7 @@ Note that you need to consider $\Delta x$, which is not represented in the plott
 %
 After you are done, be sure to reset \verb+idisplay=0+.
 
-\item (0.0) What is the maximum distance between two points in the default grid in \verb+covranD.m+?
+\item (0.0) What is the maximum distance between two points in the default grid in \tfile?
 
 %\pagebreak
 \item (0.5) Compute the sample covariance matrix $\bC_{1000}$, which we label as \verb+Csamp+.
@@ -79,22 +76,24 @@ After you are done, be sure to reset \verb+idisplay=0+.
 \begin{enumerate}
 \item (0.2) Include a plot of $\bC_{1000}$
 
+CODE NEEDS TO BE UPDATED FOR PYTHON:
+
 \verb+figure; imagesc(Csamp); axis equal, axis tight+
 
 \item (0.1) Plot the points of $\bC_{1000}$ vs $\bD$. We denote this as $C_{1000}(d)$.
 
 %Hint: Only a single plotting command is needed.
 
-\item (0.1) Superimpose the covariance function, $C(d)$.
+\item (0.1) Superimpose the covariance function $C(d)$.
 
-Hint: \verb+plot(iD*dx,C,'r.')+ is one way to plot $C(d)$.
+Hint: \verb+plot(iD*dx,C,'r.')+ is one way to plot $C(d)$, assuming that \verb+iD+ and \verb+C+ are matrices.
 
-\item (0.1) Show that the length scale is consistent with the input value $L'$ (Matlab variable~\verb+L+) (hint: see HW4 solutions).
+\item (0.1) Show that the length scale is consistent with the input value $L'$ (Matlab variable~\verb+L+) (hint: see \verb+hw_cov+ solutions).
 \end{enumerate}
 
 \item (0.0) Now set \verb+ifourier=1+ and \verb+idouble=1+ and convince yourself that the FFT method gives the same result. Check that your scatterplot of estimated $C_{1000}(d)$ is about the same.
 
-\item (0.3) The Cholesky decomposition is extremely unstable. In order to consider denser grids, or covariance functions with large $L'$ length scales, we need to use Fourier methods (\verb+ifourier=1+).
+\item (0.3) The Cholesky decomposition is numerically unstable. In order to consider denser grids, or covariance functions with large $L'$ length scales, we need to use Fourier methods (\verb+ifourier=1+).
 
 \begin{enumerate}
 \item Explain what happens in the code if \verb+idouble=0+ instead of \verb+idouble=1+.
@@ -115,7 +114,7 @@ Make sure that you are using \verb+nx = 2^7+.
 
 \item Show your modified lines of code.
 
-Hint: Use the template code provided at the end of \verb+covrand2D.m+ and see \verb+grf2.m+.
+Hint: Use the template code provided at the end of \tfile\ and see \verb+grf2()+ (in \verb+lib_fft.py+).
 %When you generate the first Gaussian random field, save the Gaussian random vectors as \verb+A+ and \verb+B+ in \verb+grf2.m+. Then pass these vectors into \verb+grf2.m+ for the other two sets of samples.
 \end{enumerate}
 
