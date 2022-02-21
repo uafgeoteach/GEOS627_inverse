@@ -49,7 +49,7 @@ def xy2distance(nx,ny,bdisplay=False):
         print('%i total number of distances, %i of which are unique pairs'% (n**2,nd))
         
         for ii in range(n**2):
-            print('%i-%i (%i, %i)-(%i, %i) = %i'% (pA[ii],pB[ii],ix[pA[ii]],iy[pA[ii]],ix[pB[ii]],iy[pB[ii]],id[ii]))
+            print('%2i-%2i (%i, %i)-(%i, %i) = %6.2f'% (pA[ii],pB[ii],ix[pA[ii]],iy[pA[ii]],ix[pB[ii]],iy[pB[ii]],id[ii]))
             
 
         print('---------------------------')
@@ -60,16 +60,24 @@ def xy2distance(nx,ny,bdisplay=False):
         ax1 = [-1, n, -1, n]
     
         # print some output
+        print('ind:')
         print(ind)
+        print('ix:')
         print(ix)
+        print('iy:')
         print(iy)
+        print('PA:')
+        print(PA)
+        print('PB:')
+        print(PB)
+        print('iD:')
+        print(iD)
         
-        print(PA, PB, iD)
         ud = np.unique(id)
         print('%i unique nonzero entries:'% (len(ud)-1))
         print(ud[1:])
         
-        plt.figure(figsize=(8,14))
+        plt.figure(figsize=(8,5.5))
         plt.plot(ix,iy,'.',ms='16')
         for kk in range(len(ix)):
             plt.text(ix[kk],iy[kk],str(ind[kk]))
@@ -84,22 +92,21 @@ def xy2distance(nx,ny,bdisplay=False):
         nr=2; nc=1;
         plt.subplot(nr,nc,1)
         plt.imshow(PA,vmin=1,vmax=n)
-        plt.axis(ax1)
+        #plt.axis(ax1)
         plt.colorbar()
         plt.title('Point A index')
     
         plt.subplot(nr,nc,2)
         plt.imshow(PB,vmin=1,vmax=n)
-        plt.axis(ax1)
+        #plt.axis(ax1)
         plt.colorbar()
         plt.title('Point B index')
-    
     
         plt.figure(figsize=(8,14))
         nr=2; nc=1;
         plt.subplot(nr,nc,1)
         plt.imshow(iD)
-        plt.axis(ax1)
+        #plt.axis(ax1)
         plt.colorbar()
         plt.xlabel('Index of point B')
         plt.ylabel('Index of point A')
@@ -117,7 +124,7 @@ def xy2distance(nx,ny,bdisplay=False):
     
         plt.subplot(nr,nc,2)
         plt.imshow(R)
-        plt.axis(ax1)
+        #plt.axis(ax1)
         plt.colorbar()
         plt.xlabel('Index of point A')
         plt.ylabel('Index of point B')
