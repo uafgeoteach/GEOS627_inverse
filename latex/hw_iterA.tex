@@ -28,9 +28,9 @@ Last compiled: \today
 
 \item {\bf Problem 1.} In \verb+hw_cov+ you explored Gaussian random fields with prescribed covariance (exponential or Gaussian) for a 1D spatial field. This problem deals with 2D Gaussian random fields. Your goal is to understand how these fields are generated, and to get some intuitive sense for how certain parameters change the appearance of the 2D fields.
 
-The Matlab scripts for computing Gaussian random fields in the frequency domain were provided by Miranda Holmes, who wrote them as part of the study \citet{BuhlerHolmes2009}. She also wrote a useful set of notes, ``Generating stationary Gaussian random fields,'' which is available as \verb+ft_summary.pdf+ in the same directory containing the Matlab scripts (\verb+~/+\repodir\verb+/util_grf/+).
+The Matlab scripts for computing Gaussian random fields in the frequency domain were provided by Miranda Holmes, who wrote them as part of the study \citet{BuhlerHolmes2009}. She also wrote a useful set of notes, ``Generating stationary Gaussian random fields,'' which is available as in our google drive notes directory. The Matlab scripts have been recorded for Python and reside in \verb+lib_fft.py+.
 
-Why do we care about the statistical characteristics of spatial random fields? Because real systems have complex variations that we would like to quantify in simpler terms. \citet{Gneiting2012} examined several different covariance functions, including the Matern family, which includes the Gaussian and exponential functions, and they illustrate their technique with line transects of arctic sea ice.
+Why do we care about the statistical characteristics of spatial random fields? Because real systems have complex variations that we would like to quantify in simpler terms. \citet{Gneiting2012} examined several different covariance functions, including the Matern family, which includes the Gaussian and exponential functions, and they apply their technique to line transects of arctic sea ice.
 
 \item {\bf Problem 2.} Iterative methods are needed for nonlinear problems, which are characterized by a nonlinear forward model $\bg(\bem)$. In many problems it is not computationally feasible to evaluate the misfit function dozens of times, let alone millions (or billions) of times needed to cover the $\nparm$-dimensional model space. The basic strategy is to evaluate the misfit function at one point, then use the gradient (and Hessian) at that point to guide the choice of the next point. This problem will build upon the lab exercie \verb+lab_iter.pdf+.
 
@@ -46,16 +46,7 @@ Why do we care about the statistical characteristics of spatial random fields? B
 In this problem, a ``sample'' is a 2D spatial field that is $n_x \times n_y$.
 %
 \begin{enumerate}
-\item (0.2) Use the template code \tfile. Run it. It will will generate 1000 samples of a 2D Gaussian random field with prescribed covariance; eight samples are plotted.
-
-Compute and plot the sample mean $\bmu_{1000}$ with a colorbar.
-
-Throughout this problem, when plotting samples, use the same plotting commands\footnote{If you are not using Matlab, then the key points when plotting are to not distort the shape of the samples and to use a color scale that ranges between $-3\sigma$ and $+3\sigma$.}:
-
-\verb+axis equal, axis(ax1aex), caxis(3*sigma*[-1 1])+
-
-\item (0.3) Open \verb+xy2distance.m+ (NEED TO BE UPDATED)
-%(note \footnote{This is in the subfolder {\tt util$\_$grf}), which will be in your Matlab path (type {\tt open xy2distance}) if you ran {\tt covrand2D.m} in the previous problem.}, set \verb+idisplay=1+, then run the example at the bottom.
+\item (0.3) Open \tfile, set \verb+run_xy2distance = True+, then run it. Open \verb+lib_fft.py+ to see the function \verb+xy2distance()+.
 %
 \begin{enumerate}
 \item (0.0) Explain how the points are ordered within the distance index matrix \verb+iD+.
@@ -66,19 +57,21 @@ Throughout this problem, when plotting samples, use the same plotting commands\f
 Note that you need to consider $\Delta x$, which is not represented in the plotted example grid.
 \end{enumerate}
 %
-After you are done, be sure to reset \verb+idisplay=0+.
+After you are done, be sure to set \verb+run_xy2distance = False+.
 
-\item (0.0) What is the maximum distance between two points in the default grid in \tfile?
+\item (0.0) Use the template code \tfile. Run it. It will will generate 1000 samples of a 2D Gaussian random field with prescribed covariance; eight samples are plotted.
+
+What is the maximum distance between two points in the default grid in \tfile?
+
+\item (0.2) Compute and plot the sample mean $\bmu_{1000}$ with a colorbar.
+
+Throughout this problem, when plotting samples, make sure you do not distort the shape of the 2D samples (\ie aspect ratio 1:1), and use a color scale that ranges between $-3\sigma$ and $+3\sigma$.
 
 %\pagebreak
 \item (0.5) Compute the sample covariance matrix $\bC_{1000}$, which we label as \verb+Csamp+.
 
 \begin{enumerate}
-\item (0.2) Include a plot of $\bC_{1000}$
-
-CODE NEEDS TO BE UPDATED FOR PYTHON:
-
-\verb+figure; imagesc(Csamp); axis equal, axis tight+
+\item (0.2) Include a square, colored matrix plot of $\bC_{1000}$.
 
 \item (0.1) Plot the points of $\bC_{1000}$ vs $\bD$. We denote this as $C_{1000}(d)$.
 

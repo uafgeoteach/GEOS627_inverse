@@ -28,7 +28,22 @@ Last compiled: \today
 
 %------------------------
 
-\subsection*{Instructions}
+\subsection*{Overview}
+
+See Wikipedia ``Newton's method in optimization'': \\
+\url{https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization}
+
+The quasi-Newton algorithm is (\eg Tarantola, 2005, Eq.~6.291)
+%
+\begin{eqnarray}
+\bem_{n+1} &=& \bem_n + \bDelta\bem_n
+\\
+\bDelta\bem_n &=& -\bHh_n^{-1}\; \bgammah_n = -\bH_n^{-1}\; \bgamma_n
+\end{eqnarray}
+
+%------------------------
+
+\subsection*{Problems}
 
 \begin{enumerate}
 \item Consider the equation $\bH\bem = \bg$. \\
@@ -52,9 +67,11 @@ Zoom in to show that this appears to be a true minimum.
 
 \item By hand, sketch your setup for this problem: axes, a curve, your starting point $(\bem_0,\,F(\bem_0))$, your (known) minimum point $(\bem_{\rm min},\,F(\bem_{\rm min}))$. Describe in words how the Newton algorithm will find the minimum of $F(\bem)$. Annotate your sketch with some iterates of $\bem_n$.
 
+Bonus: Check out the Wikipedia description, and see if you can annotate your sketch to show how the next model is obtained.
+
 \vspace{10cm}
 
-\item Implement the Newton algorithm (Tarantola, 2005, Eq.~6.291), and demonstrate (graphically or numerically) that you reach the minimum.
+\item Implement the Newton algorithm, and demonstrate (graphically or numerically) that you reach the minimum.
 
 Plot the point $(\bem,\,F(\bem))$ for each new value of $\bem$.
 
