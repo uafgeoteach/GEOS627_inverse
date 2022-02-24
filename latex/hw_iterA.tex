@@ -26,21 +26,37 @@ Last compiled: \today
 \begin{enumerate}
 \item Reading: Section 6.22 of \citet{Tarantola2005}
 
-\item {\bf Problem 1.} In \verb+hw_cov+ you explored Gaussian random fields with prescribed covariance (exponential or Gaussian) for a 1D spatial field. This problem deals with 2D Gaussian random fields. Your goal is to understand how these fields are generated, and to get some intuitive sense for how certain parameters change the appearance of the 2D fields.
+\item {\bf Problem 1 [Part A].} In \verb+hw_cov+ you explored Gaussian random fields with prescribed covariance (exponential or Gaussian) for a 1D spatial field. This problem deals with 2D Gaussian random fields. Your goal is to understand how these fields are generated, and to get some intuitive sense for how certain parameters change the appearance of the 2D fields.
 
-The Matlab scripts for computing Gaussian random fields in the frequency domain were provided by Miranda Holmes, who wrote them as part of the study \citet{BuhlerHolmes2009}. She also wrote a useful set of notes, ``Generating stationary Gaussian random fields,'' which is available as in our google drive notes directory. The Matlab scripts have been recorded for Python and reside in \verb+lib_fft.py+.
+The codes we use for computing Gaussian random fields in the frequency domain were provided by Miranda Holmes, who wrote them in Matlab as part of the study \citet{BuhlerHolmes2009}. She also wrote a useful set of notes, ``Generating stationary Gaussian random fields,'' which is available as in our google drive notes directory. The Matlab codes have been rewritten for Python (by Yuan Tian) and reside in \verb+lib_fft.py+.
 
 Why do we care about the statistical characteristics of spatial random fields? Because real systems have complex variations that we would like to quantify in simpler terms. \citet{Gneiting2012} examined several different covariance functions, including the Matern family, which includes the Gaussian and exponential functions, and they apply their technique to line transects of arctic sea ice.
 
-\item {\bf Problem 2.} Iterative methods are needed for nonlinear problems, which are characterized by a nonlinear forward model $\bg(\bem)$. In many problems it is not computationally feasible to evaluate the misfit function dozens of times, let alone millions (or billions) of times needed to cover the $\nparm$-dimensional model space. The basic strategy is to evaluate the misfit function at one point, then use the gradient (and Hessian) at that point to guide the choice of the next point. This problem will build upon the lab exercie \verb+lab_iter.pdf+.
+\refFig{fig:frankel} provides a motivating figure from \citet{Tarantola2005}.
 
-\item {\bf Problem 3.} Here we revisit \citet{Tarantola2005}, Problem 7-1. See \verb+hw_epi+ for background.
+\item {\bf Problem 2 [Part B].} Iterative methods are needed for nonlinear problems, which are characterized by a nonlinear forward model $\bg(\bem)$. In many problems it is not computationally feasible to evaluate the misfit function dozens of times, let alone millions (or billions) of times needed to cover the $\nparm$-dimensional model space. The basic strategy is to evaluate the misfit function at one point, then use the gradient (and Hessian) at that point to guide the choice of the next point. This problem will build upon the lab exercie \verb+lab_iter.pdf+.
+
+\item {\bf Problem 3 [Part B].} Here we revisit \citet{Tarantola2005}, Problem 7-1. See \verb+hw_epi+ for background.
 
 \end{enumerate}
 
 %------------------------
+\clearpage\pagebreak
 
-\pagebreak
+\begin{figure}
+\centering
+\includegraphics[width=16cm]{Tarantola2005_Fig5p8.eps}
+%
+\caption[]
+{{
+Figure~1 from \citet{FrankelClayton1986}, redisplayed as Figure~5.8 from \citet{Tarantola2005}. Caption: ``Pseudorandom realizations of three types of two-dimensional Gaussian random fields.'' The covariance functiosn from top to bottom are: Von Karman, exponential, and Gaussian.
+\label{fig:frankel}
+}}
+\end{figure}
+
+%------------------------
+
+\clearpage\pagebreak
 \subsection*{Problem 1 (3.0). 2D Gaussian random fields}
 
 In this problem, a ``sample'' is a 2D spatial field that is $n_x \times n_y$.

@@ -10,6 +10,11 @@
 \newcommand{\tfileFE}{{\tt forward\_epicenter.ipynb}}
 \newcommand{\tfileFEC}{{\tt forward\_epicenter\_crescent.ipynb}}
 
+\graphicspath{
+  {./figures/}
+  {./seis/figures/}    % only needed when running from inv
+}
+
 %--------------------------------------------------------------
 \begin{document} 
 %-------------------------------------------------------------
@@ -30,7 +35,21 @@ See the lab exercise on the quasi-Newton method (\verb+lab_iter.pdf+). There you
 %
 Alternatively you can use your \tfile\ script, but, whichever you use, {\bf check your results for the quasi-Newton method with those listed in \refTab{tab}.}
 
-%\pagebreak
+\vspace{0.5cm}
+\begin{figure}[h]
+\centering
+\includegraphics[width=13cm]{optimhw_fig02.eps}
+\caption[Source-receiver geometry]
+{{
+Source--receiver geometry for the earthquake location problem. The ray paths are drawn between the (fixed) receivers and the initial epicenter $\bem_{\rm initial}$.
+The target data are computed using the target model \textcolor{red}{$\bem_{\rm target}$}.
+The data $\dvec$ are constructed by adding errors to the target data.
+Both $\bem_{\rm initial}$ and $\bem_{\rm target}$ are samples within the prior distribution, which is centered at \textcolor{blue}{$\bem_{\rm prior}$} and represented by the 1000 dots. Alternatively, one could choose \textcolor{blue}{$\bem_{\rm prior}$} to be $\bem_{\rm initial}$.
+\label{fig:srcrec}
+}}
+\end{figure}
+
+\clearpage\pagebreak
 \subsection*{Problem 2 (4.0). Implementation of iterative methods}
 
 In this problem you will replace the quasi-Newton method with three other methods. You will not need to touch the code associated with the forward model .
@@ -80,7 +99,7 @@ NOTE: This problem can be answered even if your implementations in 2-1, 2-2, 2-3
 
 %------------------------
 
-%\pagebreak
+\clearpage\pagebreak
 \subsection*{Problem 3 (3.0). Revisiting \citet{Tarantola2005}, Problem 7-1}
 
 Your goal is to implement \citet{Tarantola2005}, Problem 7-1.
@@ -112,11 +131,10 @@ ymin = -2
 ymax = 30
 xcen = (xmax+xmin)/2
 ycen = (ymin+ymax)/2
-
-% prior model
-mprior = [ xcen ycen ]
 \end{verbatim}
 %
+Then use $\mprior$ = \verb+(xcen, ycen)+.
+
 Use the same $\sigma$ values for the prior epicenter as in \tfileFE\ ($\sigma_{x_s} = \sigma_{y_s} = 10$~km). This prior model is chosen as an analog for the perspective that the epicenter could be anywhere within a large region (such as the plotting grid).
 
 \item $\bem_{\rm initial} = (15, 20)$.
@@ -148,6 +166,7 @@ Solve the problem using the quasi-Newton method with eight iterations.
 
 %----------
 
+\pagebreak
 \item (0.5) \ptag\ See \citet[][p.~34--36]{Aster} for how to compute confidence regions. The key concept is that the inequality
 %
 \begin{equation*}
