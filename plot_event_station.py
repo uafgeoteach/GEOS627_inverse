@@ -1,1 +1,0 @@
-../GEOS626_seis/plot_event_station.py
