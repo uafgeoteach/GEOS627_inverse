@@ -52,7 +52,7 @@ Both $\bem_{\rm initial}$ and $\bem_{\rm target}$ are samples within the prior d
 \clearpage\pagebreak
 \subsection*{Problem 2 (4.0). Implementation of iterative methods}
 
-In this problem you will replace the quasi-Newton method with three other methods. You will not need to touch the code associated with the forward model .
+In this problem you will replace the quasi-Newton method (from \verb+lab_iter.pdf+) with three other methods. You will not need to touch the code associated with the forward model (\tfileFE).
 
 \begin{enumerate}
 \item (1.5) Implement the {\bf steepest descent} method (Eq. 6.297). Use Eq. 6.309 for $\mu_n$. Use 8~iterations (\verb+niter=8+). Include the following:
@@ -102,9 +102,11 @@ NOTE: This problem can be answered even if your implementations in 2-1, 2-2, 2-3
 \clearpage\pagebreak
 \subsection*{Problem 3 (3.0). Revisiting \citet{Tarantola2005}, Problem 7-1}
 
-Your goal is to implement \citet{Tarantola2005}, Problem 7-1.
+Your goal is to apply the quasi-Newton method to Problem 7-1 of \citet{Tarantola2005}.
 %
 \begin{itemize}
+\item Start with a clean version of \tfile\ that replicates the quasi-Newton results shown in \refTab{tab} for \tfileFE.
+
 \item Prepare for this example by copying a file: \\
 \verb+cp+ \tfileFE\ \tfileFEC.
 
@@ -144,7 +146,7 @@ Use the same $\sigma$ values for the prior epicenter as in \tfileFE\ ($\sigma_{x
 \item For the case of fixed data errors, \verb+tobs+ to be the values used in \verb+hw_epi+:
 %
 \begin{verbatim}
-tobs = np.array([3.12,3.26,2.98,3.12,2.84,2.98]).reshape((6,1))
+tobs = np.array([[3.12,3.26,2.98,3.12,2.84,2.98]]).T
 eobs = tobs - dtarget
 \end{verbatim}
 %
