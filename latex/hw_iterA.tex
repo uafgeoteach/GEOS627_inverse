@@ -95,9 +95,9 @@ Throughout this problem, when plotting samples, make sure you do not distort the
 
 \item (0.1) Superimpose the covariance function $C(d)$.
 
-Hint: \verb+plot(iD*dx,C,'r.')+ is one way to plot $C(d)$, assuming that \verb+iD+ and \verb+C+ are matrices.
+Hint: \verb+plt.plot(iD*dx,C,'ro')+ is one way to plot $C(d)$, assuming that \verb+iD+ and \verb+C+ are matrices.
 
-\item (0.1) Show that the length scale is consistent with the input value $L'$ (Matlab variable~\verb+L+) (hint: see \verb+hw_cov+ solutions).
+\item (0.1) Show that the length scale is consistent with the input value $L'$ (code variable~\verb+Lprime+) (hint: see \verb+hw_cov+ solutions).
 \end{enumerate}
 
 \item (0.0) Now set \verb+ifourier=1+ and \verb+idouble=1+ and convince yourself that the FFT method gives the same result. Check that your scatterplot of estimated $C_{1000}(d)$ is about the same.
@@ -114,17 +114,25 @@ After you are done, reset \verb+idouble=1+; from here on out, we will use \verb+
 
 \item (0.2) Compute the mean and standard deviation of each sample from the set of 1000 samples. Plot the means and standard deviations as two histograms.
 
-\item (1.0) \ptag\ Generate a Gaussian random field with (a) Gaussian covariance, (b) exponential covariance, and (c) circular covariance. In each case, {\em use the same Gaussian random vector} (note: this requires coding). Use \verb+nx = 2^7+, \verb+ichol=0+, \verb+ifourier=1+, \verb+idouble=1+, and keep all other parameters fixed (as defaults).
-%
-\begin{enumerate}
-\item Show the GRFs in a $3 \times 1$ subplot figure. \\
-In all plots use the same the color range \verb+caxis(3*sigma*[-1 1])+. \\
-Make sure that you are using \verb+nx = 2^7+.
+\item (0.5) \ptag\ Generate two Gaussian random fields having different covariance (Gaussian or exponential) but using {\em the same Gaussian random vector} (note: this requires coding). Use \verb+nx = 2^5+, \verb+ichol=0+, \verb+ifourier=1+, \verb+idouble=1+, and keep all other parameters fixed (as defaults).
 
+\begin{enumerate}
 \item Show your modified lines of code.
 
 Hint: Use the template code provided at the end of \tfile\ and see \verb+grf2()+ (in \verb+lib_fft.py+).
 %When you generate the first Gaussian random field, save the Gaussian random vectors as \verb+A+ and \verb+B+ in \verb+grf2.m+. Then pass these vectors into \verb+grf2.m+ for the other two sets of samples.
+
+Note: If you do not implement the code correctly, then explain what code modifications are needed.
+\end{enumerate}
+
+\item \textcolor{red}{\bf Now close your server and start a new one with the large-memory option.}
+
+(0.5) \ptag\ Generate a Gaussian random field with (a) Gaussian covariance, (b) exponential covariance, and (c) circular covariance. In each case, {\em use the same Gaussian random vector}. Use \verb+nx = 2^7+, \verb+ichol=0+, \verb+ifourier=1+, \verb+idouble=1+, and keep all other parameters fixed (as defaults).
+%
+\begin{enumerate}
+\item Show the GRFs in a $3 \times 1$ subplot figure. \\
+In all plots use the same the color range $[-3\sigma, 3\sigma]$ (\verb+plt.clim(3*sigma*np.array([-1,1]))+).  \\
+Make sure that you are using \verb+nx = 2^7+.
 \end{enumerate}
 
 \item (0.5) \ptag\ Choose a covariance function (pick any \verb+icov+), then plot six Gaussian random fields, each with a different length scale $L'$. Use the same Gaussian random vector to generate each GRF. Include a $3 \times 2$ subplot figure showing your GRFs.
