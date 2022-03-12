@@ -219,7 +219,7 @@ Hint:
 %------------------------
 
 \pagebreak
-\subsection*{Problem 3 (3.5). Estimating a covariance matrix from a set of samples}
+\subsection*{Problem 3 (4.0). Estimating a covariance matrix from a set of samples}
 
 See the template script \tfile. Let $\nsample$ be the number of samples and $\nparm$ be the number of model parameters describing a single sample. The $j$th sample is represented by the $\nparm \times 1$ vector
 %
@@ -279,7 +279,7 @@ where $\bem_j$ is the $j$th sample.
 \item (0.7) Compute and plot the covariance matrix, $\bC_{10}$ (use \verb+imshow+). Show your code to compute $\bC_{10}$, and do not use the black-box \verb+cov+ function\footnote{If you use {\tt cov} to check, you may need to transpose your matrix of samples to ensure that the resultant matrix is $\nparm \times \nparm$.}.
 \item (0.5) Make a scatterplot (use \verb+plot+) of $(\bC_{10})_{kk'}$ versus $D_{kk'} = |x_k - x_{k'}|$, where $\bD$ is provided in \tfile. 
 
-Hint: Try \verb+plot(D,Csamp,'b.')+ where \verb+Csamp+ represents $\bC_{10}$.
+Hint: Try \verb+plt.plot(D,Csamp,'b.')+ where \verb+Csamp+ represents $\bC_{10}$.
 \end{enumerate}
 
 %--------------
@@ -290,7 +290,7 @@ Hint: Try \verb+plot(D,Csamp,'b.')+ where \verb+Csamp+ represents $\bC_{10}$.
 
 %--------------
 
-\item (0.2) Examine the function \verb+covC()+.
+\item (0.4) Examine the function \verb+covC()+.
 %, which will be needed in Problems 3-\ref{prob:covC} and 4.
 Some example plots using \verb+covC()+ are shown in \refFig{fig:covC2}. Two of the functions plotted are \refEqii{Cgaus1}{Cexp1} (see \refApp{sec:matern}), where $d$ is the distance between $\br$ and $\br'$. In our 1D example, $d(\br,\br') = d(x,x') = |x - x'|$.
 %The function \verb+covC()+ inputs $L'$ (assuming that \verb+LFACTOR=2+).
@@ -332,7 +332,7 @@ Note: Only integers and variables should appear in your answers.
 
 %--------------
 
-\item (0.5) Use \verb+covC()+ to find a covariance function $C(d)$ that reasonably fits the scatterplot of $(\bC_{1000})_{kk'}$ versus $D_{kk'}$ from Problem 3-\ref{prob:Cd}.
+\item (0.8) Use \verb+covC()+ to find a covariance function $C(d)$ that reasonably fits the scatterplot of $(\bC_{1000})_{kk'}$ versus $D_{kk'}$ from Problem 3-\ref{prob:Cd}.
 %
 \begin{enumerate}
 \item List your values of the parameters that describe $C(d)$.
@@ -349,7 +349,7 @@ What are the diagonal entries of $\bC$ and why?
 %------------------------
 
 \pagebreak
-\subsection*{Problem 4 (3.0). Generating samples from a prescribed covariance}
+\subsection*{Problem 4 (2.5). Generating samples from a prescribed covariance}
 
 \citet[][p.~45]{Tarantola2005}:
 %

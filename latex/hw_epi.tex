@@ -67,6 +67,12 @@ F(\bem) &=& \frac{1}{2} \sum_{i=1}^6 \frac{\left(t_i(\bem) - t_i^{\rm obs}\right
 %
 where $\sigma$, $t_i^{\rm obs}$, and the forward model $t_i(\bem)$ are provided in \citet{Tarantola2005}, and the model vector represents the epicenter $\bem = (x^s,y^s)$. Here $\bt(\bem)$ is a $6 \times 1$ vector of predicted arrival times, and $\bt^{\rm obs}$ is a $6 \times 1$ vector of observed arrival times.
 
+Define an evaluation of the forward model as
+%
+\begin{equation}
+F_i = F(m_i) = F(x_i,y_i)
+\end{equation}
+
 \begin{enumerate}
 \item (1.0) Check that
 %
@@ -99,7 +105,9 @@ Some tips:
 
 \item You may find it useful to define your own functions (see \verb+lab_sampling.pdf+). I have provided \verb+hw_epi.ipynb+ as a starting point. This template includes code for generating a set of points covering the 2D model space (you can change \verb+dx+). Note that I have already used variable names that you need to fill with numbers (\eg \verb+tobs+).
 
-\item The code in \verb+hw_epi.ipynb+ implies that you search over the grid of $\bem$ using a single for loop. This will store the vector of values $f_i = F(x_i,y_i)$; in order to plot this, you will need to apply a reshape command, as we did in \verb+lab_linefit.ipynb+. (Or you could use \verb+plt.scatter()+) To use \verb+plt.pcolor()+ (or related commands), you need to provide same-size matrices of \verb+X+, \verb+Y+, and \verb+F+, as in \verb+plt.pcolor(X,Y,F,cmap='jet')+. (See \verb+lab_linefit.ipynb+ for an example.)
+\item The code in \verb+hw_epi.ipynb+ implies that you search over the grid of $\bem$ using a single for loop. This will store the vector of values $f_k = F(x_k,y_k)$. This can be plotted without reshaping by using \verb+plt.scatter()+
+
+However, matrix plots are probably best. To do this, you will need to apply a reshape command, as we did in \verb+lab_linefit.ipynb+.  To use \verb+plt.pcolor()+ (or related commands), you need to provide same-size matrices of \verb+X+, \verb+Y+, and \verb+F+, as in \verb+plt.pcolor(X,Y,F,cmap='jet')+. (See \verb+lab_linefit.ipynb+ for an example.)
 
 \item Plot your 6 receivers on your plots. 
 
@@ -111,6 +119,7 @@ Some tips:
 
 %------------------------
 
+\pagebreak
 \subsection*{Problem 2 (1.5). Probabilistic solution, Part II}
 
 Consider the posterior probability density (eq. 7.9)
@@ -137,7 +146,8 @@ Hint: What is the probability that the epicenter is somewhere in our model domai
 \item (0.5) 
 
 \begin{enumerate}
-\item (0.3) Write your integral expression for $K$ in discretized form (hint: use \verb+dA+).
+\item (0.3) Write your integral expression for $K$ in discretized form \\
+Hint: use $\Delta A$ and $F_k = (x_k,y_k)$
 \item (0.2) Compute $\sigma_{\rm M}(\bem)$ and plot a figure similar to Figure 7.1 of \citet{Tarantola2005}.
 \end{enumerate}
 
@@ -185,7 +195,7 @@ Hints:
 
 \item Check that your \verb+NTRY+ test samples $\bem_i$ cover your full model space.
 
-\item Check that your evaluations of the test samples, $\sigma_{\rm M}(\bem_i)$, all range between 0 and 1.
+\item Check that your evaluations $\sigma_{\rm M}(\bem_i)$ of the test samples all range between 0 and 1.
 
 \item Plot the first 50 samples that pass the rejection test.
 \end{itemize}
