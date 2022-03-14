@@ -58,6 +58,20 @@ def covC(id,parms):
     return Cd
 
 
+def plot_matrix(M,gridlines=False,colormap=None):
+    
+    plt.imshow(M,cmap=colormap)
+    plt.xticks(ticks=range(np.shape(M)[1]),labels=[str(val) for val in range(1,np.shape(M)[1]+1)])
+    plt.yticks(ticks=range(np.shape(M)[0]),labels=[str(val) for val in range(1,np.shape(M)[0]+1)])
+    if gridlines:
+        xgrid = np.array(range(np.shape(M)[1] + 1)) - 0.5
+        ygrid = np.array(range(np.shape(M)[0] + 1)) - 0.5
+        for gridline in xgrid:
+            plt.axvline(x=gridline,color='k',linewidth=1)
+        for gridline in ygrid:
+            plt.axhline(y=gridline,color='k',linewidth=1)
+
+
 def plot_ellipse(DELTA2,C,m):
     # DELTA2 controls the size of the ellipse (see chi2inv in lib_peip.py)
     # C      2 x 2 input covariance matrix
