@@ -12,13 +12,13 @@ def covC(id,parms):
 #   id      array of distance values (scalar, vector, matrix, etc)
 #   parms:
 #   icov    type of covariance function (=1 Gaussian; =2 exponential)
-#   iL      length scale (same units as id)
+#   iLprime length scale (same units as id)
 #   sigma   amplitude factor
 #   nu      OPTIONAL: parameter for Matern covariance (icov=4 only)
 #
 # OPTIONS FOR SPECIFYING LENGTH SCALE
-#   (1) iL and id are indices for a spatial grid
-#   (2) iL and id are actual lengths for a spatial grid
+#   (1) iLprime and id are indices for a spatial grid
+#   (2) iLprime and id are actual lengths for a spatial grid
 #
     nparm   = len(parms)
     icov    = parms[0]
@@ -56,6 +56,31 @@ def covC(id,parms):
         Cd = sigma**2 * (1/(special.gamma(nu)*2**(nu-1))) * (np.sqrt(2*nu)*id/iL)**nu * b
 
     return Cd
+
+
+def plot_ellipse(DELTA2,C,m):
+    # DELTA2 controls the size of the ellipse (see chi2inv in lib_peip.py)
+    # C      2 x 2 input covariance matrix
+    # m      2 x 1 (xs,ys) defining the center of the ellipse
+
+    # construct a vector of n equally-spaced angles from (0,2*pi)
+    n = 1000
+    theta = np.linspace(0.01,2*np.pi,n).T
+    # corresponding unit vector
+    xhat = np.array([np.cos(theta),np.sin(theta)]).T
+    Cinv = np.linalg.inv(C)
+    # preallocate output array
+    r = np.zeros((n,2))
+    for i in range(n):
+        #store each (x,y) pair on the confidence ellipse in the corresponding row of r
+        #r(i,:) = sqrt(DELTA2/(xhat(i,:)*Cinv*xhat(i,:)'))*xhat(i,:)
+        #r[i,:] = np.dot(np.sqrt(DELTA2/(xhat[i,:]@Cinv@xhat[i,:].T)),xhat[i,:])
+        r[i,:] = np.sqrt(DELTA2/(xhat[i,:]@Cinv@xhat[i,:].T)) * xhat[i,:]
+    
+    # shift ellipse based on centerpoint m = (xs,ys)
+    x = m[0] + r[:,0]
+    y = m[1] + r[:,1]
+    plt.plot(x,y)
 
 
 def cart2pol(x, y):
