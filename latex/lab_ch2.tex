@@ -11,6 +11,9 @@
 \renewcommand{\theequation}{L\arabic{equation}}
 \renewcommand{\thesection}{L\arabic{section}}
 
+\newcommand{\tfileA}{{\tt ex2p1\_ex2p2.ipynb}}
+\newcommand{\tfileB}{{\tt ex3p1.ipynb}}
+
 %--------------------------------------------------------------
 \begin{document}
 %-------------------------------------------------------------
@@ -23,11 +26,15 @@ Last compiled: \today \\
 %\textcolor{red}{Answer questions in red for lab credit}
 \end{spacing}
 
+\subsection*{Overview}
+
+These examples will help prepare you for \verb+hw_ch2.pdf+, which is based on Chapter~2 of \citet{Aster}. The Python notebooks \tfileA\ and \tfileB\ are adapted from the Matlab versions provided with \citet{Aster}.
+
 \subsection*{Part I: Aster Chapter 2 examples}
 
 \begin{enumerate}
-\item Review \citet{Aster}, Examples 2-1 and 2-2 by running \verb+ex_2_1_2_uaf.m+.
-(This was needed in HW5 for calculating a confidence ellipse for the crescent misfit problem of \citet{Tarantola2005} in HW3.)
+\item Review \citet{Aster}, Examples 2-1 and 2-2 by running \tfileA.
+(This notebook was needed in \verb+hw_iterB+ for calculating a confidence ellipse for the epicenter crescent misfit problem of \citet{Tarantola2005} in \verb+hw_epi+.)
 
 \item What do you expect to happen to the confidence curves if you decrease \verb+PCONF+?
 
@@ -44,7 +51,7 @@ Suggestion: Start by copying-and-pasting the relevant blocks of code to start a 
 \subsection*{Part II: Aster Chapter 3 example}
 
 \begin{enumerate}
-\item Read \citet{Aster}, Example 3-1. Then read \verb+ex_3_1_uaf.m+ and run the script. 
+\item Read \citet{Aster}, Example 3-1. Then read \tfileB\ and run the script. 
 %
 \begin{enumerate}
 \item What is the forward model in this problem?

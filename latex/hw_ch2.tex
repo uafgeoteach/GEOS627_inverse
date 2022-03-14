@@ -5,6 +5,10 @@
 
 \renewcommand{\baselinestretch}{1.1}
 
+\newcommand{\tfile}{{\tt hw\_ch2\_ch2p1.ipynb}}
+%\newcommand{\tfileA}{{\tt ex2p1_ex2p2.ipynb}}
+%\newcommand{\tfileB}{{\tt ex3p1.ipynb}}
+
 %--------------------------------------------------------------
 \begin{document}
 %-------------------------------------------------------------
@@ -13,7 +17,7 @@
 \centering
 {\large \bf Problem Set 6: Aster Ch. 2 [ch2]} \\
 \cltag\ \\
-Assigned: October 9, 2019 --- Due: October 16, 2019 \\
+Assigned: March 14, 2022 --- Due: March 23, 2022 \\
 Last compiled: \today
 \end{spacing}
 
@@ -22,7 +26,7 @@ Last compiled: \today
 \subsection*{Instructions}
 
 \begin{itemize}
-\item These problems are from \citet{Aster}, Chapters 2 and 3. Be sure you understand Examples 2-1, 2-2, and 3-1; template scripts\footnote{These scripts come with the Matlab toolbox from the book. I have made minor changes and added the {\tt \_uaf} to distinguish these versions from those in the toolbox.}  for these are saved as \verb+ex_2_1_2_uaf.m+ and \verb+ex_3_1_uaf.m+ in the class directory.
+\item These problems are from \citet{Aster}, Chapters 2 and 3. Be sure you understand Examples 2-1, 2-2, and 3-1, featured in \verb+lab_ch2.pdf+.
 \item Wherever it says ``calculate \ldots'' or ``compute \ldots,'' please list the numerical output.
 \item List units for all answers.
 \end{itemize}
@@ -30,7 +34,7 @@ Last compiled: \today
 %\pagebreak
 \subsection*{Problem 1 (3.0). Aster 2-1 modified.}
 
-A seismic profiling experiment is performed where the first arrival times of seismic energy from a mid-crustal refractor are observed at distances (in kilometers) of $\bx = (x_1, \ldots, x_m)$ from the source, and are found to be (in seconds after the source origin time) $\bt = (t_1, \ldots, t_m)$. The vectors $\bx$ and $\bt$ are listed in the template program \verb+hw_ch2p1.m+.
+A seismic profiling experiment is performed where the first arrival times of seismic energy from a mid-crustal refractor are observed at distances (in kilometers) of $\bx = (x_1, \ldots, x_m)$ from the source, and are found to be (in seconds after the source origin time) $\bt = (t_1, \ldots, t_m)$. The vectors $\bx$ and $\bt$ are listed in the template program \tfile.
 
 A two-layer, flat Earth structure gives the mathematical model
 %
@@ -51,7 +55,7 @@ where the intercept time $t_0$ depends on the thickness and slowness of the uppe
 \item (0.3) Calculate the weighted least squares solution for the model parameters $t_0$ and~$s_2$.
 
 Note: It is probably easiest to use the transformed variables $\bd_w$ and $\bG_w$.
-\item (0.4) Plot the data, the data uncertainties (\verb+errorbar+), and the predictions for the fitted model as a dashed line.
+\item (0.4) Plot the data, the data uncertainties, and the predictions for the fitted model as a dashed line.
 \end{enumerate}
 
 
@@ -65,7 +69,7 @@ How will the correlations be manifested in the general appearance of the error e
 \begin{enumerate}
 \item (0.1) What value of $\Delta$ should you use?
 
-Hint: Use \verb+chi2inv.m+ to get $\Delta^2$; use $n$ degrees of freedom, as in Example 2.2 and described on p.~34--35. (In the the other parts of Problem 1, you should use $m-n$ for the number of degrees of freedom, when needed.)
+Hint: Use \verb+chi2inv()+ to get $\Delta^2$; use $n$ degrees of freedom, as in Example 2.2 and described on p.~34--35. (In the the other parts of Problem 1, you should use $m-n$ for the number of degrees of freedom, when needed.)
 
 \item (0.1) List the confidence intervals for $t_0$ and $s_2$.
 \item (0.1) What is the corresponding interval for $v_2 = 1/s_2$?
@@ -73,14 +77,15 @@ Hint: Use \verb+chi2inv.m+ to get $\Delta^2$; use $n$ degrees of freedom, as in 
 
 \item (0.3) Calculate and plot the 95\% confidence error ellipsoid in the $(t_0, s_2)$ plane.
 
-Hint: Use \verb+plot_ellipse.m+, which has inputs $\Delta^2$, $\bC$, and $\bem$.
+Hint: Use \verb+plot_ellipse()+, which has inputs $\Delta^2$, $\bC$, and $\bem$.
 
 Note: To check your result, you can display the 2000 estimated models from the following problem.
 
 \item (0.2) Compute $\chi^2_{\rm obs}$ and the $p$-value for the solution.
 
 \item (1.0) Evaluate the value of $\chi^2_{\rm obs}$ for 2000 Monte Carlo simulations using the data prediction from your model perturbed by noise that is consistent with the data assumptions. Compare a histogram of these $\chi^2_{\rm obs}$ values with the theoretical $\chi^2$ distribution for the correct number of degrees of freedom.
-You may find the library function \verb+chi2pdf.m+ to be useful here.
+%You may find the library function \verb+chi2pdf.m+ to be useful here.
+You may find the \verb+chi_2.pdf()+ to be useful here.
 
 \label{monte}
 
@@ -153,21 +158,21 @@ where $\bR$ is the Cholesky factor: $\covdi = \bR^T\bR$.
 %\pagebreak
 \subsection*{Problem 3 (1.5). Aster 2-5 modified.}
 
-In this problem you will use linear regression to fit a polynomial of the form
+In this problem you will use linear regression to fit a polynomial of the form\footnote{The $\nparm = 20$ coefficients are the unknown model parameters.}
 %
 \begin{equation}
 y_i = a_0 + a_1x_i + a_2x_i^2 + \cdots + a_{19}x_i^{19}
 \label{yi}
 \end{equation}
 %
-to the $m=20$ noise-free data points
+to the $\ndata=21$ noise-free data points
 %
 \begin{equation*}
-(x_i,y_i) = (-0.95,-0.95), (-0.85,-0.85), \ldots, (0.95,0.95).
+(x_i,y_i) = (-1,1), (-0.95,-0.95), (-0.85,-0.85), \ldots, (0.95,0.95), (1,1)
 \end{equation*}
 %
 \begin{itemize}
-\item Do not use the backslash (\verb+\+) operation in this problem.
+\item Do not use any pseudo-inverse operations in this problem (these will comein Chapter 3).
 
 \item Do not use $\covd$ in this problem.
 \end{itemize}
@@ -192,7 +197,7 @@ to the $m=20$ noise-free data points
 
 \begin{enumerate}
 \item (0.2) What are the numerical entries of true model $\bem_{\rm true}$?
-\item (0.2) Calculate $\bem_{\rm lsq}$, $\bem_{\rm qr}$, and $\bem_{\rm svd}$, and list the output as the matrix \verb+[mtrue mlsq mqr msvd]+.
+\item (0.2) Calculate $\bem_{\rm lsq}$, $\bem_{\rm qr}$, and $\bem_{\rm svd}$, and list the output for convenient comparison (like \verb+[mtrue mlsq mqr msvd]+).
 \item (0.1) Plot the discrete data points $(x_i,y_i)$. Superimpose the predictions from your least-squares model as a continuous function of $x$.
 %\item Plot the true model and your least-squares estimated model, $\bem_{\rm lsq}$.
 \end{enumerate}
@@ -328,9 +333,9 @@ In this case, there is nothing wrong with $\bDelta\bem < 0$ or $\bDelta\bd < 0$.
 \caption[]
 {{
 Setup for the tomography problem.
-(a) Indexing of the $n=9$ model parameters.
+(a) Indexing of the $\nparm=9$ model parameters.
 (Note that here the checkerboard pattern is only plotted to illuminate the boundaries of the cells.)
-(b) Ray paths for the $m=8$ measurements.
+(b) Ray paths for the $\ndata=8$ measurements.
 \label{fig:index}
 }}
 \end{figure} 
