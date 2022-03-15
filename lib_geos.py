@@ -79,7 +79,7 @@ def plot_ellipse(DELTA2,C,m):
 
     # construct a vector of n equally-spaced angles from (0,2*pi)
     n = 1000
-    theta = np.linspace(0.01,2*np.pi,n).T
+    theta = np.linspace(0,2*np.pi,n).T
     # corresponding unit vector
     xhat = np.array([np.cos(theta),np.sin(theta)]).T
     Cinv = np.linalg.inv(C)
