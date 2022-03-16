@@ -5,6 +5,15 @@ import scipy.linalg as la
 import scipy.special as special
 import matplotlib.pyplot as plt
 
+
+def rot2d(xdeg):
+    # return 2D rotation matrix
+    cosx = np.cos(xdeg * np.pi/180)
+    sinx = np.sin(xdeg * np.pi/180)
+    R = np.array([[cosx,-sinx],[sinx,cosx]])
+    return R
+
+
 def svdmat(G):
     # equivalent of matlab command [U,S,V] = svd(G)
     [U,s,VH] = la.svd(G) 
