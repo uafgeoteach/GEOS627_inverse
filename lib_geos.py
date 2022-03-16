@@ -1,9 +1,17 @@
-# Tools library of GEOS627 inverse course
-# Coded by Yuan Tian at UAF 2022-01-01
-# Contributers: Amanda McPherson
+# Library for GEOS 626 and GEOS627 courses at UAF
+# Contributers: Carl Tape, Yuan Tian*, Amanda McPherson*
 import numpy as np
+import scipy.linalg as la
 import scipy.special as special
 import matplotlib.pyplot as plt
+
+def svdmat(G):
+    # equivalent of matlab command [U,S,V] = svd(G)
+    [U,s,VH] = la.svd(G) 
+    S = la.diagsvd(s,*G.shape)
+    V = VH.T
+    return U,S,V
+
 
 def covC(id,parms):
 #COVC evaluate covariance function C(d) at an array of distances d
