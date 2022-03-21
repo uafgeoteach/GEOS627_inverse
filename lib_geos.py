@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 
 def rot2d(xdeg):
     # return 2D rotation matrix
-    cosx = np.cos(xdeg * np.pi/180)
-    sinx = np.sin(xdeg * np.pi/180)
+    cosx = np.cos(np.deg2rad(xdeg))
+    sinx = np.sin(np.deg2rad(xdeg))
     R = np.array([[cosx,-sinx],[sinx,cosx]])
     return R
 
