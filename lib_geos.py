@@ -22,6 +22,23 @@ def svdmat(G):
     return U,S,V
 
 
+def svdall(G):
+    [U, svec, VH] = np.linalg.svd(G) 
+    S  = la.diagsvd(svec,*G.shape)
+    V  = VH.T
+    p  = np.linalg.matrix_rank(G)
+    Sp = S[:p,:p]
+    Vp = V[:,:p]
+    V0 = V[:,p:]
+    Up = U[:,:p]
+    U0 = U[:,p:]
+    Rm = Vp@Vp.T
+    Rd = Up@Up.T
+    ndata,nparm = G.shape
+    print('G is %i x %i, rank(G) = %i' % (ndata,nparm,p))
+    return Up,Sp,Vp,U0,V0,Rm,Rd,p
+
+
 def covC(id,parms):
 #COVC evaluate covariance function C(d) at an array of distances d
 #
@@ -335,21 +352,6 @@ def plot_histo(hdat,edges,itype=2,make_plot=True):
             #disp(sprintf(' the number of input (%i) does not equal the sum of bin counts (%i).',length(hdat),sum(N)));
     
     plt.tight_layout()
-
-
-def svdall(G):
-    [U, svec, VH] = np.linalg.svd(G) 
-    S  = scipy.linalg.diagsvd(svec,*G.shape)  # vector of singular values
-    V  = VH.T
-    p  = np.linalg.matrix_rank(G)
-    Sp = S[:p,:p]
-    Vp = V[:,:p]
-    V0 = V[:,p:]
-    Up = U[:,:p]
-    U0 = U[:,p:]
-    Rm = Vp@Vp.T
-    Rd = Up@Up.T
-    return Up,Sp,Vp,U0,V0,Rm,Rd,p
 
 
 def vm_F_chi(chi,F0,icprior,u,v):
