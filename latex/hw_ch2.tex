@@ -180,7 +180,7 @@ to the $\ndata=21$ noise-free data points
 %---------------
 
 \begin{enumerate}
-\item (0.3) Based on \refEq{yi}, write out the least squares problem $\bG\bem = \bd$ in schematic matrix-vector notation (list variables, not numbers).
+\item (0.3) Based on \refEq{yi}, write out the least squares problem $\bG\bem = \dvec$ in schematic matrix-vector notation (list variables, not numbers).
 
 %--------
 
@@ -188,28 +188,33 @@ to the $\ndata=21$ noise-free data points
 
 \begin{enumerate}
 \item Write the expression for the solution $\bem_{\rm lsq}$ to the least squares problem.
-\item Use the QR factorization of $\bG$ to write the expression for the solution $\bem_{\rm qr}$ for \makebox{$\bG\bem = \bd$}. Hint: \citet[][Appendix A]{Aster}.
+\item Use the QR factorization of $\bG$ to write the expression for the solution $\bem_{\rm qr}$ for \makebox{$\bG\bem = \dvec$}. Hint: \citet[][Appendix A]{Aster}.
 
-\item Use the SVD factorization of $\bG$ to write the expression for the solution $\bem_{\rm svd}$ for \makebox{$\bG\bem = \bd$}.
+\item Use the SVD factorization of $\bG$ to write the expression for the solution $\bem_{\rm svd}$ for \makebox{$\bG\bem = \dvec$}. Hint: your expressions should have the $p$ subscripts.
 \end{enumerate}
 
-\item (0.5)
+\item (0.6)
 
 \begin{enumerate}
-\item (0.2) What are the numerical entries of true model $\bem_{\rm true}$?
-\item (0.2) Calculate $\bem_{\rm lsq}$, $\bem_{\rm qr}$, and $\bem_{\rm svd}$, and list the output for convenient comparison (like \verb+[mtrue mlsq mqr msvd]+).
+\item (0.1) What are the numerical entries of true model $\bem_{\rm true}$?
+
+\item (0.2) Plot the true model and your least-squares estimated model, $\bem_{\rm lsq}$. The $x$-axis can be the index $i = 0,1,\ldots,19$ of $a_i$.
+
 \item (0.1) Plot the discrete data points $(x_i,y_i)$. Superimpose the predictions from your least-squares model as a continuous function of $x$.
-%\item Plot the true model and your least-squares estimated model, $\bem_{\rm lsq}$.
+
+%\item (0.2) Calculate $\bem_{\rm lsq}$, $\bem_{\rm qr}$, and $\bem_{\rm svd}$, and list the output for convenient comparison (like \verb+[mtrue mlsq mqr msvd]+).
+
+\item (0.2) Discuss the performance of the LSQ, QR, and SVD approaches to solving this problem.
+
 \end{enumerate}
 
-
-\item (0.3) \ptag\ To demonstrate the instability of the solution, compute the least-squares solution \verb+mlsqmod = inv(G'*G)*G'*y+. (Note \footnote{This equation is based on a non-square $\bG$, but of course our $\bG$ is square. Do not motify our $\bG$.})
+%\item (0.3) \ptag\ To demonstrate the instability of the solution, compute the least-squares solution \verb+mlsqmod = inv(G'*G)*G'*y+. (Note \footnote{This equation is based on a non-square $\bG$, but of course our $\bG$ is square. Do not motify our $\bG$.})
 %
-\begin{enumerate}
-\item How does this model and its predictions compare with the previous results?
-\item Explain why $\bem_{\rm lsqmod}$ differs from $\bem_{\rm true}$.
-\item What do you expect will happen to your model vectors if you add noise to the data, \ie the $y$ values?
-\end{enumerate}
+%\begin{enumerate}
+%\item How does this model and its predictions compare with the previous results?
+%\item Explain why $\bem_{\rm lsqmod}$ differs from $\bem_{\rm true}$.
+%\item What do you expect will happen to your model vectors if you add noise to the data, \ie the $y$ values?
+%\end{enumerate}
 
 \end{enumerate}
 
