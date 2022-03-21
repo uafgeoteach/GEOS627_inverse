@@ -5,6 +5,8 @@
 
 \renewcommand{\baselinestretch}{1.1}
 
+\newcommand{\tfile}{{\tt lab\_svdgeom.ipynb}}
+
 % change the figures to ``Figure L3'', etc
 \renewcommand{\thefigure}{L\arabic{figure}}
 \renewcommand{\thetable}{L\arabic{table}}
@@ -32,7 +34,7 @@ The objective of this lab is to reinforce the geometrical concept of SVD \citep{
 Following \verb+notes_svd.pdf+, \refFig{fig:2D} shows four examples of different ($2 \times 2$) $\bG$ representing the SVD.
 
 \begin{enumerate}
-\item Using \refFig{fig:ex1}, estimate $\Ucolor$, $\Vcolor$, $\bS$, and then calculate $\bG$.
+\item Using \refFig{fig:ex1}, estimate $\Ucolor$ (\textcolor{red}{data space}), $\Vcolor$ (\textcolor{blue}{model space}), $\bS$, and then calculate $\bG$.
 %(The prime notation is to distinguish your estimated matrices from the true matrices.)
 
 If your entries of $\bG$ are not close to integer values, please try again.
@@ -49,7 +51,7 @@ Measuring the coordinates of two basis vectors will not guarantee that the two v
 \right]
 \end{equation}
 %
-This can be implemented as a Matlab in-line function. Provide a $\theta$, then the columns of $\bR_\theta$ will be the rotated standard basis vectors.
+This can be implemented as a function. Provide a $\theta$, then the columns of $\bR_\theta$ will be the rotated standard basis vectors.
 
 To get $\Ucolor$ and $\Vcolor$, use $\bR_\theta$. You may also want to use
 %
@@ -78,7 +80,9 @@ Sketch $\bG\be_1$ and $\bG\be_2$ in the right plot.
 \item the ellipse representing $\bG^{\dagger}\Ucolor$ in the right plot
 \end{itemize}
 
-\item Using Matlab's \verb+svd+, calculate $\Ucolor$, $\Vcolor$, and $\bS$, and then calculate $\bG^{\dagger}$. \\
+\item Open \tfile\ and execute the first cell. What does the function \verb+svdmat()+ do (see \verb+lib_geos.py+)?
+
+\item Using \verb+svdmat+, calculate $\Ucolor$, $\Vcolor$, and $\bS$, and then calculate $\bG^{\dagger}$. \\
 Sketch $\be_1$ and $\be_2$ in the lower left plot. \\
 Sketch $\bG^{\dagger}\be_1$ and $\bG^{\dagger}\be_2$ in the lower right plot.
 
@@ -90,7 +94,7 @@ Note: You can't sketch the eigenvectors if they are complex.
 
 \item Get some more practice with three more examples in \refFigab{fig:ex2}{fig:ex4}.
 
-\item Open and run \verb+lab_svdgeom.m+ (copy \verb+lab_svdgeom_template.m+). By default, the code will generate a random $\bG$ with all have integer entries between $-2$ and 2.
+\item Run \tfile. By default, the code will generate a random $\bG$ with all have integer entries between $-2$ and 2.
 
 Try a few different $\bG$ to see what happens. \\
 You may want to try the four examples in \verb+notes_svd.pdf+. \\

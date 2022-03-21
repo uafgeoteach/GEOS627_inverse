@@ -9,15 +9,15 @@
 \begin{document}
 %-------------------------------------------------------------
 
-\begin{center}
-
+\begin{spacing}{1.2}
+\centering
 {\large \bf Problem Set 3: Probabilistic inversion for earthquake epicenter [epi]} \\
 \cltag\ \\
 Assigned: January 31, 2022 --- Due: February 9, 2022 \\
 Last compiled: \today
+\end{spacing}
 
 \includegraphics[width=12cm]{hw_epi_L2_ierror0_3D_ai.eps}
-\end{center}
 
 %------------------------
 
@@ -139,19 +139,21 @@ P({\cal A}) = \int_{\cal A} \sigma_{\rm M}(\bem) \, d\bem,
 %
 derive an expression for $K$ in terms of the variables in this problem. \\
 %Do not expand out the term $F(\bem) = F(x,y)$.
-Your expression for $K$ should have the (unexpanded) term $F(x,y)$ in it.
+Your expression for $K$ should have the (unexpanded) term $F(x,y)$ in it. \\
+{\bf No numbers besides 1 should appear in your expression.}
 
 Hint: What is the probability that the epicenter is somewhere in our model domain?
 
 \item (0.5) 
 
 \begin{enumerate}
-\item (0.3) Write your integral expression for $K$ in discretized form \\
-Hint: use $\Delta A$ and $F_k = (x_k,y_k)$
+\item (0.3) Write your integral expression for $K$ in discretized form. \\
+Hint: use $\Delta A$ and $F_k = (x_k,y_k)$ \\
+{\bf No numbers besides 1 should appear in your expression.}
 \item (0.2) Compute $\sigma_{\rm M}(\bem)$ and plot a figure similar to Figure 7.1 of \citet{Tarantola2005}.
 \end{enumerate}
 
-\item (0.3) List your values for $K$, $\max(\sigma_{\rm M})$, and the grid increment \verb+dx+. Include units.
+\item (0.3) List your values for $K$, $\max(\sigma_{\rm M})$, and the grid increment \verb+dx+. Include units. To find the maximum, use the simplest approach (nearest neighbor).
 
 \item (0.2) Try a different value for \verb+dx+, and list the new calculations for $K$ and $\max(\sigma_{\rm M})$.  Check that your results do not change (much) when you change the grid increment \verb+dx+.
 

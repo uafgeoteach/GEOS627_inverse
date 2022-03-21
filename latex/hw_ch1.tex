@@ -204,7 +204,7 @@ For this problem we need some numbers and a computer. Assume the following:
 
 \begin{enumerate}
 
-\item (0.0) Using your formula for $t(z)$ from the previous problem, compute \textcolor{red}{a noiseless synthetic data vector $\bd^{\rm exact}$} of predicted seismic travel times at the sensor depths, $t_i = t(z_i)$. 
+\item (0.0) Using your formula for $t(z)$ from the previous problem, compute \textcolor{red}{a noiseless synthetic data vector $\bd^{\rm exact}$} of predicted seismic travel times. Althought we think of $t(z)$ as continuous, some discretization is needed for plotting; consider using 1000 or so $z$-points. 
 {\bf (No need to list any values or expressions for this part.)}
 
 \item (0.3)  Make two qualitative sketches like Figure 1.10, one containing model variables, the other containing data variable. Each sketch should include a coordinate axis and {\bf discretization points}. In either of the plots, include the labels $z$, $\Delta z$, $s_1$, $s_2$, $s_\nparm$, $t_1$, $t_2$, $t_\ndata$.
@@ -230,10 +230,14 @@ t_2 &=& ???
 \\
 t_\ndata &=& ???
 \end{eqnarray*}
-% 
-Write this system of equations in succinct form $\bd = \bG\bem$, and list the expressions for $\bd$, (matrix) $\bG$, and $\bem$.
 
-{\bf No non-integer numbers should appear in your answer.}
+{\bf No numbers (besides indices) should appear in your expressions.}
+
+%-----
+
+\item Write this system of equations in succinct form $\bd = \bG\bem$, and list the expressions for $\bd$, (matrix) $\bG$, and $\bem$.
+
+{\bf No numbers (besides indices) should appear in your expressions.}
 
 %-----
 
@@ -243,19 +247,30 @@ Write this system of equations in succinct form $\bd = \bG\bem$, and list the ex
 \bd^{\rm true} = \bG\bem_{\rm true}
 \end{equation}
 %
-and compare this with $\bd^{\rm exact}$ by superimposing the two curves in a plot of $t(z)$ (travel time) vs $z$ (sensor depth). (In all plots, please put depth on the $x$-axis.)
+and compare this with $\bd^{\rm exact}$ by superimposing the two curves in a plot of $t(z)$ (travel time) vs $z$ (sensor depth). (In all plots, put depth on the $x$-axis.)
 
 \label{calc1}
 
 %-----
 
-\item (0.5) Using $\bd^{\rm exact}$, solve for the slowness $\bem$ as a function of depth using your $\bG$ matrix and the code options in \verb+lab_linefit.ipynb+. Compare your $\bem$ and $\bem_{\rm true}$  graphically by superimposing the two curves in a plot of $s(z)$ (slowness) vs $z$ (interval midpoint depth).
+\item (0.5) Using $\bd^{\rm true}$, solve for the slowness $\bem$ as a function of depth using your $\bG$ matrix and the code options in \verb+lab_linefit.ipynb+.
+%
+\begin{enumerate}
+\item (0.2) Show your one line of code to solve.
+\item (0.3) Compare your $\bem$ and $\bem_{\rm true}$ graphically by superimposing the two curves in a plot of $s(z)$ (slowness) vs $z$ (interval midpoint depth).
+\end{enumerate}
 
 \label{calc2}
 
 %-----
 
-\item (0.5) \ptag\ Generate a noisy travel time vector where independent normally distributed noise with a standard deviation of 0.05~ms ($5 \times 10^{-5}$~s) is added to the elements of $\bd^{\rm exact}$. (Hint: Python command \verb+numpy.random.randn+) Re-solve the system for $\bem$ and again compare your results graphically with $\bem_{\rm true}$. How has the model changed?
+\item (0.5) \ptag\ Generate a noisy travel time vector $\dvec$ by adding independent normally distributed noise with a standard deviation of 0.05~ms ($\sigma = 5 \times 10^{-5}$~s) to the elements of $\bd^{\rm exact}$:
+%
+\begin{equation}
+\dvec = \bd^{\rm exact} + \sigma\bw
+\end{equation}
+%
+(Hint: Python command \verb+numpy.random.randn+) Re-solve the system for $\bem$ and again compare your results graphically with $\bem_{\rm true}$. How has the model changed?
 
 \label{calc3}
 
@@ -263,26 +278,26 @@ and compare this with $\bd^{\rm exact}$ by superimposing the two curves in a plo
 
 \item (0.5) \ptag\ Repeat parts \ref{calc1}, \ref{calc2}, and \ref{calc3}, but for just $\nparm=4$ sensor depths and corresponding slowness intervals. Keep the maximum depth as the same as before (20~m), and note that $\Delta z$ is no longer 0.2~m.
 
-Is the recovery of the true model improved? Explain in terms of the condition numbers (Aster Section A.8; Matlab command \verb+numpy.linalg.cond+) of your $\bG$ matrices.
+Is the recovery of the true model improved? Explain in terms of the condition numbers (Aster Section A.8; command \verb+numpy.linalg.cond+) of your $\bG$ matrices.
 
 \end{enumerate}
 
 %--------------------------------------------------------------
 
-\pagebreak
+%\pagebreak
 \subsection*{Problem 4 (3.0). Aster 1-4 modified.}
 
 Find a journal article that discusses the solution of an inverse problem in a discipline of special interest to you. (For example, try a google scholar search such as ``ice physics inverse problem''.)
 %
 \begin{enumerate}
-\item What are the data?
-\item Are the data discrete or continuous?
-\item Have the authors discussed possible sources of noise in the data?
-\item What is the model? Is the model continuous or discrete?
-\item What physical laws determine the forward operator $G$?
-\item Is $G$ linear or nonlinear?
-\item Do the authors discuss any issues associated with existence, uniqueness, or instability of solutions?
-\item Please turn in the first page of your article (with title, authors, abstract, etc).
+\item (0.4) What are the data?
+\item (0.2) Are the data discrete or continuous?
+\item (0.3) Have the authors discussed possible sources of noise in the data?
+\item (1.0) What is the model? Is the model continuous or discrete?
+\item (0.5) What physical laws determine the forward operator $G$?
+\item (0.2) Is $G$ linear or nonlinear?
+\item (0.2) Do the authors discuss any issues associated with existence, uniqueness, or instability of solutions?
+\item (0.2) Turn in the first page of your article (with title, authors, abstract, etc).
 \end{enumerate}
 
 %------------------------
