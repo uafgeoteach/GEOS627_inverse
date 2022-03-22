@@ -23,17 +23,15 @@ def svdmat(G):
 
 
 def svdall(G):
-    [U, svec, VH] = np.linalg.svd(G) 
-    S  = la.diagsvd(svec,*G.shape)
-    V  = VH.T
+    [U,S,V] = svdmat(G)
     p  = np.linalg.matrix_rank(G)
     Sp = S[:p,:p]
     Vp = V[:,:p]
-    V0 = V[:,p:]
     Up = U[:,:p]
-    U0 = U[:,p:]
-    Rm = Vp@Vp.T
-    Rd = Up@Up.T
+    V0 = V[:,p:]    # model null space (could be empty)
+    U0 = U[:,p:]    # data null space (could be empty)
+    Rm = Vp@Vp.T    # model resolution matrix
+    Rd = Up@Up.T    # data resolution matrix
     ndata,nparm = G.shape
     print('G is %i x %i, rank(G) = %i' % (ndata,nparm,p))
     return Up,Sp,Vp,U0,V0,Rm,Rd,p
