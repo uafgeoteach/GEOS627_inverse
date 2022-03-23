@@ -32,9 +32,14 @@ def svdall(G):
     U0 = U[:,p:]    # data null space (could be empty)
     Rm = Vp@Vp.T    # model resolution matrix
     Rd = Up@Up.T    # data resolution matrix
+
+    # generalized inverse (see also la.pinv)
+    Gdagger = Vp@la.inv(Sp)@Up.T
+
     ndata,nparm = G.shape
     print('G is %i x %i, rank(G) = %i' % (ndata,nparm,p))
-    return Up,Sp,Vp,U0,V0,Rm,Rd,p
+
+    return Up,Sp,Vp,U0,V0,Rm,Rd,Gdagger,p
 
 
 def covC(id,parms):
