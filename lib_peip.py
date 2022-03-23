@@ -150,12 +150,13 @@ def ex_getG(iex,*argv):
 # % This function is featured in lab_svd.pdf
 # %
     
-    bfigure=True
+    bfigure = True
+
     if iex==1:
         stlab = 'tomography ray tracing (Ex 1.12)'
         print('Aster Example 1.12 (and 3.1) for tomography ray tracing')
-        t=np.sqrt(2)
-        G=np.array([[1,0,0,1,0,0,1,0,0],
+        t = np.sqrt(2)
+        G = np.array([[1,0,0,1,0,0,1,0,0],
                     [0,1,0,0,1,0,0,1,0],
                     [0,0,1,0,0,1,0,0,1],
                     [1,1,1,0,0,0,0,0,0],
@@ -163,28 +164,29 @@ def ex_getG(iex,*argv):
                     [0,0,0,0,0,0,1,1,1],
                     [t,0,0,0,t,0,0,0,t],
                     [0,0,0,0,0,0,0,0,t]],dtype='float')
+
     elif iex==2:
         stlab = 'vertical seismic profiling (Ex 1.3)'
         print('Aster Example 1.3, 1.9, 4.4 for the vertical seismic profiling')
         if argv:
-            m=argv[0]
-            n=argv[1]
+            m = argv[0]
+            n = argv[1]
         else:
-            m=100
-            n=m
-        G=np.zeros((m,n))
-        if n>=m:
-            f=n/m
+            m = 100
+            n = m
+        G = np.zeros((m,n))
+        if n >= m:
+            f = n/m
             for i in range(m):
                 ncut=int(np.ceil(f*(i+1)))
                 G[i,:ncut]=1
         else:
-            f=m/n
-            fint=int(np.floor(f))
+            f = m/n
+            fint = int(np.floor(f))
             for k in range(n):
                 for nf in np.arange(1,int(fint+1)):
-                    inds=int(k*f+nf)
-                    G[inds-1,k]=nf
+                    inds = int(k*f+nf)
+                    G[inds-1,k] = nf
                     for kk in range(k,0,-1):
                         #print(kk)
                         G[inds-1,kk-1]=fint
@@ -194,17 +196,18 @@ def ex_getG(iex,*argv):
         zran = zmax-zmin
         dz = zran / m
         G = G*dz
+
     elif iex==3:
         if argv:
-            m=argv[0]
-            n=argv[1]
+            m = argv[0]
+            n = argv[1]
         else:
-            m=210
-            n=m
+            m = 210
+            n = m
         stlab = 'deconvolution (Ex 3.2)'
         print('Aster Example 3.2 for deconvolution of instrument response (m=n)')
         # Discretizing values for M & N (210 data points)
-        t=np.linspace(-5,100,n+1)
+        t = np.linspace(-5,100,n+1)
         sigi = 10;
         gmax = 3.6788
 
@@ -220,24 +223,26 @@ def ex_getG(iex,*argv):
         # now divide everything by the denominator
         deltat = t[2]-t[1]
         G = G/gmax * deltat
+
     elif iex==4:
         stlab = 'Shaw slit (Ex 1.6)'
         print('Aster Example 1.6 and Example 3.3 for the Shaw slit diffraction problem (m=n)')
         if argv:
-            m=argv[0]
-            n=argv[1]
+            m = argv[0]
+            n = argv[1]
         else:
-            n=20
-        m=n
+            n = 20
+            m = n
         G,b,x = shaw(n)
+
     if bfigure:
         plt.figure(figsize=(7,7))
         plt.imshow(G)
         plt.xlabel('column index k')
         plt.ylabel('row index i')
-        plt.axis('equal')
+        #plt.axis('equal')
         plt.colorbar()
-        plt.title('G matrix [%i x %i] for %s' %(G.shape[0],G.shape[1],stlab))
+        plt.title('G matrix [%i x %i] for %s' % (G.shape[0],G.shape[1],stlab))
     return G
 
 
