@@ -5,6 +5,9 @@
 
 \renewcommand{\baselinestretch}{1.1}
 
+\newcommand{\tfile}{{\tt lab\_svdballistic.ipynb}}
+\newcommand{\nfile}{{\tt notes\_svd.pdf}}
+
 % change the figures to ``Figure L3'', etc
 \renewcommand{\thefigure}{L\arabic{figure}}
 \renewcommand{\thetable}{L\arabic{table}}
@@ -26,37 +29,63 @@ Last compiled: \today
 
 \subsection*{Overview}
 
-This is Problem 3 from Chapter 3 \citep{Aster}, revisiting Example~1.1, which was featured in our second problem set (\verb+hw_ch1.pdf+). Review Example~1.1 and the solutions to the problem (if needed). In this lab we apply SVD to the same problem. See Chapter 3 (and notes) for background on SVD.
+This is the ballistics problem from Aster (Problem 3 from Chapter 3 \citep{Aster}, revisiting Example~1.1), which was featured in our second problem set (\verb+hw_ch1.pdf+). Review Aster~Example~1.1 and the solutions to the problem (if needed). In this lab we apply SVD to the same problem. See Chapter 3 (and \nfile) for background on SVD. The template notebook is \tfile.
 
 %------------------------
 
 \subsection*{Aster Chapter 3, Problem 3 (expanded)}
 
-Using the parameter estimation problem described in Example~1.1 for determining the three parameters defining a ballistic trajectory, construct synthetic examples that demonstrate the following four cases using the SVD.
+Using the parameter estimation problem described in Example~1.1 for determining the three parameters defining a ballistic trajectory, construct synthetic examples that demonstrate the four cases using SVD below (2a, 2b, 2c, 2d).
 
-In each case, display and interpret the SVD components $\bU$, $\bV$, and $\bS$ in terms of the rank, $p$, of your forward problem $\bG$ matrix.
-Calculate and interpret any model and data null space vector(s).
-Calculate model and data space resolution matrices.
+%In each case, display and interpret the SVD components $\bU$, $\bV$, and $\bS$ in terms of the rank, $p$, of your forward problem $\bG$ matrix. Calculate and interpret any model and data null space vector(s). Calculate model and data space resolution matrices.
 %
 \begin{enumerate}
-\item Write out the forward model for the ballistics problem in matrix schematic form.
+\item Write out the forward model for the ballistics problem in matrix schematic form for the case of $\ndata=5$.
 
 \item Exploring the model null space.
 
 \begin{enumerate}
-\item Three data points ($\ndata = 3$) that are exactly fit by a unique model (\refFig{fig:unique}). \\
-Plot your data points and the predicted data for your model.
+\item (Case 1) Three data points ($\ndata = 3$) that are exactly fit by a unique model (\refFig{fig:unique}).
+%
+\begin{enumerate}
+\item Solve for $\bem^\dagger$.
+\item Plot your data points and the predictions for \textcolor{red}{your model}.
+Explicitly: Use the provided \verb+tplot+ and \verb+Gplot+ to plot the continuous representation of $\bem^\dagger$ (\ie \verb+Gplot@mdagger+) as a parabola.
+\item Display and interpret the SVD components $\bU$, $\bV$, and $\bS$ in terms of the rank $p$ of your forward problem $\bG$ matrix.
+\item Calculate and interpret any model and data null space vector(s).
+\item Calculate model and data space resolution matrices.
+\end{enumerate}
 
-\item Two data points ($\ndata = 2$) that are exactly fit by an infinite suite of parabolas. \\
-Plot your data points and the predicted data for a suite of these models.
+\item (Case 2) Two data points ($\ndata = 2$) that are exactly fit by an infinite suite of parabolas.
+%
+\begin{enumerate}
+\item Plot your data points and the predictions for \textcolor{red}{a suite of models}.
+\item Display and interpret the SVD components $\bU$, $\bV$, and $\bS$ in terms of the rank $p$ of your forward problem $\bG$ matrix.
+\item Calculate and interpret any model and data null space vector(s).
+\item Calculate model and data space resolution matrices.
+\end{enumerate}
 
-\item Four data points ($\ndata = 4$) that are only approximately fit by a parabola. \\
-Plot your data points and the predicted data for the least squares model.
+\item (Case 3) Four data points ($\ndata = 4$) that are only approximately fit by a parabola.
+%
+\begin{enumerate}
+\item Choose one of the sets of data in \refFig{fig:unique}. Add a fourth point that is off the curve. Then plot the updated solution as a new parabola. Does the new parabola fit any of the points?
 
-Choose one of the sets of data in \refFig{fig:unique}. Add a fourth point that is off the curve. Then plot the updated solution as a new parabola. Does the new parabola fit any of the points?
+\item Plot your data points and the predictions for \textcolor{red}{the least squares model}.
+\item Display and interpret the SVD components $\bU$, $\bV$, and $\bS$ in terms of the rank $p$ of your forward problem $\bG$ matrix.
+\item Calculate and interpret any model and data null space vector(s).
+\item Calculate model and data space resolution matrices.
+\end{enumerate}
 
-\item Two data points ($\ndata = 2$) that are only approximately fit by any parabola, and for which there are an infinite number of least squares solutions. \\
-Plot your data points and the predicted data for a suite of least squares models.
+\item (Case 4) Two data points ($\ndata = 2$) that are only approximately fit by any parabola, and for which there are an infinite number of least squares solutions.
+%
+\begin{enumerate}
+\item Plot your data points and the predictions for \textcolor{red}{a suite of least squares models}.
+\item Display and interpret the SVD components $\bU$, $\bV$, and $\bS$ in terms of the rank $p$ of your forward problem $\bG$ matrix.
+\item Calculate and interpret any model and data null space vector(s).
+\item Calculate model and data space resolution matrices.
+\end{enumerate}
+
+
 \end{enumerate}
 
 \item Exploring the data null space.
