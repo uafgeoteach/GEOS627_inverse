@@ -168,11 +168,11 @@ y_i = a_0 + a_1x_i + a_2x_i^2 + \cdots + a_{19}x_i^{19}
 to the $\ndata=21$ noise-free data points
 %
 \begin{equation*}
-(x_i,y_i) = (-1,1), (-0.95,-0.95), (-0.85,-0.85), \ldots, (0.95,0.95), (1,1)
+(x_i,y_i) = (-1,-1), (-0.9,-0.9), (-0.8,-0.8), \ldots, (0.9,0.9), (1,1)
 \end{equation*}
 %
 \begin{itemize}
-\item Do not use any pseudo-inverse operations in this problem (these will comein Chapter 3).
+\item Do not use any pseudo-inverse code functions (like \verb+pinv+) in this problem; these will come in Chapter~3.
 
 \item Do not use $\covd$ in this problem.
 \end{itemize}
@@ -184,23 +184,23 @@ to the $\ndata=21$ noise-free data points
 
 %--------
 
-\item (0.6) 
+\item (0.5) 
 
 \begin{enumerate}
-\item Write the expression for the solution $\bem_{\rm lsq}$ to the least squares problem.
-\item Use the QR factorization of $\bG$ to write the expression for the solution $\bem_{\rm qr}$ for \makebox{$\bG\bem = \dvec$}. Hint: \citet[][Appendix A]{Aster}.
+\item (0.1) Write the generic expression for the solution $\bem_{\rm lsq}$ to the least squares problem.
+\item (0.2) Use the QR factorization of $\bG$ to write the expression for the solution $\bem_{\rm qr}$ for \makebox{$\bG\bem = \dvec$}. Hint: \citet[][Appendix A]{Aster}.
 
-\item Use the SVD factorization of $\bG$ to write the expression for the solution $\bem_{\rm svd}$ for \makebox{$\bG\bem = \dvec$}. Hint: your expressions should have the $p$ subscripts.
+\item (0.2) Use the SVD factorization of $\bG$ to write the expression for the solution $\bem_{\rm svd}$ for \makebox{$\bG\bem = \dvec$}. Hint: your expressions should have the $p$ subscripts.
 \end{enumerate}
 
-\item (0.6)
+\item (0.7)
 
 \begin{enumerate}
 \item (0.1) What are the numerical entries of true model $\bem_{\rm true}$?
 
 \item (0.2) Plot the true model and your least-squares estimated model, $\bem_{\rm lsq}$. The $x$-axis can be the index $i = 0,1,\ldots,19$ of $a_i$.
 
-\item (0.1) Plot the discrete data points $(x_i,y_i)$. Superimpose the predictions from your least-squares model as a continuous function of $x$.
+\item (0.2) Plot the discrete data points $(x_i,y_i)$. Superimpose the predictions from your least-squares model as a continuous function of $x$.
 
 %\item (0.2) Calculate $\bem_{\rm lsq}$, $\bem_{\rm qr}$, and $\bem_{\rm svd}$, and list the output for convenient comparison (like \verb+[mtrue mlsq mqr msvd]+).
 
