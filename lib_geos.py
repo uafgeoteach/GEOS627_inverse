@@ -16,7 +16,7 @@ def rot2d(xdeg):
 
 def svdmat(G):
     # equivalent of matlab command [U,S,V] = svd(G)
-    [U,s,VH] = la.svd(G) 
+    [U,s,VH] = la.svd(G)
     S = la.diagsvd(s,*G.shape)
     V = VH.T
     return U,S,V
@@ -200,8 +200,8 @@ def tsvd(g, X, rvec):
     f_r_ss      = np.zeros((nr, 1))       # norm of each model
 
     #compute SVD of X
-    [U, s, VH]   = np.linalg.svd(X) 
-    S=scipy.linalg.diagsvd(s,*X.shape)    # vector of singular values
+    [U, s, VH]  = la.svd(X) 
+    S = la.diagsvd(s,*X.shape)    # vector of singular values
 
     # 'Fourier' coefficients (fc) in expansion of solution in terms of right singular vectors
     # note: these are also referred to as Picard ratios
