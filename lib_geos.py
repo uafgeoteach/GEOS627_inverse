@@ -19,6 +19,7 @@ def svdmat(G):
     [U,s,VH] = la.svd(G)
     S = la.diagsvd(s,*G.shape)
     V = VH.T
+    #svec = np.reshape(s,(len(s),1))
     return U,S,V
 
 
@@ -148,6 +149,7 @@ def pol2cart(rho, phi):
 
 
 def plotconst_mod(x,l,r,color,lw):
+    # DOES THIS FUNCTION WORK?
     n = len(x)
     delta = (r-l)/n
     myx = np.array([0])
@@ -188,6 +190,10 @@ def tsvd(g, X, rvec):
 # % Adapted from TSVD routine in Per Christian Hansen's Regularization Toolbox. 
 # %
 
+    # allow rvec and g to be vectors
+    rvec = np.squeeze(rvec)
+    g    = np.squeeze(g)
+
     # % size of inputs (n is number of data; p is number of parameters)
     (n, p)      = X.shape
     #print(n,p)
@@ -218,6 +224,7 @@ def tsvd(g, X, rvec):
         f_r_ss[j] = np.sum(fc[:k]**2);    # the squared norm of f_r
         rss[j]    = np.sum(beta[k:q]**2)  # residual sum of squares
     f_r = f_r.T
+
     # in overdetermined case, add rss of least-squares problem
     if (n > p):
         rss = rss + np.sum((g - U[:, :q]@beta)**2)   # note data g
