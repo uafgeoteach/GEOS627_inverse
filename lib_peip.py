@@ -253,3 +253,18 @@ def collocate(xmin,xmax,n):
     dx = (xmax-xmin)/n
     x = xmin + dx/2 + (np.arange(1,n+1)-1)*dx
     return x
+
+
+def plotconst_mod(x,l,r,color,lw):
+    # DOES THIS FUNCTION WORK?
+    n = len(x)
+    delta = (r-l)/n
+    myx = np.array([0])
+    myy = np.array([0])
+    for i in range(n):
+        myx = np.concatenate((myx,np.arange(i*delta+l,(i+1)*delta+l,(delta/20))))
+        myy = np.concatenate((myy,np.arange(i*delta+l,(i+1)*delta+l,(delta/20))))
+    l2 = len(myx)
+    myx = myx[1:l2+1]
+    myy = myy[1:l2+1]
+    plt.plot(myx,myy,color,lw=lw)

@@ -147,21 +147,6 @@ def pol2cart(rho, phi):
     y = rho * np.sin(phi)
     return(x, y)
 
-
-def plotconst_mod(x,l,r,color,lw):
-    # DOES THIS FUNCTION WORK?
-    n = len(x)
-    delta = (r-l)/n
-    myx = np.array([0])
-    myy = np.array([0])
-    for i in range(n):
-        myx = np.concatenate((myx,np.arange(i*delta+l,(i+1)*delta+l,(delta/20))))
-        myy = np.concatenate((myy,np.arange(i*delta+l,(i+1)*delta+l,(delta/20))))
-    l2 = len(myx)
-    myx = myx[1:l2+1]
-    myy = myy[1:l2+1]
-    plt.plot(myx,myy,color,lw=lw)
-
     
 def tsvd(g, X, rvec):
 #     %TSVD regularization using truncated singular value decomposition
