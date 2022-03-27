@@ -5,6 +5,8 @@
 
 \renewcommand{\baselinestretch}{1.1}
 
+\newcommand{\tfile}{{\tt hw\_grav.ipynb}}
+
 \newcommand{\rh}{\hat{r}}
 %\newcommand{\ndata}{m}
 %\newcommand{\nparm}{n}
@@ -29,7 +31,7 @@
 \centering
 {\large \bf Problem Set 7: Regularization by truncated singular value decomposition} \\
 \cltag\ \\
-Assigned: October 28, 2019 --- Due: November 4, 2019 \\
+Assigned: March 28, 2022 --- Due: April 4, 2022 \\
 Last compiled: \today
 \end{spacing}
 
@@ -42,9 +44,10 @@ Last compiled: \today
 
 Note that the gravity example is rooted in Chapter 1 (Examples 1.4 and 1.5).
 
-\item Relevant example scripts: \verb+ex_3_2_uaf.m+, \verb+ex_3_3_uaf.m+
-\item Relevant function: \verb+tsvd.m+ (credit: Regularization Toolbox \citep{Hansen})
-\item Template scripts: \verb+grav.m+, \verb+ch3p5.m+
+%\item Relevant example scripts: \verb+ex_3_2_uaf.m+, \verb+ex_3_3_uaf.m+
+\item Relevant examples: Aster Example~3.2, Aster Example~3.3
+\item Relevant function: \verb+tsvd()+ (in \verb+lib_geos.py+) (credit: Regularization Toolbox \citep{Hansen})
+\item Template notebook: \tfile\
 %\item Optional utility scripts: \verb+collocate.m+, \verb+plotconst_mod.m+
 %\item Here $\ndata$ is the number of data, and $\nparm$ is the number of model parameters.
 \item The \textcolor{red}{the red text sections of Problems 1-\ref{prob1} though 1-\ref{prob2}} denote the questions to be repeated in Problem~2 for the forward model in \refEq{dy}. Points for Problem~2 are worth half what is listed for Problem 1.
@@ -83,7 +86,7 @@ K(\dv,\mv) = \frac{\dep}{\left(\dep^2 + (\dv-\mv)^2\right)^{3/2}}
 the $\ndata \times \nparm$ design matrix $\bG$ is a discrete representation of the integral operator in \refEq{Kxy}.
 %The vector $\bem$ of density variations plays the role of the regression coefficients. The vector $\bd$ of gravity variations is the response variable.
 
-The file \verb+grav.m+ provides $\dvec$, the measurements of gravity variations at $\ndata = \numdataG$ equally spaced points along the line $0 \le \dv \le 1$. The standard deviation of the measurement errors is assumed to be $\sigma \approx 0.1$.
+The file \tfile\ provides $\dvec$, the measurements of gravity variations at $\ndata = \numdataG$ equally spaced points along the line $0 \le \dv \le 1$. The standard deviation of the measurement errors is assumed to be $\sigma \approx 0.1$.
 
 You will be asked to compute
 %The file \verb+integral.dat+ contains
@@ -94,9 +97,9 @@ the $\ndata \times \nparm$ matrix $\bG$ that relates gravity variations $\dvec$ 
 %\pagebreak
 
 \begin{enumerate}
-\item (0.5) Run the template script \verb+grav.m+ to load the data. This template provides the discretization to use for the $\dv_i$ points and $\mv_k$ points.
+\item (0.5) Run the template script \tfile\ to load the data. This template provides the discretization to use for the $\dv_i$ points and $\mv_k$ points.
 
-Make a sketch of the problem in $x$-$z$ space, where $z$ is depth. The aspect ratio need not be one-to-one. Plot and label the $\dv_i$ and $\mv_k$ points in their appropriate locations. (Matlab may be easier to use than sketching by hand.)
+Make a sketch of the problem in $x$-$z$ space, where $z$ is depth. The aspect ratio need not be one-to-one. Plot and label the $\dv_i$ and $\mv_k$ points in their appropriate locations. (Computer plotting may be easier than sketching by hand.)
 
 %----------
 
@@ -141,7 +144,7 @@ Write $\bem_{\ntrun}$ as a matrix expression and as a summation.
 
 \item (0.3) \textcolor{red}{Plot the singular value spectrum on a $\log_{10}$ scale (note \footnote{It doesn't matter whether you use natural log or log-10 ($\log_{10}x = \ln x / \ln 10$), but for the sake of comparison use log-10.}).}
 
-Hint: \verb+plot(log10(svec),'.-')+
+Hint: \verb+plt.plot(pvec,np.log10(svec),'ko-')+
 
 \item (0.3) \textcolor{red}{Given that the standard deviation of the measurement error of $\sigma$, what can you infer about the reliability of the least-squares estimate $\bem_{\rm lsq}$?} Explain why the least-squares estimate  $\bem_{\rm lsq}$, the ``best linear unbiased estimate,'' is not a good estimate for~$\bem$.
 
@@ -162,10 +165,10 @@ Note: Interpretation is easier if each $\bv_k$ has its own subplot.
 \item (1.8)
 
 \begin{enumerate}
-\item (0.2) \textcolor{red}{Use TSVD to compute several different solutions, $\bem_{\ntrun}$, for the problem.} \\
-Show your Matlab code.
+\item (0.2) \textcolor{red}{Use TSVD to compute several different solutions $\bem_{\ntrun}$ for the problem.} \\
+Show your code.
 
-Hint: Use \verb+tsvd.m+.
+Hint: Use \verb+tsvd()+ (from \verb+lib_peip.py+).
 
 \item (0.8) \textcolor{red}{Plot an $\ssL$-curve \citep[][p.~95]{Aster} for $\ntrun = 1,\ldots,p$.} \\
 Plot both axes on a $\log_{10}$ scale.
@@ -213,7 +216,7 @@ and adding pseudo-random noise to the implied gravity variations.
 \pagebreak
 \subsection*{Problem 2 (3.0). \ptag\ Aster Problem 3-5 modified}
 
-Run the template script \verb+ch3p5.m+ to get the input data for this problem.
+Run \tfile\ to get the input data for this problem.
 The problem has $\ndata = \numdataA$ data points and $\nparm = \numparmA$ unknown model parameters.
 The function $d(\dv)$, $0 \le \dv \le 1$, is related to an unknown function $m(\mv)$, $0 \le \mv \le 1$, by the forward model
 %
