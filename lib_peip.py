@@ -259,12 +259,14 @@ def plotconst_mod(x,l,r,color,lw):
     # DOES THIS FUNCTION WORK?
     n = len(x)
     delta = (r-l)/n
-    myx = np.array([0])
-    myy = np.array([0])
+    myx = np.array([[0]])
+    myy = np.array([[0]])
+    print(myy.shape)
     for i in range(n):
-        myx = np.concatenate((myx,np.arange(i*delta+l,(i+1)*delta+l,(delta/20))))
-        myy = np.concatenate((myy,np.arange(i*delta+l,(i+1)*delta+l,(delta/20))))
-    l2 = len(myx)
-    myx = myx[1:l2+1]
-    myy = myy[1:l2+1]
-    plt.plot(myx,myy,color,lw=lw)
+        dum=np.arange(i*delta+l,(i+1)*delta+l+(delta/20),(delta/20))
+        myx = np.hstack((myx,dum.reshape((1,len(dum)))))
+        myy = np.hstack((myy,np.ones((1,len(dum)))*x[i]))
+    #print(myx.shape,myy.shape)
+    myx = myx[:,1:]
+    myy = myy[:,1:]
+    plt.plot(myx.flatten(),myy.flatten(),color,lw=lw)
