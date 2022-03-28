@@ -256,14 +256,14 @@ def collocate(xmin,xmax,n):
 
 
 def plotconst_mod(x,l,r,color,lw):
-    # DOES THIS FUNCTION WORK?
+    # stairstep plotting option used in some Aster et al. (2019) examples
     n = len(x)
     delta = (r-l)/n
     myx = np.array([[0]])
     myy = np.array([[0]])
-    print(myy.shape)
+    #print(myy.shape)
     for i in range(n):
-        dum=np.arange(i*delta+l,(i+1)*delta+l+(delta/20),(delta/20))
+        dum = np.arange(i*delta+l,(i+1)*delta+l+(delta/20),(delta/20))
         myx = np.hstack((myx,dum.reshape((1,len(dum)))))
         myy = np.hstack((myy,np.ones((1,len(dum)))*x[i]))
     #print(myx.shape,myy.shape)
