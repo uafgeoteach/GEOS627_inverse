@@ -149,7 +149,7 @@ def pol2cart(rho, phi):
 
     
 def tsvd(g, X, rvec):
-#     %TSVD regularization using truncated singular value decomposition
+# %TSVD regularization using truncated singular value decomposition
 # %
 # % INPUT
 # %   g       n x 1 data vector
@@ -173,46 +173,46 @@ def tsvd(g, X, rvec):
 # % associated residual sum of squares and estimate sum of squares.
 # % 
 # % Adapted from TSVD routine in Per Christian Hansen's Regularization Toolbox. 
-# %
 
     # allow rvec and g to be vectors
-    rvec = np.squeeze(rvec)
-    g    = np.squeeze(g)
+    rvec   = np.squeeze(rvec)
+    g      = np.squeeze(g)
 
     # % size of inputs (n is number of data; p is number of parameters)
-    (n, p)      = X.shape
+    (n,p)  = X.shape
     #print(n,p)
-    q           = np.min([n, p])
-    nr          = len(rvec)
+    q      = np.min([n, p])
+    nr     = len(rvec)
 
     #initialize outputs
-    f_r         = np.zeros((p, nr))       # set of r models
-    rss         = np.zeros((nr, 1))       # RSS for each model
-    f_r_ss      = np.zeros((nr, 1))       # norm of each model
+    f_r    = np.zeros((p,nr))       # set of r models
+    rss    = np.zeros((nr,1))       # RSS for each model
+    f_r_ss = np.zeros((nr,1))       # norm of each model
 
     #compute SVD of X
-    [U, s, VH]  = la.svd(X) 
-    S = la.diagsvd(s,*X.shape)    # vector of singular values
+    [U,s,VH] = la.svd(X)
+    V = VH.T
+    S = la.diagsvd(s,*X.shape)
 
     # 'Fourier' coefficients (fc) in expansion of solution in terms of right singular vectors
     # note: these are also referred to as Picard ratios
-    beta        = U[:, :q].T@g            # note data g
-    fc          = beta / s
-    V = VH.T
+    beta   = U[:,:q].T@g            # note data g
+    fc     = beta / s
+
     # treat each truncation parameter separately
     f_r = V[:, :rvec[0]] @ fc[:rvec[0]]
     #print((V[:, :rvec[0]] @ fc[:rvec[0]]).shape)
     for j in range(nr):
-        k         = rvec[j]               # current truncation parameter
-        if j>0:
-            f_r = np.vstack((f_r, V[:, :k] @ fc[:k]))    # truncated SVD estimated model vector
-        f_r_ss[j] = np.sum(fc[:k]**2);    # the squared norm of f_r
-        rss[j]    = np.sum(beta[k:q]**2)  # residual sum of squares
+        k = rvec[j]   # current truncation parameter
+        if j > 0:
+            f_r = np.vstack((f_r, V[:,:k] @ fc[:k])) # truncated SVD estimated model vector
+        f_r_ss[j] = np.sum(fc[:k]**2)                # the squared norm of f_r
+        rss[j]    = np.sum(beta[k:q]**2)             # residual sum of squares
     f_r = f_r.T
 
     # in overdetermined case, add rss of least-squares problem
     if (n > p):
-        rss = rss + np.sum((g - U[:, :q]@beta)**2)   # note data g
+        rss = rss + np.sum((g - U[:,:q]@beta)**2)   # note data g
     return f_r, rss, f_r_ss
 
 
