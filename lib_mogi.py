@@ -23,8 +23,8 @@ def plot_model(infile,nline,nsample,posting,output_filename=None,dpi=72,xsol=Non
     cmap.set_bad('white', 1.)
     
     # Plot displacement
-    fig = plt.figure(figsize=(16, 8))
-    ax1 = fig.add_subplot(1, 2, 1)
+    fig = plt.figure(figsize=(16,8))
+    ax1 = fig.add_subplot(1,2,1)
     im = ax1.imshow(infile, interpolation='nearest', cmap=cmap, extent=extent_xy, origin='upper')
     cbar = ax1.figure.colorbar(im, ax=ax1, orientation='horizontal')
     ax1.set_title("Displacement in look direction [mm]")
@@ -33,8 +33,8 @@ def plot_model(infile,nline,nsample,posting,output_filename=None,dpi=72,xsol=Non
     plt.grid()
     
     # Plot interferogram
-    im.set_clim(-30, 30)
-    ax2 = fig.add_subplot(1, 2, 2)
+    im.set_clim(-30,30)
+    ax2 = fig.add_subplot(1,2,2)
     im = ax2.imshow(inwrapped, interpolation='nearest', cmap=cmap, extent=extent_xy, origin='upper')
     cbar = ax2.figure.colorbar(im, ax=ax2, orientation='horizontal')
     ax2.set_title("Interferogram phase [rad]")
@@ -54,32 +54,36 @@ def plot_model(infile,nline,nsample,posting,output_filename=None,dpi=72,xsol=Non
 
 
 # Mogi forward model
-def rngchg_mogi(n1, e1, depth, delta_volume, northing, easting, plook):
+def rngchg_mogi(n1, e1, depth_km, delta_volume_km3, northing, easting, plook):
     
     # This geophysical coefficient is needed to describe how pressure relates to volume change
-    displacement_coefficient = (1e6*delta_volume*3)/(np.pi*4)
+    # The 1e6 = 1e9*1e-3 factor converts the volume from km3 to m3 (1e9),
+    # then the output displacement from m to to mm (1e-3).
+    nu = 0.25   # assume a Poisson solid
+    displacement_coefficient = (1/np.pi)*(1-nu)*(1e6*delta_volume_km3)
     
     # Calculating the horizontal distance from every point in the displacement map to the x/y source location
     d_mat = np.sqrt(np.square(northing-n1) + np.square(easting-e1))
     
     # denominator of displacement field for mogi source
-    tmp_hyp = np.power(np.square(d_mat) + np.square(depth),1.5)
+    tmp_hyp = np.power(np.square(d_mat) + np.square(depth_km),1.5)
     
     # horizontal displacement
-    horizontal_displacement = displacement_coefficient * d_mat / tmp_hyp
+    horizontal_displacement_mm = displacement_coefficient * d_mat / tmp_hyp
     
     # vertical displacement
-    vertical_displacement = -displacement_coefficient * depth / tmp_hyp #Amanda: added '-'
+    vertical_displacement_mm = displacement_coefficient * (-depth_km) / tmp_hyp
     
     # azimuthal angle
     azimuth = np.arctan2((easting-e1), (northing-n1))
     
     # compute north and east displacement from horizontal displacement and azimuth angle
-    east_displacement = np.sin(azimuth) * horizontal_displacement
-    north_displacement = np.cos(azimuth) * horizontal_displacement
+    east_displacement_mm  = np.sin(azimuth) * horizontal_displacement_mm
+    north_displacement_mm = np.cos(azimuth) * horizontal_displacement_mm
     
     # project displacement field onto look vector
-    temp = np.concatenate((east_displacement, north_displacement, vertical_displacement), axis=1)
-    delta_range = temp.dot(np.transpose([plook]))
-    delta_range = -1.0 * delta_range
+    #Utran = np.concatenate((east_displacement_mm, north_displacement_mm, vertical_displacement_mm), axis=1)
+    Utran = np.hstack((east_displacement_mm, north_displacement_mm, vertical_displacement_mm))
+    delta_range = -Utran @ plook
+    
     return delta_range
