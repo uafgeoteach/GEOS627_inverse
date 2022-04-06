@@ -2,7 +2,7 @@ import copy
 import matplotlib.pylab as plt
 import numpy as np
 
-# this contains functions called by hw_mogi.py
+# this contains functions called by hw_mogi.ipynb
 
 # bounding box
 def extents(vector_component):
@@ -11,10 +11,10 @@ def extents(vector_component):
 
 
 # plot 2D model
-def plot_model(infile,line,sample,posting,output_filename=None,dpi=72,xsol=None,ysol=None,Vsol=None,zsol=None):
+def plot_model(infile,nline,nsample,posting,output_filename=None,dpi=72,xsol=None,ysol=None,Vsol=None,zsol=None):
     # Calculate the bounding box
-    extent_xvec = extents((np.arange(1, sample*posting, posting)) / 1000)
-    extent_yvec = extents((np.arange(1, line*posting, posting)) / 1000)
+    extent_xvec = extents((np.arange(1, nsample*posting, posting)) / 1000)
+    extent_yvec = extents((np.arange(1, nline*posting, posting)) / 1000)
     extent_xy = extent_xvec + extent_yvec
     
     plt.rcParams.update({'font.size': 14})
@@ -50,7 +50,7 @@ def plot_model(infile,line,sample,posting,output_filename=None,dpi=72,xsol=None,
         #ax1.plot(V[indV],zs[indz],'kp',ms=18,mfc='w')
         #ax2.plot(V[indx],zs[indz],'kp',ms=18,mfc='w')
     
-    return extent_xvec, extent_yvec
+    #return extent_xvec, extent_yvec
 
 
 # Mogi forward model
