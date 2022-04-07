@@ -7,6 +7,9 @@
 \usepackage{xr}
 \externaldocument{lab_mogi}
 
+\newcommand{\tfile}{{\tt hw\_mogi.ipynb}}
+\newcommand{\lfile}{{\tt lib\_mogi.py}}
+
 %--------------------------------------------------------------
 \begin{document}
 %-------------------------------------------------------------
@@ -23,7 +26,7 @@ University of Alaska Fairbanks \\
 %Assigned: April 9, 2015 --- Due: April 16, 2015 \\
 %Assigned: April 6, 2017 \\
 %Due: April 12, 2017 [Tape]; April 18, 2017 [Meyer] \\
-Assigned: November 6, 2019 --- Due: November 13, 2019 \\
+Assigned: April 6, 2022 --- Due: April 13, 2022 \\
 Last compiled: \today
 \end{spacing}
 
@@ -36,13 +39,22 @@ Last compiled: \today
 
 \item The problem set involves reading, running, and writing some Matlab scripts. You are welcome to work together on the ``Questions for all students.''
 
-\item Primary Matlab scripts (note: for 627 students these are in the directory \verb+mogi+ within \repodir):
+\item Python notebook (\tfile) and library (\lfile) includes key functions:
 \begin{itemize}
-\item \verb+read_data.m+: loads InSAR observations
-\item \verb+plot_model.m+: plots InSAR field, which can be observed or synthetic
-\item \verb+mogi2insar.m+: uses Mogi forward model to simulate InSAR surface deformation signals
-%\item \verb+xy_gridsearch.m+: grid search for finding the best-fitting geographic source location
+
+\item \verb+rngchg_mogi()+ (\lfile): Mogi source model $\rightarrow$ surface displacement $\rightarrow$ InSAR line-of-sight displacement signal
+
+\item \verb+mogi2insar()+ (\tfile): wrapper for \verb+rngchg_mogi()+ 
+
+\item \verb+plot_model()+ (\lfile): plots InSAR field, which can be observed or synthetic
+
 \end{itemize}
+%Primary Matlab scripts (note: for 627 students these are in the directory \verb+mogi+ within \repodir):
+%\begin{itemize}
+%\item \verb+read_data.m+: loads InSAR observations
+%\item \verb+plot_model.m+: plots InSAR field, which can be observed or synthetic
+%\item \verb+mogi2insar.m+: uses Mogi forward model to simulate InSAR surface deformation signals
+%\item \verb+xy_gridsearch.m+: grid search for finding the best-fitting geographic source location
 
 \end{itemize}
 
@@ -51,37 +63,53 @@ Last compiled: \today
 \subsection*{Questions for all students (3 points)}
 
 \begin{enumerate}
-\item (0.4) Run \verb+read_data.m+ (or see \refFig{data} from the lab) and examine the interferogram. What is the sign of the look displacement of the prominent circular signal? What does this imply about the sign of the volume change?
+\item (0.4) Run \tfile\ (or see \refFig{data} from the lab) and examine the interferogram. What is the sign of the look displacement of the prominent circular signal? What does this imply about the sign of the volume change?
 
-\item (0.4) What are reasonable ranges for each of the four model parameters? Try a few different models in \verb+mogi2insar.m+ to get an idea for what the ranges should be. Explain your choices.
+\item (0.4) What are reasonable ranges for each of the four model parameters? Try a few different models in \verb+mogi2insar()+ to get an idea for what the ranges should be. Explain your choices.
 
 \item (0.6) Using the fixed values $z_{\rm s} = -2.58$~km and $V = 0.0034$~km$^3$, perform a grid search over $x_{\rm s}$ and $y_{\rm s}$ and evaluate the misfit function.
 %
 \begin{enumerate}
 \item (0.4) Make a 2D colored plot of the misfit function with axes $x_{\rm s}$ and $y_{\rm s}$.
 
-Start your Matlab script with the following lines:
-%
-\begin{verbatim}
-read_data;
-zs = -2.58;
-vs = 0.0034;
-bokay = ~isnan(obs_rngchg);
-\end{verbatim}
-%
-The variable \verb+bokay+ is needed so that you evaluate the misfit function only at non-NaN points in the interferogram. For example, the command \verb+sum(obs_rngchg(bokay(:)))+ will not return \verb+NaN+, whereas \verb+sum(obs_rngchg(:))+ will.
+%Start your Matlab code with the following lines:
+%%
+%%\begin{verbatim}
+%read_data;
+%zs = -2.58;
+%vs = 0.0034;
+%bokay = ~isnan(obs_rngchg);
+%\end{verbatim}
+%%
+%The variable \verb+bokay+ is needed so that you evaluate the misfit function only at non-NaN points in the interferogram. For example, the command \verb+sum(obs_rngchg(bokay(:)))+ will not return \verb+NaN+, whereas \verb+sum(obs_rngchg(:))+ will.
 
 \item (0.2) Find the minimum of your misfit function and list your best-fitting values for $x_{\rm s}$ and $y_{\rm s}$.
 
+Assuming you have filled a 2D array of misfit values \verb+misfit+, you can find the minimum with the following commands:
+%
+\begin{verbatim}
+# Find the minimum
+inds = np.nonzero(misfit == np.amin(misfit))
+indx = inds[0][0]
+indy = inds[1][0]
+
+print('Source xs : %.2f km' % (xs[indx]))
+print('Source ys : %.2f km' % (ys[indy]))
+print('misfit : %.2e' % (misfit[indx,indy]))
+\end{verbatim}
+
 \end{enumerate}
 
-\item (1.6) Now assume that the lateral location of the magma source is fixed with $x_{\rm s} = 20.6$~km and $y_{\rm s} = 21.8$~km. Search over $z_{\rm s}$ and $V$ and evaluate the misfit function to obtain best-fitting values for $z_{\rm s}$ and $V$. Modify the Matlab script \verb+xy_gridsearch.m+ to perform this analysis.
+\item (1.6) Now assume that the lateral location of the magma source is fixed with $x_{\rm s} = 20.6$~km and $y_{\rm s} = 21.8$~km. Search over $z_{\rm s}$ and $V$ and evaluate the misfit function to obtain best-fitting values for $z_{\rm s}$ and $V$.
+%Modify the Matlab script \verb+xy_gridsearch.m+ to perform this analysis.
 %
 \begin{enumerate}
 \item (0.8) Provide a plot of the misfit function. Put $z_{\rm s}$ on the vertical axis.
 
-Note 1: Make sure that you do {\em not} use the command \verb+axis equal+. \\
-Note 2: You may want to adjust the color scale\footnote{You can adjust the color scale by specifying {\tt caxis([a b])}, where {\tt a} and {\tt b} are your values. This command needs to appear {\em before} you list the {\tt colorbar} command.}, in order to better see the shape of the misfit function.
+Note: Adjust the color scale in order to best see the spatial pattern of the misfit function.
+
+%Note: Make sure that you do {\em not} use the command \verb+axis equal+. \\
+%Note: You may want to adjust the color scale\footnote{You can adjust the color scale by specifying {\tt caxis([a b])}, where {\tt a} and {\tt b} are your values. This command needs to appear {\em before} you list the {\tt colorbar} command.}, in order to better see the shape of the misfit function.
 
 \item (0.4) Provide the best-fitting values for $z_{\rm s}$ and $V$. 
 
@@ -98,7 +126,7 @@ Provide a physical interpretation for this elongated pattern.
 \subsection*{Questions for Meyer//GEOS 657 (7 points)}
 
 \begin{enumerate}
-\item (4.0) {\bf Analysis of the Mogi forward model}. Run the forward model experiments using Matlab function \verb+mogi2insar.m+:
+\item (4.0) {\bf Analysis of the Mogi forward model}. Run the forward model experiments using \verb+mogi2insar()+:
 \begin{itemize}
 \item Do a reference simulation with the following model parameters: $x_0 = 20.6$~km; $y_0 = 21.8$~km; $z_0 = -2.5$~km; $V_0 = 0.01$~km$^3$. Visualize the results.
 \item Change the depth of the source by a factor of 3 ($z_1 = -7.5$~km) while leaving the other parameters unchanged. Visualize the results. Discuss changes to the reference run. Describe how the strength and shape of the deformation signal has changed and provide a physical explanation.

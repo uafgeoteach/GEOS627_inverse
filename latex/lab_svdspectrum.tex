@@ -5,7 +5,7 @@
 
 %\renewcommand{\baselinestretch}{1.0}
 
-\newcommand{\tfile}{{\tt lab\_sbdspectrum.ipynb}}
+\newcommand{\tfile}{{\tt lab\_svdspectrum.ipynb}}
 \newcommand{\nfile}{{\tt notes\_svd.pdf}}
 
 % change the figures to ``Figure L3'', etc
@@ -29,23 +29,23 @@ Last compiled: \today
 
 \subsection*{Background}
 
-This is the third of a series of labs on the SVD: \verb+lab_svdgeometry+, \verb+lab_svdballistic+, \verb+lab_svdspectrum+.
+This is the third of a series of labs on the SVD: \verb+lab_svdgeometry+, \verb+lab_svdballistic+, \verb+lab_svdspectrum+. The notes that augment \citet{Aster} are \nfile.
 
-The singular value decomposition is given by
+The singular value decomposition of $\ndata \times \nparm$ matrix $\bG$ is given by
 %
-\begin{equation*}
-\bG = \bU\bS\bV^T
-\end{equation*}
+\begin{eqnarray*}
+\bG &=& \bU\bS\bV^T.
+\end{eqnarray*}
 %
-and is useful for examining linear inverse problems of the form $\bG\bem = \bd$.
+This is useful for examining linear inverse problems of the form $\bG\bem = \bd$.
 
 The {\em singular value spectrum} is simply the set of singular values
 %
 \begin{equation*}
-s_j = S_{jj}
+s_k = S_{kk} \ge 0
 \end{equation*}
 %
-where $j$ ranges from 1 to $p$ and $s_p > 0$.
+where $k$ ranges from 1 to $\min(\ndata,\nparm)$.
 
 %------------------------
 
@@ -53,25 +53,25 @@ where $j$ ranges from 1 to $p$ and $s_p > 0$.
 
 \begin{enumerate}
 
-\item \citet[][Section~3.5, p.~74]{Aster} provides criteria for classifying the ``posed-ness'' of a linear inverse problem based on the singular values $s_j$:
+\item \citet[][Section~3.5, p.~74]{Aster} provides criteria for classifying the ``posed-ness'' of a linear inverse problem based on the singular values $s_k$:
 %
 \begin{enumerate}
 \renewcommand{\theenumi}{\Alph{enumi}}
-\item mildly ill-posed: $s_j = k j^{-\alpha}$, $\alpha \le 1$
-\item moderately ill-posed: $s_j = k j^{-\alpha}$, $\alpha > 1$
-\item severely ill-posed: $s_j = k e^{-\alpha j}$
+\item mildly ill-posed: $s_k = h k^{-\alpha}$, $\alpha \le 1$
+\item moderately ill-posed: $s_k = h k^{-\alpha}$, $\alpha > 1$
+\item severely ill-posed: $s_k = h e^{-\alpha k}$
 \end{enumerate}
 %
-Here $k$ and $\alpha$ are unknown.
+Here $h$ and $\alpha$ are unknown.
 
 Transform each equation so that it can be written as the equation of a line. This should inform how to plot the singular values.
 
-\item The function \verb+ex_getG()+ will return the forward linear model $\bG$ for the four models in \citet{Aster}. Run \nfile\ and analyze the matrixplots of $\bG$ for each of the 8 examples listed at the top of \verb+ex_getG()+ (which resides in \verb+lib_peip.py+). Make sure you understand why they look the way they do.
+\item The function \verb+ex_getG()+ will return the forward linear model $\bG$ for the four models in \citet{Aster}. Run \tfile\ and analyze the matrixplots of $\bG$ for each of the 8 examples listed at the top of \verb+ex_getG()+ (which resides in \verb+lib_peip.py+). Make sure you understand why they look the way they do.
 
-\item Set \verb+bfigure = false+ in \verb+ex_getG()+, then write some code to call \verb+ex_getG()+ and plot the singular value spectrum for each of the 8 examples.
+\item Write code to call \verb+ex_getG()+ and plot the singular value spectrum for each of the 8 examples. (If you prefer, you can set \verb+bfigure = false+ in \verb+ex_getG()+ to avoid seeing the matrix plots.)
 
 \pagebreak
-\item Based the singular value spectra, mark (a), (b), or (c) next to each example below.
+\item Based the singular value spectra, identify the posed-ness category (a), (b), or (c) for each example below:
 %
 \begin{spacing}{1.5}
 \begin{verbatim}

@@ -49,7 +49,7 @@ Interferogram used in this lab exercise. This is Okmok volcano, which is the nor
 
 \begin{itemize}
 \item The goal of this lab is to understand the principles of InSAR processing and inverse problems. 
-\textcolor{red}{\bf Matlab may be useful for plotting, but it is not required to answer the lab questions.}
+\textcolor{red}{\bf Python may be useful for plotting, but it is not required to answer the lab questions.}
 
 \item Lab time:
 %
@@ -58,7 +58,7 @@ Interferogram used in this lab exercise. This is Okmok volcano, which is the nor
 \item 15 min: overview of lab by Carl
 \item 10 min: lab: Theory I questions
 \item 50 min: lab: Discussion questions
-\item 60 min: open Matlab, start problem set
+\item 60 min: open OSL, start problem set
 \end{itemize}
 
 \item You are encouraged to pair up with someone in the other class, in order to best cover all the background material for the lab.
@@ -149,7 +149,7 @@ The axes convention is that $x$ points east, $y$ points north, and $z$ points up
 %\clearpage\pagebreak
 \input{mogi_sketch}
 
-The satellite ``sees'' a projection of the 3D ground displacement $\bu$ onto the look vector $\bLh$, which points from the satellite to the target\footnote{The ``look vector'' is also known as the ``line-of-sight vector'' \citep[][Figure~10]{SimonsRosen2007}. We refer to the displacement in the direction of the look vector as the ``look displacement;'' alternatively this is referred to as the ``line-of-sight displacement''. We use ``look displacement'' to be consistent with the ``look angle''.}.
+The satellite ``sees'' a projection of the 3D ground displacement $\bu$ onto the look vector $\bLh$, which points from the satellite to the target\footnote{The ``look vector'' is also known as the ``line-of-sight vector'' \citep[][Figure~10]{SimonsRosen2007} or the ``pointing vector''. We refer to the displacement in the direction of the look vector as the ``look displacement;'' alternatively this is referred to as the ``line-of-sight displacement''. We use ``look displacement'' to be consistent with the ``look angle''.}.
 Therefore, we are actually interested in the (signed magnitude of the) projection of $\bu$ onto $\bLh$ (\refFig{proj}). This is given by
 %
 \begin{eqnarray}

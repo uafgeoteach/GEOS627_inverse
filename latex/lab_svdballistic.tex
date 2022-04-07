@@ -56,33 +56,35 @@ Explicitly: Use the provided \verb+tplot+ and \verb+Gplot+ to plot the continuou
 \item Calculate model and data space resolution matrices.
 \end{enumerate}
 
-\item (Case 2) Two data points ($\ndata = 2$) that are exactly fit by an infinite suite of parabolas.
+\item (Case 2) Two data points ($\ndata = 2$) that are \textcolor{red}{exactly fit} by an infinite suite of parabolas.
 %
 \begin{enumerate}
-\item Plot your data points and the predictions for \textcolor{red}{a suite of models}.
+\item Solve for $\bem^\dagger$.
 \item Display and interpret the SVD components $\bU$, $\bV$, and $\bS$ in terms of the rank $p$ of your forward problem $\bG$ matrix.
 \item Calculate and interpret any model and data null space vector(s).
 \item Calculate model and data space resolution matrices.
+\item Plot your data points and the predictions for \textcolor{red}{a suite of models}.
 \end{enumerate}
 
 \item (Case 3) Four data points ($\ndata = 4$) that are only approximately fit by a parabola.
 %
 \begin{enumerate}
-\item Choose one of the sets of data in \refFig{fig:unique}. Add a fourth point that is off the curve. Then plot the updated solution as a new parabola. Does the new parabola fit any of the points?
+\item Choose one of the sets of data in \refFig{fig:unique}. Add a fourth point that is off the curve. Then solve for $\bem^\dagger$ and plot the updated solution as a new parabola, along with the data points. Does the new parabola fit any of the points?
 
-\item Plot your data points and the predictions for \textcolor{red}{the least squares model}.
+%\item Plot your data points and the predictions for \textcolor{red}{the least squares model}.
 \item Display and interpret the SVD components $\bU$, $\bV$, and $\bS$ in terms of the rank $p$ of your forward problem $\bG$ matrix.
-\item Calculate and interpret any model and data null space vector(s).
+\item Calculate and interpret any model and data null space vector(s). (In the next problem, we will explore the data null space.)
 \item Calculate model and data space resolution matrices.
 \end{enumerate}
 
-\item (Case 4) Two data points ($\ndata = 2$) that are only approximately fit by any parabola, and for which there are an infinite number of least squares solutions.
+\item (Case 4) Two data points ($\ndata = 2$) that are \textcolor{red}{approximately fit} by an infinite number of least squares solutions, depicted as parabolas.
 %
 \begin{enumerate}
-\item Plot your data points and the predictions for \textcolor{red}{a suite of least squares models}.
+\item Solve for $\bem^\dagger$.
 \item Display and interpret the SVD components $\bU$, $\bV$, and $\bS$ in terms of the rank $p$ of your forward problem $\bG$ matrix.
 \item Calculate and interpret any model and data null space vector(s).
 \item Calculate model and data space resolution matrices.
+\item Plot your data points and the predictions for \textcolor{red}{a suite of least squares models}.
 \end{enumerate}
 
 

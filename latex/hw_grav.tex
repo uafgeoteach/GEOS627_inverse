@@ -40,13 +40,12 @@ Last compiled: \today
 \subsection*{Instructions}
 
 \begin{itemize}
-\item Background reading: Ch.~3, \citet{Aster}
+\item Background reading: Ch.~3, \citet{Aster}.
 
-Note that the gravity example is rooted in Chapter 1 (Examples 1.4 and 1.5).
+The gravity example is rooted in Chapter 1 (Examples 1.4 and 1.5).
 
-%\item Relevant example scripts: \verb+ex_3_2_uaf.m+, \verb+ex_3_3_uaf.m+
-\item Relevant examples: Aster Example~3.2, Aster Example~3.3
-\item Relevant function: \verb+tsvd()+ (in \verb+lib_geos.py+) (credit: Regularization Toolbox \citep{Hansen})
+\item Relevant example scripts: \\ \verb+ex3p2.ipynb+ (Aster Example 3.2), \verb+ex3p3.ipynb+ (Aster Example 3.3)
+\item Relevant function: \\ \verb+tsvd()+ (in \verb+lib_geos.py+) (credit: Regularization Toolbox \citep{Hansen})
 \item Template notebook: \tfile\
 %\item Optional utility scripts: \verb+collocate.m+, \verb+plotconst_mod.m+
 %\item Here $\ndata$ is the number of data, and $\nparm$ is the number of model parameters.
@@ -138,7 +137,7 @@ Compute the least-squares solution $\bem_{\rm lsq}$.
 
 Write $\bem_{\ntrun}$ as a matrix expression and as a summation.
 
-\item (0.0) Compute the singular value decoposition.
+\item (0.0) Compute the singular value decomposition.
 
 \item (0.4) \textcolor{red}{Compute the condition number for this system of equations (without using {\tt cond}; show your code and the output value). What does the condition number imply about the influence of noise on your solution?}
 
