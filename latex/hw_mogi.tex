@@ -67,7 +67,7 @@ Last compiled: \today
 
 \item (0.4) What are reasonable ranges for each of the four model parameters? Try a few different models in \verb+mogi2insar()+ to get an idea for what the ranges should be. Explain your choices.
 
-\item (0.6) Using the fixed values $z_{\rm s} = -2.58$~km and $V = 0.0034$~km$^3$, perform a grid search over $x_{\rm s}$ and $y_{\rm s}$ and evaluate the misfit function.
+\item (0.6) Using the fixed values $z_{\rm s} = -2.58$~km and $V = 0.0034$~km$^3$, perform a grid search over $x_{\rm s}$ and $y_{\rm s}$ and evaluate the misfit function. WARNING: Make sure you are using the {\em masked} image, not the unmasked image.
 %
 \begin{enumerate}
 \item (0.4) Make a 2D colored plot of the misfit function with axes $x_{\rm s}$ and $y_{\rm s}$.
@@ -85,18 +85,7 @@ Last compiled: \today
 
 \item (0.2) Find the minimum of your misfit function and list your best-fitting values for $x_{\rm s}$ and $y_{\rm s}$.
 
-Assuming you have filled a 2D array of misfit values \verb+misfit+, you can find the minimum with the following commands:
-%
-\begin{verbatim}
-# Find the minimum
-inds = np.nonzero(misfit == np.amin(misfit))
-indx = inds[0][0]
-indy = inds[1][0]
-
-print('Source xs : %.2f km' % (xs[indx]))
-print('Source ys : %.2f km' % (ys[indy]))
-print('misfit : %.2e' % (misfit[indx,indy]))
-\end{verbatim}
+Assuming you have filled a 2D array of misfit values \verb+misfit+, you can find the minimum by using the commands commented out in \tfile.
 
 \end{enumerate}
 
