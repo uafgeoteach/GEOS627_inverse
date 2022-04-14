@@ -42,11 +42,12 @@ The objective of this lab is to reinforce the geometrical concept of SVD \citep{
 
 \subsection*{Part 1: $\bG$}
 
-Four examples of ($2 \times 2$) $\bG$ representing the SVD are presented in Figure~1 of \nfile. We label those as Examples 1--4. Four additional examples (Examples 5--8) are shown in \refFig{fig:2D} for this lab.
+This lab includes four examples of ($2 \times 2$) $\bG$ representing the SVD (\refFig{fig:2D}). \\
+Four additional examples (Examples 5--8) are shown in Figure~1 of \nfile.
 
 \begin{enumerate}
 
-\item Start with \refFig{fig:ex5}.
+\item Start with \refFig{fig:ex1}.
 %
 \begin{enumerate}
 \item Determine the singular values $s_1$ and $s_2$. Note that if $s_1 = s_2 = 1$, then the map of the unit circle would be unchanged.
@@ -91,7 +92,7 @@ If your entries of $\bG$ are not close to integer values, please try again.
 
 \item Make sure you have the true $\bG$ before proceeding.
 
-\item In the {\bf top} of \refFig{fig:ex5}, sketch $\be_1$ and $\be_2$ in the left plot. \\
+\item In the {\bf top} of \refFig{fig:ex1}, sketch $\be_1$ and $\be_2$ in the left plot. \\
 Sketch $\bG\be_1$ and $\bG\be_2$ in the right plot.
 
 \item An example model
@@ -125,11 +126,11 @@ is plotted. Calculate $\bd = \bG\bem$ and plot it at right.
 \item Are $\bh_1$ and $\bh_2$ orthogonal?
 \end{itemize}
 
-\item Repeat the above steps to determine the three other $\bG$ matrices in \refFigab{fig:ex6}{fig:ex8}.
+\item Repeat the above steps to determine the three other $\bG$ matrices in \refFigab{fig:ex2}{fig:ex4}. Annotate the plots as requested above.
+
+\item Try the other four examples in \refFigab{fig:ex5}{fig:ex8}.
 
 Note: You can't sketch the eigenvectors if they are complex.
-
-\item Try the other four examples in Figure~1 of \nfile.
 
 \end{enumerate}
 
@@ -141,7 +142,7 @@ Note: You can't sketch the eigenvectors if they are complex.
 
 \begin{enumerate}
 
-\item The {\bf bottom} of \refFig{fig:ex5} represents the mapping $\bG^{\dagger}\Ucolor$. Sketch the following (note that you do not need $\bG^{\dagger}$ for the sketch):
+\item The {\bf bottom} of \refFig{fig:ex1} represents the mapping $\bG^{\dagger}\Ucolor$. Sketch the following (note that you do not need $\bG^{\dagger}$ for the sketch):
 %
 \begin{itemize}
 \item $\bu_1$ and $\bu_2$ in the left plot
@@ -157,13 +158,24 @@ Sketch $\bG^{\dagger}\be_1$ and $\bG^{\dagger}\be_2$ in the lower right plot.
 
 \item Does $\bG^{\dagger} = \bG^{-1}$? Why?
 
-\item Get some more practice with three more examples in \refFigab{fig:ex6}{fig:ex8}.
+\item Get some more practice with three more examples in \refFigab{fig:ex2}{fig:ex4}. For each case, calculate the SVD of $\bG$, then $\bG^{\dagger}$, and sketch the following in the lower plots:
+%
+%
+\begin{itemize}
+\item $\bu_1$ and $\bu_2$ in the left plot
+\item appropriately scaled versions of $\bv_1$ and $\bv_2$ in the right plot
+\item the ellipse representing $\bG^{\dagger}\Ucolor$ in the right plot
+\item $\be_1$ and $\be_2$ in the lower left plot.
+\item $\bG^{\dagger}\be_1$ and $\bG^{\dagger}\be_2$ in the lower right plot.
+\end{itemize}
+%
+If you are feeling ambitious, then try \refFigab{fig:ex5}{fig:ex8} as well.
 
-\item Run \tfile. By default, the code will generate a random $\bG$ with all have integer entries between $-2$ and 2.
+\item Run \tfile. By default, the code will generate a random $\bG$ having integer entries between $-2$ and 2.
 
 Try a few different $\bG$ to see what happens.
 
-\item The top of \refFig{fig:ex5} represents $\Vcolor \rightarrow \bG \rightarrow \Ucolor$.
+\item The top of \refFig{fig:ex1} represents $\Vcolor \rightarrow \bG \rightarrow \Ucolor$.
 
 Write some code to generate a plot representing $\Ucolor \rightarrow \bG^{\dagger} \rightarrow \Vcolor$. Stick to the coloring convention for $\Ucolor$ and $\Vcolor$.
 
@@ -173,21 +185,67 @@ Write some code to generate a plot representing $\Ucolor \rightarrow \bG^{\dagge
 \bibliography{carl_abbrev,carl_main}
 %-------------------------------------------------------------
 
+\setcounter{figure}{-1}
+
 \clearpage\pagebreak
 \pagestyle{empty}
 \begin{figure}
 \centering
 \begin{tabular}{rcc}
-Ex 5 & $........$ & \includegraphics[width=11cm]{svd_2D_5} \\ \\ \\
-Ex 6 & &\includegraphics[width=11cm]{svd_2D_6} \\ \\ \\
-Ex 7 & &\includegraphics[width=11cm]{svd_2D_7} \\ \\ \\
-Ex 8 & &\includegraphics[width=11cm]{svd_2D_8} 
+Ex 1 & $........$ & \includegraphics[width=11cm]{svd_2D_1} \\ \\ \\
+Ex 2 & &\includegraphics[width=11cm]{svd_2D_2} \\ \\ \\
+Ex 3 & &\includegraphics[width=11cm]{svd_2D_3} \\ \\ \\
+Ex 4 & &\includegraphics[width=11cm]{svd_2D_4} 
 \end{tabular}
 \caption[]
 {{
-Examples 5--8.
+Examples 1--4.
 The matrix $\bG = \Ucolor\,\bS\,\Vcolor^T$ transforms the orthonormal basis vectors \textcolor{blue}{$\{\bv_i\}$} to the orthogonal vectors \textcolor{red}{$\{s_i\bu_i\}$}: \makebox{$\bG\Vcolor = \Ucolor\,\bS$}.
 \label{fig:2D}
+}}
+\end{figure}
+
+\clearpage\pagebreak
+\begin{figure}
+\hspace{-1cm}
+\includegraphics[width=18cm]{svd_2D_both_1}
+\caption[]
+{{
+Example 1.
+\label{fig:ex1}
+}}
+\end{figure}
+
+\clearpage\pagebreak
+\begin{figure}
+\hspace{-1cm}
+\includegraphics[width=18cm]{svd_2D_both_2}
+\caption[]
+{{
+Example 2.
+\label{fig:ex2}
+}}
+\end{figure}
+
+\clearpage\pagebreak
+\begin{figure}
+\hspace{-1cm}
+\includegraphics[width=18cm]{svd_2D_both_3}
+\caption[]
+{{
+Example 3.
+\label{fig:ex3}
+}}
+\end{figure}
+
+\clearpage\pagebreak
+\begin{figure}
+\hspace{-1cm}
+\includegraphics[width=18cm]{svd_2D_both_4}
+\caption[]
+{{
+Example 4.
+\label{fig:ex4}
 }}
 \end{figure}
 
