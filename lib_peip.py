@@ -17,7 +17,7 @@ def phi(x):
     #
     # Input Parameters:
     #   x - endpoint of integration (scalar)
-    3
+    #
     # Output Parameters:
     #   z - value of integral
     #Python version coded by Yuan Tian @UAF 2021
