@@ -55,13 +55,20 @@ where the intercept time $t_0$ depends on the thickness and slowness of the uppe
 \item (0.3) Calculate the weighted least squares solution for the model parameters $t_0$ and~$s_2$.
 
 Note: It is probably easiest to use the transformed variables $\bd_w$ and $\bG_w$.
-\item (0.4) Plot the data, the data uncertainties, and the predictions for the fitted model as a dashed line.
+\item (0.4) Make a plot containing:
+%
+\begin{itemize}
+\item data as unconnected points
+\item data uncertainties as vertical errorbars
+\item predications for the fitted model as a dashed line
+\end{itemize}
+
 \end{enumerate}
 
 
 \item (0.2) Calculate the posterior model parameter covariance matrix $\cpost$ and the corresponding correlation matrix $\rhopost$. List the entries with at least 3 significant figures.
 
-How will the correlations be manifested in the general appearance of the error ellipsoid in $(t_0,s_2)$ space?
+How will the correlations manifest themselves in the general appearance of the error ellipsoid in $(t_0,s_2)$ space?
 
 \pagebreak
 \item (0.3) Calculate conservative 95\% confidence intervals for $t_0$ and $s_2$.
@@ -129,7 +136,7 @@ f(\bem) = (\bG\bem - \bd)^T \covdi (\bG\bem - \bd).
 %
 Your derivation should not involve any more variables than those in \refEq{fm}.
 
-Hint: Review \verb+notes_taylor.pdf+.
+Hint: Use some of the Miscellanaeous Derivations from \verb+notes_taylor.pdf+.
 
 %-------
 
@@ -190,7 +197,7 @@ to the $\ndata=21$ noise-free data points
 \item (0.1) Write the generic expression for the solution $\bem_{\rm lsq}$ to the least squares problem.
 \item (0.2) Use the QR factorization of $\bG$ to write the expression for the solution $\bem_{\rm qr}$ for \makebox{$\bG\bem = \dvec$}. Hint: \citet[][Appendix A]{Aster}.
 
-\item (0.2) Use the SVD factorization of $\bG$ to write the expression for the solution $\bem_{\rm svd}$ for \makebox{$\bG\bem = \dvec$}. Hint: your expressions should have the $p$ subscripts.
+\item (0.2) List the SVD solution $\bem_{\rm svd}$ for \makebox{$\bG\bem = \dvec$}. Hint: your expressions should have the $p$ subscripts.
 \end{enumerate}
 
 \item (0.7)
@@ -198,7 +205,7 @@ to the $\ndata=21$ noise-free data points
 \begin{enumerate}
 \item (0.1) What are the numerical entries of true model $\bem_{\rm true}$?
 
-\item (0.2) Plot the true model and your least-squares estimated model, $\bem_{\rm lsq}$. The $x$-axis can be the index $i = 0,1,\ldots,19$ of $a_i$.
+\item (0.2) Plot the true model and your least-squares estimated model $\bem_{\rm lsq}$. The $x$-axis can be the index $i = 0,1,\ldots,19$ of $a_i$.
 
 \item (0.2) Plot the discrete data points $(x_i,y_i)$. Superimpose the predictions from your least-squares model as a continuous function of $x$.
 
@@ -275,18 +282,26 @@ See \refApp{sec:pert}.
 \item (1.2) 
 \begin{enumerate}
 \item (0.4) List the values for the recovered model $\bem_{\dagger} = \bR_{\rm M}\bem_{\rm checker}$. Plot the vector.
+
 \item (0.2) List the values for the difference $\bem_{\dagger}-\bem_{\rm checker}$. \\
 What parameters are perfectly recovered? Plot the vector.
-\item (0.2) What is the formula for the covariance matrix $\cpost$ associated with $\bem_{\dagger}$? \\ Assume that $\covd = \sigma^2\bI$.
+
+\item (0.2) What is the formula for the covariance matrix $\cpost$ associated with $\bem_{\dagger}$? \\ Assume that $\covd = \sigma^2\bI$. Your expression should include $s_k$.
+
 \item (0.2) Compute the covariance matrix $\cpost$ using $\sigma = 1$~s. \\
 List the standard deviations associated with $\cpost$.
+
+Do not use any functions related to inverse or pseudoinverse.
+
 \item (0.2) \ptag\ Compute and plot the correlation matrix $\rhopost$. List the correlation coefficient between the 2nd and 4th model parameters.
 \end{enumerate}
 
+For these problems, note the following:
+%
 \begin{itemize}
-\item Do not use the \verb+pinv+ or \verb+inv+ commands.
 \item All model vectors should be plotted as $3 \times 3$ matrices.
-\item Use \verb+caxis(p*[-1 1])+ (where \verb+p+ is a sensible choice), so that the zero values are easy to identify.
+\item Plot the color limits with the range of $[-z,z]$ (where $z$ is a sensible choice), so that the zero values are easy to identify.
+\item Do not use any functions related to inverse or pseudoinverse.
 \end{itemize}
 
 \item (0.4) Interpret the pattern of differences $\bem_{\dagger}-\bem_{\rm checker}$ in the context of the geometry of the experiment (\refFig{fig:index}).
