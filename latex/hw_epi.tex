@@ -231,6 +231,8 @@ Here we revisit Problem~1. Use the grid discretization of \verb+dx = 0.2+ km for
 \begin{equation}
 t_6^{\rm obs} = 1.0\;{\rm s}
 \end{equation}
+%
+Use the same values for $t_1, \ldots, t_5$ as before.
 
 \begin{enumerate}
 \item (0.2) Solve for $\sigma_{\rm M}(\bem)$ with the new data vector, and include this plot.
@@ -246,7 +248,11 @@ F(\bem) &=& \sum_{i=1}^6 \frac{\left| t_i(\bem) - t_i^{\rm obs}\right|}{\sigma}
 %
 This has the same form as, for example, the first term of eq. 4.26 of \citet{Tarantola2005}, with $s=1$.
 
-How does $\sigma_{\rm M}(\bem)$ compare with the solutions from Problems 2-\ref{sigma1} and 4-1?
+\begin{enumerate}
+\item (0.2) Show your modified line(s) of code.
+\item (0.6) Include a 2D colored plot of $\sigma_{\rm M}(\bem) = \sigma_{\rm M}(x,y)$.
+\item (0.2) How does $\sigma_{\rm M}(\bem)$ compare with the solutions from Problems 2-\ref{sigma1} and 4-1?
+\end{enumerate}
 
 \item (0.5) For completeness, undo the data outlier ($t_6^{\rm obs} = 2.98$~s) and solve for $\sigma_{\rm M}(\bem)$ using the L1 misfit function.
 Briefly explain how the solution compares with the ones obtained in Problems 2-\ref{sigma1}, 4-1, and 4-2.
