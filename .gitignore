@@ -1,0 +1,12 @@
+__pycache__
+.bashrc
+.cache
+.conda
+.condarc
+.config
+.empty
+.ipynb_checkpoints
+.ipython
+.jupyter
+.local
+.vscode

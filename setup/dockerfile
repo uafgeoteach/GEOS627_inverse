@@ -63,8 +63,8 @@ RUN conda clean --yes --all && \
     chmod -R 777 /opt/conda/pkgs/
 
 # Copy essential files from this directory to docker image
-COPY etc/pull.py ${INVERSE_FILES}/pull.py
-COPY etc/startup.sh ${INVERSE_FILES}/startup.sh
+# COPY etc/pull.py ${INVERSE_FILES}/pull.py
+COPY setup/etc/startup.sh ${INVERSE_FILES}/startup.sh
 
 USER jovyan
 
