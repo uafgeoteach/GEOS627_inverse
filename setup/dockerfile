@@ -64,8 +64,10 @@ RUN conda clean --yes --all && \
 
 # Copy essential files from this directory to docker image
 # COPY etc/pull.py ${INVERSE_FILES}/pull.py
-COPY setup/etc/startup.sh ${INVERSE_FILES}/startup.sh
+COPY etc/startup.sh ${INVERSE_FILES}/startup.sh
 
+# added chown just in case
+RUN chown -R jovyan:users $HOME
 USER jovyan
 
 EXPOSE 8888

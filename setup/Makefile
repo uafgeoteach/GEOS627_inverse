@@ -1,15 +1,15 @@
 all: build run
 
 build:
-	docker build -f setup/dockerfile -t geos627:latest .
+	docker build -f dockerfile -t geos627:latest .
 
 run:
-	bash setup/run.sh 2>&1 | tee setup/log
-
+	bash run.sh 2>&1 | tee log
 
 clean:
-	rm -rf __pycache__ .cache .conda .config .empty .ipynb_checkpoints .ipython \
-		.jupyter .local .bashrc .condarc
+	rm -rf ../__pycache__ ../.cache ../.conda ../.config ../.empty \
+		../.ipynb_checkpoints ../.ipython \
+		../.jupyter ../.local ../.bashrc ../.condarc ../temp
 # clean:
 # 	rm -rf home/.cache home/.conda home/.config home/.empty \
 # 		home/.ipython home/.jupyter home/insar_analysis home/.ipynb_checkpoints \

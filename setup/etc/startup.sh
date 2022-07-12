@@ -20,8 +20,8 @@ v=$(echo $python | cut -d'.' -f 2)
 # jupyter serverextension enable --py nbgitpuller
 
 # Add Path to local pip execs.
-# export PATH=$HOME/.local/bin:$PATH
-export PATH=$HOME/setup/.local/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
+# export PATH=$HOME/setup/.local/bin:$PATH
 
 # # Pull in any repos you would like cloned to user volumes
 # gitpuller https://github.com/uafgeoteach/GEOS627_inverse.git main $HOME/GEOS627_inverse
@@ -50,7 +50,7 @@ channels:
   - defaults
 channel_priority: strict
 envs_dirs:
-  - /home/jovyan/setup/.local/envs
+  - /home/jovyan/.local/envs
   - /opt/conda/envs
 EOT
 fi
@@ -60,8 +60,10 @@ conda init
 # echo "create directory"
 # mkdir -p "$HOME"/setup/.local/envs/
 
-LOCAL="$HOME"/setup/.local
-ENVS="$LOCAL"/envs
+# LOCAL="$HOME"/setup/.local
+# LOCAL="$HOME"/.local
+# ENVS="$LOCAL"/envs
+ENVS="$HOME"/setup
 NAME=inverse
 PREFIX="$ENVS"/"$NAME"
 SITE_PACKAGES=$PREFIX"/lib/python3."$v"/site-packages"
@@ -69,6 +71,7 @@ SITE_PACKAGES=$PREFIX"/lib/python3."$v"/site-packages"
 # Create inverse env
 if [ ! -d "$PREFIX" ]; then
   echo "mamba create"
+  echo "$PREFIX"
   mamba env create -f "$ENVS"/"$NAME".yml -q
   mamba run -n "$NAME" kernda --display-name "$NAME" -o --env-dir "$PREFIX" "$PREFIX"/share/jupyter/kernels/python3/kernel.json
 else
