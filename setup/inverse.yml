@@ -1,11 +1,15 @@
 name: inverse
 channels:
   - conda-forge
+  - anaconda
   - default
 dependencies:
   - python=3.8
   - ipywidgets
+  - ipyfilechooser
+  - ipympl==0.8.8
   - jupyter
+  - kernda
   - jupyter_contrib_nbextensions
   - jupyter_nbextensions_configurator
   - jupyter-resource-usage
@@ -13,5 +17,8 @@ dependencies:
   - numpy
   - pandas
   - scipy
-  - statsmodels
   - sympy
+  - traitlets==5.1.1
+  - pip
+  - pip:
+    - df-jupyter-magic

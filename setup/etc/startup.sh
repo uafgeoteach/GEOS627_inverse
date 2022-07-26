@@ -2,31 +2,45 @@
 
 set -ex
 
-#ls -a /home/jovyan/.local
-#mkdir /home/jovyan/.local/share
-#mkdir /home/jovyan/.local/lib
-#chown -R jovyan:users /home/jovyan/.local/share
-#chown -R jovyan:users /home/jovyan/.local/lib
+# python -m pip install --user \
+#     nbgitpuller \
+#     ipywidgets \
+#     mpldatacursor
 
 python -m pip install --user \
-    nbgitpuller \
     ipywidgets \
     mpldatacursor
 
 # copy over our version of pull.py
-# REMINDER: REMOVE IF CHANGES ARE MERGED TO NBGITPULLER
 python=$(python --version 2>&1)
 v=$(echo $python | cut -d'.' -f 2)
-cp "${INVERSE_FILES}"/pull.py /home/jovyan/.local/lib/python3."$v"/site-packages/nbgitpuller/pull.py
+# cp "${INVERSE_FILES}"/pull.py /home/jovyan/.local/lib/python3."$v"/site-packages/nbgitpuller/pull.py
 
-# enable nbgitpuller
-jupyter serverextension enable --py nbgitpuller
+# # enable nbgitpuller
+# jupyter serverextension enable --py nbgitpuller
 
 # Add Path to local pip execs.
 export PATH=$HOME/.local/bin:$PATH
+# export PATH=$HOME/setup/.local/bin:$PATH
 
-# Pull in any repos you would like cloned to user volumes
-gitpuller https://github.com/uafgeoteach/GEOS627_inverse.git main $HOME/GEOS627_inverse
+# # Pull in any repos you would like cloned to user volumes
+# gitpuller https://github.com/uafgeoteach/GEOS627_inverse.git main $HOME/GEOS627_inverse
+
+# CONDARC=$HOME/.condarc
+# if ! test -f "$CONDARC"; then
+# cat <<EOT >> $CONDARC
+# channels:
+#   - conda-forge
+#   - defaults
+# channel_priority: strict
+# create_default_packages:
+#   - jupyter
+#   - kernda
+# envs_dirs:
+#   - /home/jovyan/.local/envs
+#   - /opt/conda/envs
+# EOT
+# fi
 
 CONDARC=$HOME/.condarc
 if ! test -f "$CONDARC"; then
@@ -35,9 +49,6 @@ channels:
   - conda-forge
   - defaults
 channel_priority: strict
-create_default_packages:
-  - jupyter
-  - kernda
 envs_dirs:
   - /home/jovyan/.local/envs
   - /opt/conda/envs
@@ -46,11 +57,13 @@ fi
 
 conda init
 
-echo "create directory"
-mkdir -p "$HOME"/.local/envs/
+# echo "create directory"
+# mkdir -p "$HOME"/setup/.local/envs/
 
-LOCAL="$HOME"/.local
-ENVS="$LOCAL"/envs
+# LOCAL="$HOME"/setup/.local
+# LOCAL="$HOME"/.local
+# ENVS="$LOCAL"/envs
+ENVS="$HOME"/setup
 NAME=inverse
 PREFIX="$ENVS"/"$NAME"
 SITE_PACKAGES=$PREFIX"/lib/python3."$v"/site-packages"
@@ -58,6 +71,7 @@ SITE_PACKAGES=$PREFIX"/lib/python3."$v"/site-packages"
 # Create inverse env
 if [ ! -d "$PREFIX" ]; then
   echo "mamba create"
+  echo "$PREFIX"
   mamba env create -f "$ENVS"/"$NAME".yml -q
   mamba run -n "$NAME" kernda --display-name "$NAME" -o --env-dir "$PREFIX" "$PREFIX"/share/jupyter/kernels/python3/kernel.json
 else
