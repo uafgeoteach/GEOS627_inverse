@@ -31,17 +31,23 @@ Last compiled: \today
 The objective of this lab is to introduce the concepts of forward and inverse problems by exploring the example of fitting a line to scattered data. We also want to develop some basic capabilities in Python, such as vector-matrix operations and plotting.
 
 \begin{enumerate}
+\item Consider the forward model $d_i = m_1 + m_2 x_i$, which can be written in schematic matrix form as $\bd = \bG\bem$. If $\bd$ is $\ndata \times 1$ and $\bem$ is $2 \times 1$, what is the dimension of $\bG$?
+
+\vertgap
+
 \item Write down the forward model $d_i = m_1 + m_2 x_i$ in schematic matrix form $\bd = \bG\bem$.
 
 \vertgap
 \vertgap
+\vertgap
+\vertgap
+\vertgap
+\vertgap
+
 
 \item Show that minimizing the least squares misfit function (\ie sum of squares of residuals) leads to the solution $\bem = (\bG^T\bG)^{-1}\bG^T\dvec$ (see \verb+notes_taylor.pdf+).
 
-\vertgap
-\vertgap
-\vertgap
-
+\pagebreak
 \item Run the script \verb+lab_linefit.ipynb+ and identify the key parts of the code associated with the forward problem and the inverse problem. What is the syntax for $\bem^T$, $\bG\bem$, and $\bG^T\bd$?
 
 \vertgap
@@ -51,7 +57,7 @@ The objective of this lab is to introduce the concepts of forward and inverse pr
 \vertgap
 
 \item What are the different ways to compute the solution vector $\bem$? \\
-(To see the help for a function (\eg, \verb+inv+), type \verb+help(LA.inv)+ or \verb+LA.inv?+)
+(To see the help for a function such as \verb+inv+, type \verb+help(la.inv)+ or \verb+la.inv?+)
 
 \vertgap
 
@@ -78,7 +84,7 @@ How does it change if you set $\sigma = 0$?
 %
 \begin{itemize}
 \item What is the dimension of model space?
-\item Fill out the table below.
+\item Fill out the table below. List ``scalar'' if the variable is a scalar.
 %\item XXX In the code, why is the operation \verb+res.*res+ used instead of \verb+res*res+, \verb+res'*res+, or \verb+res*res'+? XXX
 \end{itemize}
 
@@ -103,7 +109,9 @@ $\misfitvar(\bem)$  &      &                &              \\ \hline
 % GEOS 626 STOP HERE THE FIRST TIME THROUGH
 %==============================================================
 
-\item Referring to the class notes ``Taylor series and least squares'' (\verb+notes_taylor.pdf+) compute the gradient $\bgamma(\bem)$ for the same grid of $\bem$ that was used to plot the misfit function.
+\pagebreak
+
+\item Using your answer from Problem~3, compute the gradient $\bgamma(\bem)$ for the same grid of $\bem$ that was used to plot the misfit function.
 
 Hint: one line of code (plus one line to initialize $\bgamma(\bem)$)
 
@@ -128,6 +136,9 @@ Bonus: Use \verb+plot_surface+ to plot $\|\bgamma(\bem)\|$. What shape is it?
 
 \item What is the dependence of the Hessian on the model, $\bH(\bem)$? \\
 % Hessian does not depend on m
+
+\vertgap
+
 What does that imply about $F(\bem)$?
 % it is strictly quadratic
 
