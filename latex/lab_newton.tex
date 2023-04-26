@@ -13,6 +13,8 @@
 \renewcommand{\theequation}{L\arabic{equation}}
 \renewcommand{\thesection}{L\arabic{section}}
 
+\newcommand{\tfile}{{\tt lab\_newton.ipynb}}
+
 %--------------------------------------------------------------
 \begin{document}
 %-------------------------------------------------------------
@@ -36,10 +38,23 @@ See Wikipedia ``Newton's method in optimization'': \\
 The quasi-Newton algorithm is (\eg Tarantola, 2005, Eq.~6.291)
 %
 \begin{eqnarray}
-\bem_{n+1} &=& \bem_n + \bDelta\bem_n
-\\
 \bDelta\bem_n &=& -\bHh_n^{-1}\; \bgammah_n = -\bH_n^{-1}\; \bgamma_n
+\label{eq1}
+\\
+\bem_{n+1} &=& \bem_n + \bDelta\bem_n
+\label{eq2}
 \end{eqnarray}
+%
+Two key distinctions:
+1)~the dimension of the model vector $\bem$ (that is, the number of model parameters),
+2)~the use of data or model covariance matrices ($\covd$ and $\covm$).
+%
+\begin{itemize}
+\item In this lab, $\nparm = 1$, and $\bem$ is a scalar. \\
+      In the upcoming earthquake relocation problem, $\nparm = 4$, and $\bem$ is a vector.
+
+\item In the upcoming earthquake relocation problem, we introduce $\covd$ and $\covm$ in the misfit function, and these terms then appear in the expressions for the first and second derivatives of the misfit function. We do not use these in this lab.
+\end{itemize}
 
 %------------------------
 
@@ -48,13 +63,14 @@ The quasi-Newton algorithm is (\eg Tarantola, 2005, Eq.~6.291)
 \begin{enumerate}
 \item Consider the equation $\bH\bem = \bg$. \\
 If $\bH$ is invertible, what is the solution for $\bem$? \\
-If $\bH$ is a scalar, what is the solution for $Hm = g$? (Note \footnote{In Matlab, the commands \texttt{6}\textbackslash\texttt{2} (the backslash operator \textbackslash\ is a pseudoinverse), \texttt{inv(6)*2}, and \texttt{1/6*2} are all \texttt{3}.})
+If $\bH$ is a scalar, what is the solution for $Hm = g$?
+%(Note \footnote{In Matlab, the commands \texttt{6}\textbackslash\texttt{2} (the backslash operator \textbackslash\ is a pseudoinverse), \texttt{inv(6)*2}, and \texttt{1/6*2} are all \texttt{3}.})
 
 %(Type \verb+LA.inv?+ for details. In fact, it won't work with a scalar.)
 
 \vertgap
 
-\item Open \verb+lab_newton.ipynb+. What are \verb+F+, \verb+g+, and \verb+H+?
+\item Open \tfile. What are \verb+F+, \verb+g+, and \verb+H+?
 
 \vertgap
 
@@ -70,6 +86,11 @@ Zoom in to show that this appears to be a true minimum.
 Bonus: Check out the Wikipedia description, and see if you can annotate your sketch to show how the next model is obtained.
 
 \vspace{10cm}
+
+\item What are \refeqii{eq1}{eq2} for $n=0$? And then $n=1$?
+
+\vertgap
+\vertgap
 
 \item Implement the Newton algorithm, and demonstrate (graphically or numerically) that you reach the minimum.
 
