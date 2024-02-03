@@ -1,7 +1,7 @@
 name: inverse
 channels:
   - conda-forge
-  - default
+  - defaults
 dependencies:
   - ipympl
   - ipython<=8.16
