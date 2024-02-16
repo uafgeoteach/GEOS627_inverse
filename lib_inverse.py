@@ -58,6 +58,8 @@ def covC(id,parms):
 #   (1) iLprime and id are indices for a spatial grid
 #   (2) iLprime and id are actual lengths for a spatial grid
 #
+# See examples in covC_plot.ipynb
+#
     nparm   = len(parms)
     icov    = parms[0]
     iLprime = parms[1]
