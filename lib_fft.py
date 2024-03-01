@@ -37,7 +37,8 @@ def xy2distance(nx,ny,bdisplay=False):
     
     # indexing matrices
     [PA,PB] = np.meshgrid(np.arange(n),np.arange(n))
-    
+
+    # matrix of inter-point distances
     MX,MY = np.meshgrid(ix,iy)
     iD    = np.sqrt((MX-MX.T)**2 + (MY-MY.T)**2)
     
@@ -46,11 +47,11 @@ def xy2distance(nx,ny,bdisplay=False):
         pA = PA.flatten(order='F')
         pB = PB.flatten(order='F')
         print('---------------------------')
-        print('%i (x) by %i (y) = %i gridpoints'% (nx,ny,n))
-        print('%i total number of distances, %i of which are unique pairs'% (n**2,nd))
+        print('%i (x) by %i (y) = %i gridpoints' % (nx,ny,n))
+        print('%i total number of distances, %i of which are unique pairs' % (n**2,nd))
         
         for ii in range(n**2):
-            print('%2i-%2i (%i, %i)-(%i, %i) = %6.2f'% (pA[ii],pB[ii],ix[pA[ii]],iy[pA[ii]],ix[pB[ii]],iy[pB[ii]],id[ii]))
+            print('%2i-%2i (%i, %i)-(%i, %i) = %6.2f' % (pA[ii],pB[ii],ix[pA[ii]],iy[pA[ii]],ix[pB[ii]],iy[pB[ii]],id[ii]))
         
         print('---------------------------')
         
@@ -116,7 +117,7 @@ def xy2distance(nx,ny,bdisplay=False):
         
         # the next figures are related to a prescribed covariance function
     
-        # compute covariance matrix
+        # compute covariance matrix (iD is a matrix of inter-point distances)
         iL = 1
         sigma = 1
         R = sigma**2 * np.exp(-iD**2 / (2*iL**2) )
@@ -135,7 +136,7 @@ def xy2distance(nx,ny,bdisplay=False):
     
         # Gaussian sample
         A = np.linalg.cholesky(R)
-        g = A@np.random.randn(n,1)
+        g = A @ np.random.randn(n,1)
         
         plt.figure(figsize=(10,8))
         plt.imshow(g.reshape((ny,nx)),vmin=-3*sigma,vmax=3*sigma) 
