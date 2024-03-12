@@ -1,8 +1,8 @@
 # default libraries
 
 # basic python tools
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
 
 # these are for displaying matrices nicely
 from sympy import Matrix, init_printing
