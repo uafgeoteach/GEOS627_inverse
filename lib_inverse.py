@@ -1,5 +1,3 @@
-# Library for GEOS 626 and GEOS627 courses at UAF
-# Contributers: Carl Tape, Yuan Tian*, Amanda McPherson*
 import numpy as np
 import scipy.linalg as la
 import scipy.special as special
@@ -35,7 +33,7 @@ def svdall(G):
     Rd = Up@Up.T    # data resolution matrix
 
     # generalized inverse (see also la.pinv)
-    Gdagger = Vp@la.inv(Sp)@Up.T
+    Gdagger = Vp @ la.inv(Sp) @ Up.T
 
     ndata,nparm = G.shape
     print('G is %i x %i, rank(G) = %i' % (ndata,nparm,p))

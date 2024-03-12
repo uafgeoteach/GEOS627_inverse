@@ -1,6 +1,19 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+from sympy import Matrix, init_printing
+from IPython.display import display
+
+###################################################################
+
+def showmat(A, numdig=None):
+    if numdig is not None:
+        A_rounded = np.around(A, decimals=numdig)
+    else:
+        A_rounded = A
+    sym_matrix = Matrix(A_rounded)
+    display(sym_matrix)
+
 ###################################################################
 
 def fftvec(t):
@@ -42,9 +55,7 @@ def fftvec(t):
     #f1 = linspace(-fNyq,fNyq-df,n)'
     #f = [f1(n/2+1:n) ; f1(1:n/2)];
 
-    #==========================================================================
-    
-####################################################
+###################################################################
 
 def gridvec(xmin,xmax,numx,ymin,ymax):
     """  This function inputs specifications for creating a grid 
@@ -83,7 +94,7 @@ def gridvec(xmin,xmax,numx,ymin,ymax):
 #    else:
 #        return xvec, yvec, numy
 
-####################################################
+###################################################################
 
 def plot_histo(hdat,edges,itype=2,make_plot=True):
     #PLOT_HISTO plot a histogram with cyan bars and black boundaries
@@ -130,4 +141,4 @@ def plot_histo(hdat,edges,itype=2,make_plot=True):
     
     plt.tight_layout()
     
-###########################################################
+###################################################################
