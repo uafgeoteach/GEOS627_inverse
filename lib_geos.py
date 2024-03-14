@@ -8,12 +8,15 @@ from IPython.display import display
 
 def showmat(A, numdig=None):
     if numdig is not None:
-        A_rounded = np.around(A, decimals=numdig)
+        if numdig == 0:
+            A_rounded = np.around(A).astype(int)
+        else:
+            A_rounded = np.around(A, decimals=numdig)
     else:
         A_rounded = A
     sym_matrix = Matrix(A_rounded)
     display(sym_matrix)
-
+    
 ###################################################################
 
 def fftvec(t):
