@@ -118,16 +118,17 @@ def plot_ellipse(DELTA2,C,m):
     # construct a vector of n equally-spaced angles from (0,2*pi)
     n = 1000
     theta = np.linspace(0,2*np.pi,n).T
-    # corresponding unit vector
+    # points defining unit circle
     xhat = np.array([np.cos(theta),np.sin(theta)]).T
     Cinv = np.linalg.inv(C)
-    # preallocate output array
+
     r = np.zeros((n,2))
     for i in range(n):
         #store each (x,y) pair on the confidence ellipse in the corresponding row of r
         #r(i,:) = sqrt(DELTA2/(xhat(i,:)*Cinv*xhat(i,:)'))*xhat(i,:)
         #r[i,:] = np.dot(np.sqrt(DELTA2/(xhat[i,:]@Cinv@xhat[i,:].T)),xhat[i,:])
-        r[i,:] = np.sqrt(DELTA2/(xhat[i,:]@Cinv@xhat[i,:].T)) * xhat[i,:]
+        rlen   = np.sqrt(DELTA2 / (xhat[i,:] @ Cinv @ xhat[i,:].T))
+        r[i,:] = rlen * xhat[i,:]
     
     # shift ellipse based on centerpoint m = (xs,ys)
     x = m[0] + r[:,0]
