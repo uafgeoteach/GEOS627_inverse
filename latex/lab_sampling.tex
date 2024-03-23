@@ -29,7 +29,7 @@ Last compiled: \today
 \begin{itemize}
 \item The purpose of this exercise is to understand one particular method of generating samples from an arbitrary probability distribution. The sampling method, known as the {\em rejection method}, was introduced by \citet{vonNeumann1951} and is also discussed in Section 2.3.2 of \citet{Tarantola2005}. An example of its application can be found in \citet{SilwalTape2016} for the case of a three-dimensional model parameter space defining the orientation of an earthquake source mechanism.
 
-We use the rejection method to generate samples of an arbitrary distribution. As far as I know, there is no such function in Python to do this. (Let me know if you find one!)
+We use the rejection method to generate samples of an arbitrary distribution. As far as I know, there is no such function in Python to do this. (Let me know if you find one that is comparably simple to the rejection method.)
 %    http://www.mathworks.com/help/stats/common-generation-methods.html#br5k9hi-4
 
 \item A secondary purpose is to become familiar with using custom functions in Python. These are functions that are defined by you within a Python script, such as
@@ -92,7 +92,7 @@ Define $A = \max(p(x))$.
 
 \item Explain the pattern in \refFig{fig}c and how it occurs. 
 
-Set \verb+iannot = 1+ to annoate \refFig{fig}a to help your understanding.
+Set \verb+iannot = 1+ to annotate \refFig{fig}a to help your understanding.
 
 What fraction of $p(x_i)/A$ are $<$0.05?
 

@@ -56,11 +56,15 @@ What are the dimensions of the following quantities:
 
 \item Use \verb+numpy.random.randn+ to generate $\nsample$ samples of $\nparm \times 1$ vectors $\bw$ that have unit covariance, $\bC = \bI$.
 This means that the entries of $\bw$ will have mean $\mu \approx 0$ and standard deviation $\sigma \approx 1$. \\
-Use $\nsample = 500$ (\verb+nsamp+) and $\nparm = 100$ (\verb+nparm+).
+Use $\nsample = 500$ (\verb+nsample+) and $\nparm = 100$ (\verb+nparm+).
 
 It may help to think of sample $\bw_p$ as a profile of a topographic transect or as a seismogram; in any case, there are $\nparm$ discretization points per sample. You have $\nsample$ samples.
 
-\item Using \verb+plot_histo+, plot histograms of 12 or so $\bw$ to convince yourself that each $\bw$ appears to be a Gaussian distribution with $\mu \approx 0$ and $\sigma \approx 1$. (You can increase $\nparm$ to make this more clear.)
+\item Plot the first sample $\bw_1$, which has $\nparm = 100$ entries.
+
+\item Using \verb+plot_histo+, plot a histogram of the entries of $\bw_1$.
+
+\item Plot histograms of 12 or so $\bw$ to convince yourself that each $\bw$ appears to be a Gaussian distribution with $\mu \approx 0$ and $\sigma \approx 1$. (You can increase $\nparm$ to make this more clear.)
 
 \item Calculate the mean sample $\bar{\bw}$ for the set of $\nsample$ samples. Make sure it is $\nparm \times 1$.
 

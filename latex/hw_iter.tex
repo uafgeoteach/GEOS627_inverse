@@ -21,9 +21,9 @@
 
 \begin{spacing}{1.2}
 \centering
-{\large \bf Problem Set 5: Iterative methods with generalized least squares, Part B [iterB]} \\
+{\large \bf Problem Set 5A: Iterative methods with generalized least squares [iter]} \\
 \cltag\ \\
-Assigned: February 22, \cyear\ --- Due: March 8, \cyear\ \\
+Assigned: February 22, \cyear\ --- Due: February 29, \cyear\ \\
 Last compiled: \today
 \end{spacing}
 
@@ -31,10 +31,13 @@ Last compiled: \today
 
 \subsection*{Background}
 
+Iterative methods are needed for nonlinear problems, which are characterized by a nonlinear forward model $\bg(\bem)$. In many problems it is not computationally feasible to evaluate the misfit function dozens of times, let alone millions (or billions) of times needed to cover the $\nparm$-dimensional model space. The basic strategy is to evaluate the misfit function at one point, then use the gradient (and Hessian) at that point to guide the choice of the next point. This problem will build upon the lab exercie \verb+lab_iter.pdf+.
+
 See the lab exercise on the quasi-Newton method (\verb+lab_iter.pdf+). There you were asked to write a functioning version of the quasi-Newton algorithm for the 4-parameter epicenter problem. Moving forward, it is important that your code is correct. Start with \verb+lab_iter_sol.ipynb+.
 %
 Alternatively you can use your \tfile\ script, but, whichever you use, {\bf check your results for the quasi-Newton method with those listed in \refTab{tab}.}
 
+\iffalse
 \vspace{0.5cm}
 \begin{figure}[h]
 \centering
@@ -48,8 +51,9 @@ Both $\bem_{\rm initial}$ and $\bem_{\rm target}$ are samples within the prior d
 \label{fig:srcrec}
 }}
 \end{figure}
+\fi
 
-\clearpage\pagebreak
+%\clearpage\pagebreak
 \subsection*{Problem 2 (4.0). Implementation of iterative methods}
 
 In this problem you will replace the quasi-Newton method (from \verb+lab_iter.pdf+) with three other methods. You will not need to touch the code associated with the forward model (\tfileFE).
@@ -99,10 +103,10 @@ NOTE: This problem can be answered even if your implementations in 2-1, 2-2, 2-3
 
 %------------------------
 
-\clearpage\pagebreak
+%\clearpage\pagebreak
 \subsection*{Problem 3 (3.0). Revisiting \citet{Tarantola2005}, Problem 7-1}
 
-Your goal is to apply the quasi-Newton method to Problem 7-1 of \citet{Tarantola2005}.
+Here we revisit \citet{Tarantola2005}, Problem 7-1. See \verb+hw_epi+ for background. Your goal is to apply the quasi-Newton method to this problem, rather than perform a brute-force grid search.
 %
 \begin{itemize}
 \item Start with a clean version of \tfile\ that replicates the quasi-Newton results shown in \refTab{tab} for \tfileFE.
@@ -143,14 +147,12 @@ Use the same $\sigma$ values for the prior epicenter as in \tfileFE\ ($\sigma_{x
 
 \item $\bem_{\rm target} = (15, 5)$. (This is probably what Tarantola used, though we can't be certain.)
 
-\item For the case of fixed data errors, \verb+tobs+ to be the values used in \verb+hw_epi+:
+\item The fixed data errors are determined from the arrival time values listed in \verb+hw_epi+\footnote{We know that Tarantola added some errors to get {\tt tobs}. So here we deconstruct the process by guessing his target epicenter, then subtracting the predicted arrival times from the ones that he listed. {\tt eobs} gets added back in as {\tt dobs = dtarget + eobs}, which is {\tt tobs}.}:
 %
 \begin{verbatim}
 tobs = np.array([[3.12,3.26,2.98,3.12,2.84,2.98]]).T
 eobs = tobs - dtarget
 \end{verbatim}
-%
-This allows us to remove the errors added to the arrival time data listed in Tarantola. (It gets added back in as {\tt dobs = dtarget + eobs}, which is \verb+tobs+.)
 
 \item \verb+axepi = [xmin,xmax,ymin,ymax]+
 
@@ -168,7 +170,7 @@ Solve the problem using the quasi-Newton method with eight iterations.
 
 %----------
 
-\pagebreak
+%\pagebreak
 \item (0.5) \ptag\ See \citet[][p.~34--36]{Aster} for how to compute confidence regions. The key concept is that the inequality
 %
 \begin{equation*}
@@ -188,7 +190,7 @@ Hint: See \verb+ex2p1_ex2p2.ipynb+ for an example of using \verb+chi2inv+, which
 
 \item (0.1) Compute the lengths of the semi-major axis and semi-minor axis of the ellipse, where the length of the $k$th axis is $\Delta\sqrt{\lambda_k}$.
 
-\item (0.2) Plot the confidence region using \verb+plot_ellipse()+, which is a function defined in \tfile. (You should see agreement between the locations of your samples of $\bC_{\rm post}$ and the ellipse.) Also include the ellipse axes in your plot (as well as $\bem_{\rm post}$, $\bem_{\rm initial}$, $\bem_{\rm target}$, samples of prior and posterior, etc).
+\item (0.2) Plot the confidence region using \verb+plot_ellipse()+, which is a function defined in \verb+lib_inverse.py+. (You should see agreement between the locations of your samples of $\bC_{\rm post}$ and the ellipse.) Also include the ellipse axes in your plot (as well as $\bem_{\rm post}$, $\bem_{\rm initial}$, $\bem_{\rm target}$, samples of prior and posterior, etc).
 \end{enumerate}
 
 NOTE: Even if you did not successfully implement \tfileFEC, you can still do the confidence region for the epicenter associated with the forward problem of \tfileFE.
@@ -201,6 +203,7 @@ NOTE: Even if you did not successfully implement \tfileFEC, you can still do the
 %\pagebreak
 \subsection*{Problem} \howmuchtime\
 
+\pagebreak
 \bibliography{uaf_abbrev,uaf_main,uaf_source,uaf_carletal,uaf_alaska}
 %-------------------------------------------------------------
 

@@ -52,12 +52,14 @@ The objective of this lab is to introduce the concepts of forward and inverse pr
 
 \vertgap
 
-\item How are the ``target'' (or ``true'') data generated?
+\item How are the ``target'' data generated? \\
+How are the ``true'' data generated?
+
 
 \vertgap
 
 \item What are the different ways to compute the solution vector $\bem$? \\
-(To see the help for a function such as \verb+inv+, type \verb+help(la.inv)+ or \verb+la.inv?+)
+To see the help for a function such as \verb+inv+, type \verb+help(la.inv)+ or \verb+la.inv?+
 
 \vertgap
 
@@ -77,9 +79,11 @@ How does it change if you set $\sigma = 0$?
 
 \item Re-set \verb+ndata=50+ and $\sigma = 0.3$ and add one outlier to the simulated observations. This can be done by replacing the first observation point with a value that is $1000\sigma$ larger. What happens (and why)?
 
+(You will need to turn off the axes limits to see the outlier.)
+
 \vertgap
 
-%\pagebreak
+\pagebreak
 \item Now comment out the outlier, then examine the last block of code. Make sure you understand what is being plotted and how it is calculated.
 %
 \begin{itemize}
@@ -134,7 +138,7 @@ Bonus: Use \verb+plot_surface+ to plot $\|\bgamma(\bem)\|$. What shape is it?
 
 \vertgap
 
-\item What is the dependence of the Hessian on the model, $\bH(\bem)$? \\
+\item What is the dependence of the Hessian $\bH(\bem)$ on the model? \\
 % Hessian does not depend on m
 
 \vertgap

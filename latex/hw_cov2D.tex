@@ -13,9 +13,9 @@
 
 \begin{spacing}{1.2}
 \centering
-{\large \bf Problem Set 5: Iterative methods with generalized least squares, Part A [iterA]} \\
+{\large \bf Problem Set 5B: 2D Gaussian random fields [cov2D]} \\
 \cltag\ \\
-Assigned: February 22, \cyear\ --- Due: March 8, \cyear\ \\
+Assigned: February 29, \cyear\ --- Due: March 8, \cyear\ \\
 Last compiled: \today
 \end{spacing}
 
@@ -23,36 +23,24 @@ Last compiled: \today
 
 \subsection*{Overview and instructions}
 
-\begin{enumerate}
-\item Reading: Section 6.22 of \citet{Tarantola2005}
+In \verb+hw_cov+ you explored Gaussian random fields with prescribed covariance (exponential or Gaussian) for a 1D spatial field. This problem deals with 2D Gaussian random fields. Your goal is to understand how these fields are generated, and to get some intuitive sense for how certain parameters change the appearance of the 2D fields.
 
-\item {\bf Problem 1 [Part A].} In \verb+hw_cov+ you explored Gaussian random fields with prescribed covariance (exponential or Gaussian) for a 1D spatial field. This problem deals with 2D Gaussian random fields. Your goal is to understand how these fields are generated, and to get some intuitive sense for how certain parameters change the appearance of the 2D fields.
-
-The codes we use for computing Gaussian random fields in the frequency domain were provided by Miranda Holmes, who wrote them in Matlab as part of the study \citet{BuhlerHolmes2009}. She also wrote a useful set of notes, ``Generating stationary Gaussian random fields,'' which is available as in our google drive notes directory. The Matlab codes have been rewritten for Python (by Yuan Tian) and reside in \verb+lib_fft.py+.
+The codes we use for computing Gaussian random fields in the frequency domain were provided by Miranda Holmes, who wrote them in Matlab as part of the study \citet{BuhlerHolmes2009}. She also wrote a useful set of notes, ``Generating stationary Gaussian random fields,'' which is available as in our google drive notes directory. The Matlab codes have been rewritten for Python (by Yuan Tian) and reside in \verb+lib_fft.py+. Example functions:
+%
+\begin{itemize}
+\item {\tt mhfft2}: 2D FFT (mh = Miranda Holmes)
+\item {\tt mhifft2}: 2D inverse FFT
+\item {\tt grf2}: 2D Gaussian random field
+\end{itemize}
 
 Why do we care about the statistical characteristics of spatial random fields? Because real systems have complex variations that we would like to quantify in simpler terms. \citet{Gneiting2012} examined several different covariance functions, including the Matern family, which includes the Gaussian and exponential functions, and they apply their technique to line transects of arctic sea ice.
 
 \refFig{fig:frankel} provides a motivating figure from \citet{Tarantola2005}.
 
-\item {\bf Problem 2 [Part B].} Iterative methods are needed for nonlinear problems, which are characterized by a nonlinear forward model $\bg(\bem)$. In many problems it is not computationally feasible to evaluate the misfit function dozens of times, let alone millions (or billions) of times needed to cover the $\nparm$-dimensional model space. The basic strategy is to evaluate the misfit function at one point, then use the gradient (and Hessian) at that point to guide the choice of the next point. This problem will build upon the lab exercie \verb+lab_iter.pdf+.
+\bibliography{uaf_abbrev,uaf_main,uaf_source,uaf_carletal,uaf_alaska}
+%-------------------------------------------------------------
 
-\item {\bf Problem 3 [Part B].} Here we revisit \citet{Tarantola2005}, Problem 7-1. See \verb+hw_epi+ for background.
 
-\end{enumerate}
-
-%------------------------
-\clearpage\pagebreak
-
-\begin{figure}
-\centering
-\includegraphics[width=16cm]{Tarantola2005_Fig5p8.eps}
-%
-\caption[]
-{{
-Figure~1 from \citet{FrankelClayton1986}, redisplayed as Figure~5.8 from \citet{Tarantola2005}. Caption: ``Pseudorandom realizations of three types of two-dimensional Gaussian random fields.'' The covariance functions from top to bottom are: Von Karman, exponential, and Gaussian.
-\label{fig:frankel}
-}}
-\end{figure}
 
 %------------------------
 
@@ -62,7 +50,7 @@ Figure~1 from \citet{FrankelClayton1986}, redisplayed as Figure~5.8 from \citet{
 In this problem, a ``sample'' is a 2D spatial field that is $n_x \times n_y$.
 %
 \begin{enumerate}
-\item (0.3) Open \tfile, set \verb+run_xy2distance = True+, then run it. Open \verb+lib_fft.py+ to see the function \verb+xy2distance()+.
+\item (0.3) Open \tfile, check that \verb+run_xy2distance = True+, then run it. Open \verb+lib_fft.py+ to see the function \verb+xy2distance()+.
 %
 \begin{enumerate}
 \item (0.0) Explain how the points are ordered within the distance index matrix \verb+iD+.
@@ -110,11 +98,11 @@ Hint: \verb+plt.plot(iD*dx,C,'ro')+ is one way to plot $C(d)$, assuming that \ve
 \item (0.1) Explain the impact of changing \verb+idouble+ on the samples.
 \end{enumerate}
 %
-After you are done, reset \verb+idouble=1+; from here on out, we will use \verb+idouble=1+.
+After you are done, reset \verb+idouble=1+; from here on out, we will use \verb+idouble=1+ (and \verb+ifourier=1+).
 
 \item (0.2) Compute the mean and standard deviation of each sample from the set of 1000 samples. Plot the means and standard deviations as two histograms.
 
-\item (0.5) \ptag\ Generate two Gaussian random fields having different covariance (Gaussian or exponential) but using {\em the same Gaussian random vector} (note: this requires coding). Use \verb+nx = 2^5+, \verb+ichol=0+, \verb+ifourier=1+, \verb+idouble=1+, and keep all other parameters fixed (as defaults).
+\item (0.5) Generate two Gaussian random fields having different covariance (Gaussian or exponential) but using {\em the same Gaussian random vector} (note: this requires coding). Use \verb+nx = 2^5+, \verb+ichol=0+, \verb+ifourier=1+, \verb+idouble=1+, and keep all other parameters fixed (as defaults).
 
 \begin{itemize}
 \item Show your modified lines of code.
@@ -125,8 +113,8 @@ Hint: Use the template code provided at the end of \tfile\ and see \verb+grf2()+
 Note: If you do not implement the code correctly, then explain what code modifications are needed.
 \end{itemize}
 
-\item \textcolor{red}{\bf Now close your server and start a new one with the large-memory option.}
-
+%\item \textcolor{red}{\bf Now close your server and start a new one with the large-memory option.}
+\item
 (0.5)\ptag\ Following the previous problem, set \verb+nx = 2^7+ and then generate three Gaussian random fields: (a) Gaussian covariance, (b) exponential covariance, and (c) circular covariance. In each case, {\em use the same Gaussian random vector}.
 %Use \verb+nx = 2^7+, \verb+ichol=0+, \verb+ifourier=1+, \verb+idouble=1+, and keep all other parameters fixed (as defaults).
 %
@@ -142,12 +130,23 @@ Make sure that you are using \verb+nx = 2^7+.
 
 %------------------------
 
-\bibliography{uaf_abbrev,uaf_main,uaf_source,uaf_carletal,uaf_alaska}
-%-------------------------------------------------------------
+%\pagebreak
+\subsection*{Problem} \howmuchtime\
 
-%\clearpage\pagebreak
+%------------------------
 
-%-------------------------------------------------------------
+\clearpage\pagebreak
+
+\begin{figure}
+\centering
+\includegraphics[width=16cm]{Tarantola2005_Fig5p8.eps}
+%
+\caption[]
+{{
+Figure~1 from \citet{FrankelClayton1986}, redisplayed as Figure~5.8 from \citet{Tarantola2005}. Caption: ``Pseudorandom realizations of three types of two-dimensional Gaussian random fields.'' The covariance functions from top to bottom are: Von Karman, exponential, and Gaussian.
+\label{fig:frankel}
+}}
+\end{figure}
 
 % \begin{figure}
 % \centering
