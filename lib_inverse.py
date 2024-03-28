@@ -24,9 +24,9 @@ def svdmat(G):
 def svdall(G):
     [U,S,V] = svdmat(G)
     p  = np.linalg.matrix_rank(G)
-    Sp = S[:p,:p]
-    Vp = V[:,:p]
-    Up = U[:,:p]
+    Sp = S[:p,:p]   # square matrix of positive singular values
+    Vp = V[:,:p]    # compact version of orthogonal model space basis vectors
+    Up = U[:,:p]    # compact version of orthogonal data space basis vectors
     V0 = V[:,p:]    # model null space (could be empty)
     U0 = U[:,p:]    # data null space (could be empty)
     Rm = Vp@Vp.T    # model resolution matrix
