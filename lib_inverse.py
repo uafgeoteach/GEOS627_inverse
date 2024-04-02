@@ -3,6 +3,12 @@ import scipy.linalg as la
 import scipy.special as special
 import matplotlib.pyplot as plt
 
+def dispGik(G, ii, kk):
+    nx, ny = G.shape
+    if ii < 1 or ii > nx or kk < 1 or kk > ny:
+        print(f"Error: Indices ({ii},{kk}) are out of bounds for a {nx}x{ny} matrix.")
+    else:
+        print(f"G({ii}, {kk}) = {G[ii-1,kk-1]}")    
 
 def rot2d(xdeg):
     # return 2D rotation matrix
@@ -32,13 +38,15 @@ def svdall(G):
     Rm = Vp@Vp.T    # model resolution matrix
     Rd = Up@Up.T    # data resolution matrix
 
+    sarray = np.diag(Sp)  # array of singular values
+
     # generalized inverse (see also la.pinv)
     Gdagger = Vp @ la.inv(Sp) @ Up.T
 
     ndata,nparm = G.shape
     print('G is %i x %i, rank(G) = %i' % (ndata,nparm,p))
 
-    return Up,Sp,Vp,U0,V0,Rm,Rd,Gdagger,p
+    return Up,Sp,Vp,U0,V0,Rm,Rd,Gdagger,p,sarray
 
 
 def covC(id,parms):
