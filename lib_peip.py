@@ -134,14 +134,14 @@ def shaw(n):
 def ex_getG(iex,*argv):
 # return G for several examples in Aster
 #
-# G = ex_getG(1)           % Example 1.12
-# G = ex_getG(2,100,100)   % Exercise 1-3-a
-# G = ex_getG(2,4,4)       % Exercise 1-3-e
-# G = ex_getG(2,4,20)      % Example 4.4
+# G = ex_getG(1)           # Example 1.12
+# G = ex_getG(2,100,100)   # Exercise 1-3-a
+# G = ex_getG(2,4,4)       # Exercise 1-3-e
+# G = ex_getG(2,4,20)      # Example 4.4
 # G = ex_getG(2,20,4)
-# G = ex_getG(3,210,210)   % Example 3.2
-# G = ex_getG(4,20,20)     % Example 1.6, 3.3
-# G = ex_getG(4,100,100)   % Example 1.6, 3.3
+# G = ex_getG(3,210,210)   # Example 3.2
+# G = ex_getG(4,20,20)     # Example 1.6, 3.3
+# G = ex_getG(4,100,100)   # Example 1.6, 3.3
 #
 # to run all default examples at once:
 # for kk in np.arange(1,5):
