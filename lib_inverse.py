@@ -1,7 +1,9 @@
 import numpy as np
+import matplotlib.pyplot as plt
+
 import scipy.linalg as la
 import scipy.special as special
-import matplotlib.pyplot as plt
+from scipy import stats
 
 def dispGik(G, ii, kk):
     nx, ny = G.shape
@@ -295,3 +297,31 @@ def vm_F(F0,icprior,u,v):
         F[:,ii] = Fchi.flatten()
 
     return F
+
+# Python's np.corrcoef does not give p values and confidence intervals
+# The function below does, but needs to be fed 2 1D arrays (doesn't work for matrix input)
+# Source: https://zhiyzuo.github.io/Pearson-Correlation-CI-in-Python/
+def pearsonr_ci(x,y,alpha=0.05):
+    ''' calculate Pearson correlation along with the confidence interval using scipy and numpy
+    Parameters
+    ----------
+    x, y : iterable object such as a list or np.array
+      Input for correlation calculation
+    alpha : float
+      Significance level. 0.05 by default
+    Returns
+    -------
+    r : float
+      Pearson's correlation coefficient
+    pval : float
+      The corresponding p value
+    lo, hi : float
+      The lower and upper bound of confidence intervals
+    '''
+    r, p = stats.pearsonr(x,y)
+    r_z = np.arctanh(r)
+    se = 1/np.sqrt(x.size-3)
+    z = stats.norm.ppf(1-alpha/2)
+    lo_z, hi_z = r_z-z*se, r_z+z*se
+    lo, hi = np.tanh((lo_z, hi_z))
+    return r, p, lo, hi
