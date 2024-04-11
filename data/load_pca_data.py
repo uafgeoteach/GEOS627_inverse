@@ -673,6 +673,7 @@ def load_pca_data(idata):
         vlabs = ['CLI','HOU','HTH','CRM','TRN','EDU','ART','REC','ECN']
         vlabslong = ['climate', 'housing', 'health','crime', 'transportation', 'education','arts', 'recreation', 'economics']
         print('City ratings data loaded (idata=1)')
+        
     elif idata==2:
         X = [10.1, 1.4, 0.5, 8.9, 0.2, 42.3, 0.6, 5.5, 1.7,
              8.9, 14.0, 4.3, 19.9, 2.1, 28.0, 3.6, 1.3, 4.3,
