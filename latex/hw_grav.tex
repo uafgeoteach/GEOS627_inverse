@@ -23,6 +23,8 @@
 \newcommand{\dv}{x}  % data space discretization
 \newcommand{\dep}{h}
 
+\newcommand{\tcolor}{magenta}
+
 %--------------------------------------------------------------
 \begin{document}
 %-------------------------------------------------------------
@@ -49,7 +51,7 @@ The gravity example is rooted in Chapter 1 (Examples 1.4 and 1.5).
 \item Template notebook: \tfile\
 %\item Optional utility scripts: \verb+collocate.m+, \verb+plotconst_mod.m+
 %\item Here $\ndata$ is the number of data, and $\nparm$ is the number of model parameters.
-\item The \textcolor{red}{the red text sections of Problems 1-\ref{prob1} though 1-\ref{prob2}} denote the questions to be repeated in Problem~2 for the forward model in \refEq{dy}. Points for Problem~2 are worth half what is listed for Problem 1.
+\item The \textcolor{\tcolor}{the \tcolor\ text sections of Problems 1-\ref{prob1} though 1-\ref{prob2}} denote the questions to be repeated in Problem~2 for the forward model in \refEq{dy}. Points for Problem~2 are worth half what is listed for Problem 1.
 \end{itemize}
 
 %==================================
@@ -59,11 +61,11 @@ The gravity example is rooted in Chapter 1 (Examples 1.4 and 1.5).
 
 Variations of the density of subsurface rock give rise to variations of the gravity field at the Earth's surface. Therefore, from measurements of the gravity field at the Earth surface, one can in principle infer density variations of subsurface rock.
 
-Variations of the vertical component of the gravity field $g(\dv)$ $(0 \le \dv \le 1)$ along a horizontal line at the surface are related to variations $f(\mv)$ $(0 \le \mv \le 1)$ of the mass density along a horizontal line at depth $\dep$ below the surface by the Fredholm integral equation of the first kind \citep[\eg][eq.~1.31]{Aster}
+Variations of the vertical component of \textcolor{red}{the gravity field $g(\dv)$ $(0 \le \dv \le 1)$} along a horizontal line at the surface are related to \textcolor{blue}{variations $f(\mv)$ $(0 \le \mv \le 1)$ of the mass density} along a horizontal line at depth $\dep$ below the surface by the Fredholm integral equation of the first kind \citep[\eg][eq.~1.31]{Aster}
 %
 \begin{equation}
 %g(s) = \int_0^1 K(s,t)\,f(t)\,dt
-g(\dv) = \int_0^1 K(\dv,\mv)\,f(\mv)\,d\mv
+\textcolor{red}{g(\dv)} = \int_0^1 K(\dv,\mv)\,\textcolor{blue}{f(\mv)}\,d\mv
 \label{gs}
 \end{equation}
 %
@@ -102,13 +104,13 @@ Make a sketch of the problem in $x$-$z$ space, where $z$ is depth. The aspect ra
 
 %----------
 
-\item (0.2) \textcolor{red}{Explain how the forward model is linear.}
+\item (0.2) \textcolor{\tcolor}{Explain how the forward model is linear.}
 \label{prob1}
 
 %----------
 
 \item (1.0)
-\textcolor{red}{
+\textcolor{\tcolor}{
 \begin{enumerate}
 \item (0.3) Discretize the (integral) forward model (\refeq{gs}).
 \item (0.5) Write the system of equations $\bG\bem = \bd$ in matrix schematic form. Your expressions should have no numbers listed, except for the index 1.
@@ -119,7 +121,7 @@ Make a sketch of the problem in $x$-$z$ space, where $z$ is depth. The aspect ra
 %----------
 
 \item (0.5) 
-\textcolor{red}{
+\textcolor{\tcolor}{
 Compute the least-squares solution $\bem_{\rm lsq}$.
 \begin{enumerate}
 \item (0.1) Plot the predictions from $\bem_{\rm lsq}$ along with the data.
@@ -137,25 +139,25 @@ Compute the least-squares solution $\bem_{\rm lsq}$.
 
 Write $\bem_{\ntrun}$ as a matrix expression and as a summation.
 
-\item (0.0) Compute the singular value decomposition.
+\item (0.0) Compute the singular value decomposition. Hint: \verb+svdall()+
 
-\item (0.4) \textcolor{red}{Compute the condition number for this system of equations (without using {\tt cond}; show your code and the output value). What does the condition number imply about the influence of noise on your solution?}
+\item (0.4) \textcolor{\tcolor}{Compute the condition number for this system of equations (without using {\tt cond}; show your code and the output value). What does the condition number imply about the influence of noise on your solution?}
 
-\item (0.3) \textcolor{red}{Plot the singular value spectrum on a $\log_{10}$ scale (note \footnote{It doesn't matter whether you use natural log or log-10 ($\log_{10}x = \ln x / \ln 10$), but for the sake of comparison use log-10.}).}
+\item (0.3) \textcolor{\tcolor}{Plot the singular value spectrum on a $\log_{10}$ scale (note \footnote{It doesn't matter whether you use natural log or log-10 ($\log_{10}x = \ln x / \ln 10$), but for the sake of comparison use log-10.}).}
 
-Hint: \verb+plt.plot(pvec,np.log10(svec),'ko-')+
+Hint: \verb+plt.plot(parray,np.log10(sarray),'ko-')+
 
-\item (0.3) \textcolor{red}{Given that the standard deviation of the measurement error of $\sigma$, what can you infer about the reliability of the least-squares estimate $\bem_{\rm lsq}$?} Explain why the least-squares estimate  $\bem_{\rm lsq}$, the ``best linear unbiased estimate,'' is not a good estimate for~$\bem$.
+\item (0.3) \textcolor{\tcolor}{Given that the standard deviation of the measurement error of $\sigma$, what can you infer about the reliability of the least-squares estimate $\bem_{\rm lsq}$?} Explain why the least-squares estimate  $\bem_{\rm lsq}$, the ``best linear unbiased estimate,'' is not a good estimate for~$\bem$.
 
 Hint: What is the SVD expression for the covariance of the solution, $\cov(\bem_{\rm svd})$?
 
-\item (0.5) \textcolor{red}{Compute and plot the Picard ratios $|\bu_k^T\bd|/s_k$, also on a $\log_{10}$ scale.}
+\item (0.5) \textcolor{\tcolor}{Compute and plot the Picard ratios $|\bu_k^T\dvec|/s_k$, also on a $\log_{10}$ scale.}
 
-\item (0.5) \textcolor{red}{Plot all $\nparm$ basis vectors of model space, $\{\bv_k\}$. Comment on their appearance.} How does the number of zero crossings of the basis vectors behave as a function of the singular value index?
+\item (0.5) \textcolor{\tcolor}{Plot all $\nparm$ basis vectors of model space, $\{\bv_k\}$. Comment on their appearance.} How does the number of zero crossings of the basis vectors behave as a function of the singular value index?
 
 Note: Interpretation is easier if each $\bv_k$ has its own subplot.
 
-\item (0.3) \textcolor{red}{Check that $\{\bv_k\}$ forms an orthonormal basis.}
+\item (0.3) \textcolor{\tcolor}{Check that $\{\bv_k\}$ forms an orthonormal basis.}
 
 \end{enumerate}
 
@@ -164,15 +166,15 @@ Note: Interpretation is easier if each $\bv_k$ has its own subplot.
 \item (1.8)
 
 \begin{enumerate}
-\item (0.2) \textcolor{red}{Use TSVD to compute several different solutions $\bem_{\ntrun}$ for the problem.} \\
+\item (0.2) \textcolor{\tcolor}{Use TSVD to compute several different solutions $\bem_{\ntrun}$ for the problem.} \\
 Show your code.
 
 Hint: Use \verb+tsvd()+ (from \verb+lib_peip.py+).
 
-\item (0.8) \textcolor{red}{Plot an $\ssL$-curve \citep[][p.~95]{Aster} for $\ntrun = 1,\ldots,p$.} \\
+\item (0.8) \textcolor{\tcolor}{Plot an $\ssL$-curve \citep[][p.~95]{Aster} for $\ntrun = 1,\ldots,p$.} \\
 Plot both axes on a $\log_{10}$ scale.
 
-\item (0.4) \textcolor{red}{List the $\ntrun$ value that you would pick based on four methods (see table). Briefly justify your choices.}
+\item (0.4) \textcolor{\tcolor}{List the $\ntrun$ value that you would pick based on four methods (see table). Briefly justify your choices.}
 
 \begin{center}
 \begin{tabular}{l|l}
@@ -186,7 +188,7 @@ my preference \\ \hline
 \end{tabular}
 \end{center}
 
-\item (0.4) \textcolor{red}{Plot your preferred solution $\bem_{\ntrun}$. \\
+\item (0.4) \textcolor{\tcolor}{Plot your preferred solution $\bem_{\ntrun}$. \\
 Separately plot its predictions along with the data.}
 
 \end{enumerate}
@@ -194,7 +196,7 @@ Separately plot its predictions along with the data.}
 
 %----------
 
-\item (0.5) The synthetic ``measurements'' $\bd$ in \verb+gravity.dat+ were generated by discretizing the integral in \refEq{gs}, evaluating it for a mass distribution 
+\item (0.5) The synthetic ``measurements'' $\dvec$ in \verb+gravity.dat+ were generated by discretizing the integral in \refEq{gs}, evaluating it for a mass distribution 
 %
 \begin{equation}
 f(\mv) = \sin(\pi\mv) + 0.5 \sin(2\pi\mv)
@@ -229,7 +231,7 @@ The data are listed to four digits only; therefore we can assume that there are 
 %-------------
 
 \bigskip\noindent
-Complete \textcolor{red}{the red text sections of Problems 1-\ref{prob1} though 1-\ref{prob2}} for the forward model in \refEq{dy}.
+Complete \textcolor{\tcolor}{the red text sections of Problems 1-\ref{prob1} though 1-\ref{prob2}} for the forward model in \refEq{dy}.
 
 %\noindent
 %For plotting the discretized models, try to use \verb+plotconst_mod.m+ (see example in \verb+ch3p5.m+); this function is similar to Matlab's \verb+stairs+ function.

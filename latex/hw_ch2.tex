@@ -3,9 +3,10 @@
 
 \input{hw627_header}
 
-\renewcommand{\baselinestretch}{1.1}
+\renewcommand{\baselinestretch}{1.05}
 
 \newcommand{\tfile}{{\tt hw\_ch2\_ch2p1.ipynb}}
+\newcommand{\tfileB}{{\tt hw\_ch2\_ch2p5.ipynb}}
 %\newcommand{\tfileA}{{\tt ex2p1_ex2p2.ipynb}}
 %\newcommand{\tfileB}{{\tt ex3p1.ipynb}}
 
@@ -49,6 +50,8 @@ where the intercept time $t_0$ depends on the thickness and slowness of the uppe
 \item (0.0) Write \refEq{twolayer} as a forward model $\bd = \bG\bem$ in matrix-vector schematic form.
 
 \item (0.1) Write the weighted least squares solution (eq. 2.17) in terms of $\covd$ instead of $\bW$.
+
+(For the coding, it probably makes sense to {\bf not} use $\covd$ and instead use the weighted versions as shown in the lab example codes.)
 
 \item (0.7) 
 \begin{enumerate}
@@ -179,6 +182,8 @@ to the $\ndata=21$ noise-free data points
 \end{equation*}
 %
 \begin{itemize}
+\item A template notebook is provided as \tfileB.
+
 \item Do not use any pseudo-inverse code functions (like \verb+pinv+) in this problem; these will come in Chapter~3.
 
 \item Do not use $\covd$ in this problem.
@@ -191,13 +196,14 @@ to the $\ndata=21$ noise-free data points
 
 %--------
 
-\item (0.5) 
+\item (0.5) No computing is requested for this problem.
 
 \begin{enumerate}
 \item (0.1) Write the generic expression for the solution $\bem_{\rm lsq}$ to the least squares problem.
 \item (0.2) Use the QR factorization of $\bG$ to write the expression for the solution $\bem_{\rm qr}$ for \makebox{$\bG\bem = \dvec$}. Hint: \citet[][Appendix A]{Aster}.
 
-\item (0.2) List the SVD solution $\bem_{\rm svd}$ for \makebox{$\bG\bem = \dvec$}. Hint: your expressions should have the $p$ subscripts.
+\item (0.2) List the SVD solution $\bem_{\dagger}$ for \makebox{$\bG\bem = \dvec$}. Hint: your expressions should have the $p$ subscripts.
+
 \end{enumerate}
 
 \item (0.7)
@@ -212,6 +218,8 @@ to the $\ndata=21$ noise-free data points
 %\item (0.2) Calculate $\bem_{\rm lsq}$, $\bem_{\rm qr}$, and $\bem_{\rm svd}$, and list the output for convenient comparison (like \verb+[mtrue mlsq mqr msvd]+).
 
 \item (0.2) Discuss the performance of the LSQ, QR, and SVD approaches to solving this problem.
+
+You do not need to solve
 
 \end{enumerate}
 
@@ -279,6 +287,7 @@ See \refApp{sec:pert}.
 
 \item (0.2) What does the row-reduced form of $\bG$ (\verb+rref(G)+) for this problem tell you about the rank of $\bG$ and the type of solution we might expect?
 
+\pagebreak
 \item (1.2) 
 \begin{enumerate}
 \item (0.4) List the values for the recovered model $\bem_{\dagger} = \bR_{\rm M}\bem_{\rm checker}$. Plot the vector.

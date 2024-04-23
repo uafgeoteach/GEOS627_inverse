@@ -47,6 +47,8 @@ s_k = S_{kk} \ge 0
 %
 where $k$ ranges from 1 to $\min(\ndata,\nparm)$.
 
+The first example of a singular value spectrum appears in Example 3.2 of Aster, which was featured in \verb+lab_ch2.pdf+ as \verb+ex3p2.ipynb+.
+
 %------------------------
 
 \subsection*{Instructions}
@@ -68,7 +70,7 @@ Transform each equation so that it can be written as the equation of a line. Thi
 
 \item The function \verb+ex_getG()+ will return the forward linear model $\bG$ for the four models in \citet{Aster}. Run \tfile\ and analyze the matrixplots of $\bG$ for each of the 8 examples listed at the top of \verb+ex_getG()+ (which resides in \verb+lib_peip.py+). Make sure you understand why they look the way they do.
 
-\item Write code to call \verb+ex_getG()+ and plot the singular value spectrum for each of the 8 examples. (If you prefer, you can set \verb+bfigure = false+ in \verb+ex_getG()+ to avoid seeing the matrix plots.)
+\item Write code to call \verb+ex_getG()+ and plot the singular value spectrum for each of the 8 examples. (If you prefer, you can set \verb+bfigure = False+ in \verb+ex_getG()+ to avoid seeing the matrix plots.)
 
 \pagebreak
 \item Based the singular value spectra, identify the posed-ness category (a), (b), or (c) for each example below:
