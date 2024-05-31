@@ -1,0 +1,20 @@
+name: inverse
+channels:
+  - conda-forge
+  - default
+dependencies:
+  - ipympl
+  - ipython<=8.16
+  - ipywidgets<8.0.0
+  - traitlets
+  - kernda
+  - jupyterlab
+  - pip
+  - python=3.9.18
+  - matplotlib
+  - numpy
+  - pandas
+  - scikit-learn
+  - scipy 
+  - statsmodels
+  - sympy

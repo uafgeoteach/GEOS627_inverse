@@ -1,20 +1,23 @@
 name: inverse
 channels:
   - conda-forge
-  - defaults
 dependencies:
+  - ipyfilechooser
   - ipympl
-  - ipython<=8.16
-  - ipywidgets<8.0.0
-  - traitlets
+  - ipython[version='<=8.16']
+  - ipywidgets[version='<8.0.0']
+  - jupyter-resource-usage
+  - jupyter
+  - jupyter_contrib_nbextensions
+  - jupyter_nbextensions_configurator
   - kernda
-  - jupyterlab
-  - pip
-  - python=3.9.18
   - matplotlib
   - numpy
   - pandas
-  - scikit-learn
-  - scipy 
-  - statsmodels
+  - pip
+  - python
+  - scipy
   - sympy
+  - traitlets
+  - pip:
+      - df-jupyter-magic
