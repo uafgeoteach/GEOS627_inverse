@@ -35,6 +35,6 @@ A `.yml` file (see setup/ folder) lists dependencies. This file, executed within
 - navigate back to the root of repository and launch jupyter
   ```bash
   cd ..
-  jupyter notebook
+  jupyter lab
   ```
 - browse and run notebooks as desired
